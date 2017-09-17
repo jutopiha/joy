@@ -39,6 +39,7 @@ module.exports = function(app, fs)
     var mainObject = {};
     var beforeOneWeekDate = parseInt(moment().add(-7, 'days').format('YYYYMMDD'));
     var nowDate = parseInt(moment().format('YYYYMMDD'));
+    var fromDate = nowDate / 100 * 100 + 1;
 
     dbConnection.query('SELECT * FROM User WHERE userId = ?;',[req.query.uid], function(err, data){
       mainObject.point = data[0].point;
@@ -46,17 +47,32 @@ module.exports = function(app, fs)
 
       dbConnection.query('SELECT money FROM Expense WHERE userId = ? ORDER BY expenseId DESC LIMIT 1;',[req.query.uid, nowDate], function(err, data){
         console.log(data);
-        mainObject.recent = data[0].money;
+        mainObject.recentExpense = data[0].money;
 
         dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId = ? AND date = ?;',[req.query.uid, nowDate], function(err, data){
           console.log(data);
-          mainObject.today = data[0].money;
+          mainObject.todayExpense = data[0].money;
 
           dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId = ? AND date > ? AND date < ?;',[req.query.uid, beforeOneWeekDate, nowDate], function(err, data){
             console.log(data);
-            mainObject.week = data[0].money;
+            mainObject.weeklyExpense = data[0].money;
 
-            res.json(mainObject);
+            dbConnection.query('SELECT sum(money) as money FROM Income WHERE userId =? AND date > ? AND date < ?;',[req.query.uid, fromDate, nowDate], function(err, data){
+              if(err) {
+                 console.log(err);
+              }
+              console.log(data[0].money);
+          	  if (data[0].money != null) {
+           	     mainObject.monthlyIncome = data[0].money;
+          	  }
+              dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId =? AND date > ? AND date < ?;',[req.query.uid, fromDate, nowDate], function(err, data){
+                console.log(data[0].money);
+            		if (data[0].money!=null) {
+                      mainObject.monthlyExpense = data[0].money;
+            		}
+                res.json(mainObject);
+              });
+            });
           });
         });
       });
