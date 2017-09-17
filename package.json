@@ -10,8 +10,14 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.17.2",
+    "dotenv": "^4.0.0",
+    "ejs": "^2.5.7",
     "express": "^4.15.3",
     "express-session": "^1.15.3",
-    "mysql": "^2.13.0"
+    "moment": "^2.18.1",
+    "mysql": "^2.13.0",
+    "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
+    "simple-statistics": "^4.1.1"
   }
 }
