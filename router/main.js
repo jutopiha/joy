@@ -39,7 +39,8 @@ module.exports = function(app, fs)
     var mainObject = {};
     var beforeOneWeekDate = parseInt(moment().add(-7, 'days').format('YYYYMMDD'));
     var nowDate = parseInt(moment().format('YYYYMMDD'));
-    var fromDate = nowDate / 100 * 100 + 1;
+    var fromDate = parseInt(nowDate / 100) * 100 + 1;
+	console.log("nowDate=" + nowDate +"fromDate="+ fromDate);
 
     dbConnection.query('SELECT * FROM User WHERE userId = ?;',[req.query.uid], function(err, data){
       mainObject.point = data[0].point;
