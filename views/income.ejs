@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>JOY</title>
+    <link rel="stylesheet" type="text/css" href="./css/index.css" />
+    <link rel="stylesheet" type="text/css" href="./css/wrapper.css" />
+  </head>
+  <body>
+      <div class="header">
+        <div class="wrapper">
+          <a href="/">
+            <img class="logo" src="img/티끌모아태산.png" />
+          </a>
+        <!-- <ul class="user_menu">
+          <li><span>로그인</span></li>
+          <li><span>회원가입</span></li>
+        </ul> -->
+    		<div class="nav">
+          <ul class="main_menu">
+            <li>
+              <span>내역 입력</span>
+            </li>
+            <li>
+              <span>통계 조회</span>
+            </li>
+            <li>
+              <span>퀘스트</span>
+            </li>
+            <li>
+              <span>캐릭터</span>
+            </li>
+            <li>
+              <span>커뮤니티</span>
+            </li>
+  					<ul class="sub_menu">
+  						<li>
+  							<ul class="depth2">
+  								<li>
+  									<a href="/income" class="item">수입</a>
+  								</li>
+  								<li>
+  									<a href="/expense" class="item">지출</a>
+  								</li>
+  							</ul>
+  						</li>
+  						<li>
+  							<ul class="depth2">
+  								<li>일별</li>
+  								<li>월별</li>
+  							</ul>
+  						</li>
+  					</ul>
+          </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="wrapper content">
+        <h2>수입 내역 입력하기</h2>
+        <div class="input_form">
+          <form action="post/income?uid=web" method="post" id="input_expense">
+            <div>
+              <span>날짜</span>
+              <input type="date" name="date" required/>
+            </div>
+            <div>
+              <span>시간</span>
+              <input type="time" name="time" required/>
+            </div>
+            <div>
+              <span>금액</span>
+              <input type="number" name="money" required/>
+            </div>
+            <div>
+              <span>메모</span>
+              <input type="text" name="memo" />
+            </div>
+            <div>
+              <span>분류</span>
+              <select name="category">
+                <option value="월급">월급</option>
+                <option value="용돈">용돈</option>
+                <option value="etc">기타</option>
+              </select>
+            </div>
+            <div class="submit_btn">
+              <button type="submit">SUBMIT</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer">
+        <img class="btm_logo" alt=" " src="img/티끌모아태산.png"/>
+      </div>
+  </body>
+</html>

@@ -1,0 +1,152 @@
+/*font*/
+@font-face {
+  font-family: 'BareunDotum';
+  font-style: normal;
+  font-weight: 400;
+  src: url('//cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kpa/BareunDotum/BareunDotumOTFPro2.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kpa/BareunDotum/BareunDotumOTFPro2.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'BareunDotum';
+  font-style: normal;
+  font-weight: 700;
+  src: url('//cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kpa/BareunDotum/BareunDotumOTFPro3.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kpa/BareunDotum/BareunDotumOTFPro3.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'BareunDotum';
+  font-style: normal;
+  font-weight: 300;
+  src: url('//cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kpa/BareunDotum/BareunDotumOTFPro1.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kpa/BareunDotum/BareunDotumOTFPro1.woff') format('woff');
+}
+/*init*/
+li { list-style: none;}
+span { font-family: 'BareunDotum'; width: 100px;}
+body {background:rgb(242, 233, 236);}
+
+/*design*/
+.btm_logo {
+  height: 55px;
+  display: block;
+  margin: auto;
+}
+
+.header {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  border-bottom: 2px rgb(255, 2, 129) solid;
+  overflow: hidden;
+  background-color: white;
+}
+.logo {
+  float: left;
+  height: 100px;
+  margin-right: 30px;
+
+}
+
+.nav {
+  margin: 0px 5px 3px 5px;
+  padding: 0 0 3px 0;
+  background-color: white;
+}
+/*.nav .main_menu span {  height: 80px; }*/
+/*.nav::after {display: inline-block; content: ''; clear: both;}*/
+/*.nav::before {display: inline-block; content: ''; clear: both;}*/
+
+.main_menu { display: inline-block; padding-top: 10px;}
+/*.main_menu::before {display: inline-block; content: ''; clear: both;}*/
+.main_menu li {
+  float: left;
+  padding:20px 30px;
+}
+.main_menu li span { width: 100px;}
+
+.sub_menu {
+  display: none;
+  background-color: white; }
+.sub_menu li { padding: 10px 5px;}
+.sub_menu ul li {  float: none; }
+
+/*---------로그인 회원가입 디자인------------*/
+.user_menu { display: inline-block; width:125px; text-align: center;position: relative;float: right;}
+.user_menu li { display: inline-block;}
+.user_menu li span {padding: 7px; color:rgb(0, 158, 208); font-weight: 300; font-size: 13px;}
+
+/*---------홈 컨텐츠 디자인------------*/
+.home_content{
+  text-align: center;
+  padding: 150px 0 0;
+}
+.home_content h2 {
+  font-size: 55px;
+  margin-bottom: 10px;
+  color: white;
+}
+.home_content h3 {
+  font-size: 47px;
+}
+.home_content button {
+  margin: 55px 0;
+  width: 300px; height: 50px;
+  border: 0;
+  border-radius: 5px;
+  background-color: white;
+  font-weight: bold;
+  font-size: 15px;
+  color: rgb(255, 2, 129);
+  cursor: pointer;
+}
+
+.home_content .footer {
+  margin-top: 30px;
+}
+
+/*-----------입력 양식 디자인--------------*/
+.content h2 {
+  text-align: center;
+  padding: 50px 0 0;
+  font-size: 30px;
+  color: rgb(255, 2, 129);
+  /*border-bottom: 2px solid rgb(255, 2, 129);*/
+}
+.input_form {
+  width: 410px;
+  margin: 0 auto 100px;
+  padding: 60px 0 0;
+  overflow: hidden;
+}
+
+.input_form div { margin: 20px 0;}
+.input_form div span {
+  margin: 10px 5px;
+  font-size: 18px; font-weight: 700;
+  display: block;
+}
+.input_form div input {width: 400px; height: 45px; }
+.input_form div select {width: 400px; height: 45px; }
+
+.input_form .submit_btn { margin: 100px 0 60px;}
+.input_form .submit_btn button {
+  width: 140px; height: 60px;
+  border: 1px solid rgb(255, 2, 129);
+  background-color: rgb(255, 2, 129);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  display: block;
+  margin: 0 auto;
+}
+
+/*animation*/
+.nav span:hover {
+  color: rgb(255, 2, 129);
+}
+
+.main_menu:hover .sub_menu{ display: block; }
+
+.input_form .submit_btn button:hover {
+    color: rgb(255, 2, 129);
+    background-color: rgba(255, 3, 129, 0.17);
+    border: 1px solid rgb(255, 2, 129);
+  }
