@@ -3,6 +3,7 @@
 var mysql = require('mysql');
 var dotenv = require('dotenv').config();
 var moment = require('moment');
+var session = require('./session.js');
 
 /*connect MySQL*/
 var dbConnection = mysql.createConnection({
@@ -23,13 +24,18 @@ module.exports = function(app, fs)
 {
     //ejs HTML 파일에서 데이터 사용하기
     app.get('/', function(req, res){
-        var sess = req.session;
+      var username;
+      if (req.session.passport != undefined) {
+        var currentUser = req.session.passport.user;
+        username = currentUser.name;
+      } else {
+        username = "guest";
+      }
 
-        res.render('index', {
-            title: "MY HOMEPAGE",
-            length: 5,
-    //        name: sess.name,
-    //        username: sess.username
+      res.render('index', {
+          title: "MY HOMEPAGE",
+          length: 5,
+          username: username
 	   	});
     });
 
@@ -45,7 +51,6 @@ module.exports = function(app, fs)
     dbConnection.query('SELECT * FROM User WHERE userId = ?;',[req.query.uid], function(err, data){
       mainObject.point = data[0].point;
       mainObject.name = data[0].name;
-
       dbConnection.query('SELECT money FROM Expense WHERE userId = ? ORDER BY expenseId DESC LIMIT 1;',[req.query.uid, nowDate], function(err, data){
         console.log(data);
         mainObject.recentExpense = data[0].money;
