@@ -50,13 +50,44 @@ body {background:rgb(242, 233, 236);}
   padding: 0 0 3px 0;
   background-color: white;
 }
+
+
+.nav { float: left;}
+.top_menu {}
+.top_menu > ul > li {float: left; text-align: center;}
+.top_menu > ul > li > span { line-height: 100px;}
+.main_menu { }
+.mmu1 {width: 138px;}
+.mmu2 {width: 138px;}
+.mmu3 {width: 138px;}
+.mmu4 {width: 138px;}
+.mmu5 {width: 138px;}
+
+/*.sub_menu*/
+.top_menu > ul > li > ul { position: absolute;
+  z-index: 900;
+  background-color: white;
+  top: 150px;
+  visibility: hidden;
+}
+.top_menu > ul > li > ul > li {
+  width: 138px;
+  height: 80px;
+  text-align: center;
+}
+.top_menu > ul > li > ul > li > a {
+  font-size: 15px;
+  height: 80px;
+  color: #aaa;
+  line-height: 80px;
+}
 /*.nav .main_menu span {  height: 80px; }*/
 /*.nav::after {display: inline-block; content: ''; clear: both;}*/
 /*.nav::before {display: inline-block; content: ''; clear: both;}*/
 
-.main_menu { display: inline-block; padding-top: 10px;}
+/*.main_menu { display: inline-block; padding-top: 10px;}*/
 /*.main_menu::before {display: inline-block; content: ''; clear: both;}*/
-.main_menu li {
+/*.main_menu li {
   float: left;
   padding:20px 30px;
 }
@@ -66,7 +97,7 @@ body {background:rgb(242, 233, 236);}
   display: none;
   background-color: white; }
 .sub_menu li { padding: 10px 5px;}
-.sub_menu ul li {  float: none; }
+.sub_menu ul li {  float: none; }*/
 
 /*---------로그인 회원가입 디자인------------*/
 .user_menu { display: inline-block; width:125px; text-align: center;position: relative;float: right;}
@@ -141,12 +172,22 @@ body {background:rgb(242, 233, 236);}
 /*animation*/
 .nav span:hover {
   color: rgb(255, 2, 129);
+  cursor: pointer;
 }
 
-.main_menu:hover .sub_menu{ display: block; }
+.header:hover .sub_menu{
+  transform: translateY(-25px);
+  visibility: visible;
+  display: block; cursor: pointer;
+}
+
+.sub_menu:hover {
+  display: block; cursor: pointer;
+}
 
 .input_form .submit_btn button:hover {
     color: rgb(255, 2, 129);
     background-color: rgba(255, 3, 129, 0.17);
     border: 1px solid rgb(255, 2, 129);
+    cursor: pointer;
   }
