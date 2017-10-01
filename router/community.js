@@ -35,10 +35,10 @@ module.exports = function(app, fs)
 		//parse body
 		json = req.body;
 		console.log(json.title);
-		console.log(json.image);	
-	
+		console.log(json.smarteditor);
+
 		//insert to DB
-		dbConnection.query("INSERT into Post VALUES(DEFAULT,'1234','자유게시판',DEFAULT,'제목','네용','');", function(err, result, fields){
+		dbConnection.query("INSERT into Post VALUES(DEFAULT,?,?,DEFAULT,?,?,?);",[uid, json.category, json.title, json.smarteditor, json.image], function(err, result, fields){
 			if(err) {
 			console.log(err);			
 //				result.CODE = 400;
