@@ -33,7 +33,7 @@ module.exports = function(app, fs)
 		console.log("***New COMMUNITY POST Request id arrived***");
 
 		//parse body
-		json = JSON.parse(req.body);
+		json = req.body;
 
 		//insert to DB
 		dbConnection.query('INSERT into Post VALUES (DEFAULT,?,?,DEFAULT,?,?,?);',[uid, json.category, json.title, json.content. json.image], function(err, result, fields){
