@@ -27,7 +27,7 @@ module.exports = function(app, fs)
 	app.post('/community/post-write-complete', function(req, res){
 		var result = {};
 		var json = {};
-		var uid = req.query.uid;
+		var uid = '1234';
 
 		//community POST request
 		console.log("***New COMMUNITY POST Request id arrived***");
@@ -40,7 +40,7 @@ module.exports = function(app, fs)
 		//insert to DB
 		dbConnection.query("INSERT into Post VALUES(DEFAULT,?,?,DEFAULT,?,?,?);",[uid, json.category, json.title, json.smarteditor, json.image], function(err, result, fields){
 			if(err) {
-			console.log(err);			
+			console.log(err);
 //				result.CODE = 400;
 //				result.STATUS = "Database Error";
 //				throw error;
