@@ -23,8 +23,8 @@ module.exports = function(app, fs)
   app.get('/community/post-write', function(req, res){
     res.render('community-write',{});
   });
-  
-	app.post('/post-write-complete', function(req, res){
+
+	app.post('/community/post-write-complete', function(req, res){
 		var result = {};
 		var json = {};
 		var uid = req.query.uid;
@@ -46,7 +46,7 @@ module.exports = function(app, fs)
 				result.STATUS = "Created";
 				result.DATA = json;
 			}
-			res.redirect('/community');
+			res.redirect('/');
 		});
 	return;
 	});
