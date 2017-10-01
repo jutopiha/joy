@@ -69,7 +69,7 @@
 
       <div class="container wrapper">
         <h2>POST 쓰기</h2>
-        <form class="post_form" action="/community/post-write-complete?uid=web" method="POST">
+        <form id="frm" class="post_form" action="/community/post-write-complete" method="POST">
           <div>
             <span>카테고리</span>
             <select name="category">
@@ -90,7 +90,7 @@
             <input type="file" name="image" accept="image/*"/>
           </div>
           <div class="submit_btn">
-            <button type="submit">SUBMIT</button>
+            <button id="savebutton" type="submit">SUBMIT</button>
           </div>
         </form>
 
