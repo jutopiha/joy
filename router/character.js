@@ -1,3 +1,4 @@
+
 // character.js
 // 캐릭터
 var mysql = require('mysql');
@@ -45,7 +46,6 @@ module.exports = function(app, fs)
       }
     };
 
-	character.main = req.session.passport.user.mainCharacter;
     dbConnection.query('SELECT characterType FROM Charact WHERE userId=?;',[currentUser], function(err, data){
       if(err) {
          console.log(err);
@@ -53,20 +53,26 @@ module.exports = function(app, fs)
   	  if (data[0] != null) {
    	     console.log(data);
          console.log(data[0]);
-		for (var i in data ) {
-			var n = data[i].characterType
-			character.list[n] = 1;
-  	  	}
-	  }
+      for (var i in data ) {
+      	var n = data[i].characterType
+      	character.list[n] = 1;
+        	}
+      }
 
       if(isWeb == true) {
+        character.main = req.session.passport.user.mainCharacter;
       	res.render('character');
       } else{
-      	res.json(character);
+        dbConnection.query('SELECT mainCharacter FROM User WHERE userId=?;',[currentUser], function(err, data){
+          if(err) {
+             console.log(err);
+          }
+          character.main = data[0].mainCharacter;
+          res.json(character);
+      	});
       }
     });
 
   });
-
 
 };
