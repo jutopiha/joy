@@ -41,3 +41,5 @@ app.use(session({
 var main = require('./router/main')(app, fs);
 var session = require('./router/session')(app, fs);
 var statistic = require('./router/statistic')(app, fs);
+var community = require('./router/community')(app, fs);
+var character = require('./router/character') (app, fs);
