@@ -1,3 +1,4 @@
+
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500,700);
 
 .tablist {
@@ -192,3 +193,9 @@
   width: 80%;
   margin: 15px auto;
 }
+
+#myChart{
+ width: 600px !important;
+ height: 600px !important;
+}
+

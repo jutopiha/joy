@@ -38,7 +38,9 @@ module.exports = function(app, fs)
   	});
 
   });
-
+	app.get('/statistic/web', function(req, res) {
+    	res.render('monthlyStat', {income: 5000, expense: 10000});
+	});
 	/*----------------------monthly statistics------------------------*/
   app.get('/statistic/monthly', function(req, res){
     console.log("***Statistic GET Request arrived***");
