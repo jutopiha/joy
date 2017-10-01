@@ -32,7 +32,7 @@
                    <span>통계 조회</span>
                    <ul class="sub_menu">
                      <li></li>
-                     <li></li>
+                     <li><a href="/statistic/web">월별 통계</a></li>
                    </ul>
                  </li>
                  <li class="main_menu mmu3">
@@ -94,7 +94,7 @@
       <!--타사용자비교-->
       <div class="tabpanel" id="panel2" role="tabpanel">
         <div class="radarChart_con">
-          <div style="margin: auto 0">
+          <div style="text-align: center">
             <canvas id="myChart"></canvas>
           </div>
         </div>
@@ -102,11 +102,11 @@
 
       <!--월 선택-->
       <div class="input_form">
-        <form action="/">
+        <form action="/statistic/monthly?uid=web">
           <div>
             <span>월 선택</span>
             <select name="month">
-              <option value="1">1월</option>
+              <option value="201701">1월</option>
               <option value="2">2월</option>
               <option value="3">3월</option>
               <option value="4">4월</option>
@@ -214,10 +214,10 @@
     },
     "dataProvider": [{
       "country": "수입",
-      "litres": 10000
+      "litres": <%=statistic.income%> 
     }, {
       "country": "지출",
-      "litres": 5000
+      "litres": <%=statistic.expense%>
     }],
     "valueField": "litres",
     "titleField": "country",
@@ -277,12 +277,12 @@ var myChart = new Chart(ctx, {
     labels: ['식비', '교통비', '문화', '생활', '음료/간식', '교육', '공과금', '기타'],
     datasets: [{
       label: '평균',
-      data: [6, 5 , 1, 19, 5, 7, 11,20],
+      data: [<%=statistic.whole.식비%>, <%=statistic.whole.교통비%> , <%=statistic.whole.문화%>, <%=statistic.whole.생활%>, <%=statistic.whole["음료/간식"]%>, <%=statistic.whole.교육%>, <%=statistic.whole.공과금%>,<%=statistic.whole.기타%>],
       backgroundColor: "rgba(255,0,0,0.4)",
       borderColor: "rgba(255,0,0,1)",
     }, {
       label: '본인',
-      data: [2, 29, 5, 5, 2, 3, 10,20],
+      data: [<%=statistic.mine.식비%>, <%=statistic.mine.교통비%>, <%=statistic.mine.문화%>, <%=statistic.mine.생활%>, <%=statistic.mine["음료/간식"]%>, <%=statistic.mine.교육%>, <%=statistic.mine.공과금%>,<%=statistic.mine.기타%>],
       backgroundColor: "rgba(255,153,0,0.4)",
       borderColor: "rgba(255,153,0,1)",
     }]

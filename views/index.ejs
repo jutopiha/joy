@@ -32,7 +32,7 @@
                 <span>통계 조회</span>
                 <ul class="sub_menu">
                   <li></li>
-                  <li></li>
+                  <li><a href="/statistic/monthly?uid=web">월별 통계</a></li>
                 </ul>
               </li>
               <li class="main_menu mmu3">
@@ -65,9 +65,13 @@
       <div class="full home_content">
         <h2>당신만의 맞춤형 가계부</h2>
         <h3>지금 당장 시작해보세요</h3>
-        <form action="/" method="get">
-          <button type="submit">페이스북으로 로그인</button>
-        </form>
+		<% if (username!="guest"){ %>
+			<h3> <%= username %> </h3>
+		<% } else{ %>
+        	<form action="/auth/facebook" method="get">
+          		<button type="submit">페이스북으로 로그인</button>
+       		</form>
+		<% } %>
 
         <div class="footer">
           <img class="btm_logo" alt=" " src="img/티끌모아태산.png"/>

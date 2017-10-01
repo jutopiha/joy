@@ -197,5 +197,6 @@
 #myChart{
  width: 600px !important;
  height: 600px !important;
+ display: inline-block !important;
 }
 
