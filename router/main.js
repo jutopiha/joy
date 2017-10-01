@@ -106,11 +106,11 @@ module.exports = function(app, fs)
   		uid = '1234';
 
   		//날짜 시간
-  		req.body.date = moment(req.body.date, 'YYYYMMDD');
+  		req.body.date = moment(req.body.date, 'YYYYMMDD').format('YYYYMMDD');
   		req.body.time = moment(req.body.time, 'HHmm').format('HHmm');
-  		//console.log(time);
+  		//console.log(req.body.date);
   		req.body.date = parseInt(req.body.date);
-  		req.body.time = parseInt(time);
+  		req.body.time = parseInt(req.body.time);
   		//console.log(req.body.time);
 
   		json = req.body;
@@ -123,7 +123,7 @@ module.exports = function(app, fs)
 
   	// insert to DB
   	dbConnection.query('INSERT into Expense VALUES (DEFAULT,?,?,?,?,?,?,?);', [uid, json.date, json.time, parseInt(json.money),
-                        json.memo, json.category, json.payMethod], function (err, results, fields) {
+                        json.memo, json.category, json.payMethod], function (err, result, fields) {
      	if (err) {
         result.CODE = 400;
         result.STATUS = "Database Error";
@@ -133,8 +133,11 @@ module.exports = function(app, fs)
         result.STATUS = "Created";
         result.DATA = json;
       }
-
-      res.json(result);
+	  if(uid == '1234'){
+		res.redirect('/');	
+	  } else{
+      	res.json(result);
+	  }
   	});
 
     return;
