@@ -61,7 +61,13 @@ module.exports = function(app, fs)
 
       if(isWeb == true) {
         character.main = req.session.passport.user.mainCharacter;
-      	res.render('character');
+		console.log(req.session.passport.user);
+		console.log(character);
+		console.log(character.main);
+		console.log(character.list);
+      	res.render('character', {
+			character: character
+		});
       } else{
         dbConnection.query('SELECT mainCharacter FROM User WHERE userId=?;',[currentUser], function(err, data){
           if(err) {
