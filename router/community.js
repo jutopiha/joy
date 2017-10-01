@@ -34,17 +34,20 @@ module.exports = function(app, fs)
 
 		//parse body
 		json = req.body;
-
+		console.log(json.title);
+		console.log(json.image);	
+	
 		//insert to DB
-		dbConnection.query('INSERT into Post VALUES (DEFAULT,?,?,DEFAULT,?,?,?);',[uid, json.category, json.title, json.content. json.image], function(err, result, fields){
+		dbConnection.query("INSERT into Post VALUES(DEFAULT,'1234','자유게시판',DEFAULT,'제목','네용','');", function(err, result, fields){
 			if(err) {
-				result.CODE = 400;
-				result.STATUS = "Database Error";
-				throw error;
+			console.log(err);			
+//				result.CODE = 400;
+//				result.STATUS = "Database Error";
+//				throw error;
 			} else {
-				result.CODE = 201;
-				result.STATUS = "Created";
-				result.DATA = json;
+//				result.CODE = 201;
+//				result.STATUS = "Created";
+//				result.DATA = json;
 			}
 			res.redirect('/');
 		});
