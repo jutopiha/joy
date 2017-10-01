@@ -42,9 +42,10 @@ module.exports = function(app, fs)
         "4": 0,
         "5": 0,
         "6": 0,
-      },
+      }
     };
 
+	character.main = req.session.passport.user.mainCharacter;
     dbConnection.query('SELECT characterType FROM Charact WHERE userId=?;',[currentUser], function(err, data){
       if(err) {
          console.log(err);
@@ -52,21 +53,18 @@ module.exports = function(app, fs)
   	  if (data[0] != null) {
    	     console.log(data);
          console.log(data[0]);
-  	  }
-/*
-      for (var i in data ) {
-        var category = data[i].category;
-        var money =  data[i].money;
-         statistic.mine[category] = money;
-      }
-  */
+		for (var i in data ) {
+			var n = data[i].characterType
+			character.list[n] = 1;
+  	  	}
+	  }
+
       if(isWeb == true) {
-      	res.redirect('character');
+      	res.render('character');
       } else{
       	res.json(character);
       }
     });
-
 
   });
 
