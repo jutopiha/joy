@@ -1,0 +1,60 @@
+.container {
+  padding: 35px;
+  padding-bottom: 40px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.box {
+  float: left;
+  display:inline-table;
+  margin: 10px;
+  padding: 20px;
+  width: 290px;
+  height: 330px;
+  border: 2px solid #ddd;
+  box-sizing:border-box;
+
+}
+
+.post_pic {
+  width: 246px;
+  height: 200px;
+  background-image: url('../img/티끌모아태산.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: inline-block;
+}
+
+.post_date {
+  font-size: 13px;
+}
+
+/*community post form*/
+.container h2, .post_form { width: 780px; margin: 0 auto;}
+.container h2 { font-size: 30px; margin-bottom: 50px;}
+.post_form {}
+.post_form span {display: inline-block; width: 100px; font-size: 15px;}
+.post_form div { margin: 10px 0;}
+.post_form input { width: 600px;height: 25px;font-size: 15px;}
+.post_form textarea {
+  font-size: 20px; resize: vertical;
+  width:766px; height:412px;
+}
+.post_form iframe { margin-top: 20px;}
+.post_form select {
+  width: 130px;
+  height: 30px;
+  font-size: 15px;
+}
+.post_form select option {
+  font-size: 15px;
+}
+
+.post_form .submit_btn {margin: 30px 0;}
+
+/*----------animation----------*/
+.box:hover {
+  cursor: pointer;
+}

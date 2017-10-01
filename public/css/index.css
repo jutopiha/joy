@@ -76,28 +76,23 @@ a { text-decoration: none;;}
   color: #aaa;
   line-height: 80px;
 }
-/*.nav {
-  margin: 0px 5px 3px 5px;
-  padding: 0 0 3px 0;
-  background-color: white;
-}*/
-/*.nav .main_menu span {  height: 80px; }*/
-/*.nav::after {display: inline-block; content: ''; clear: both;}*/
-/*.nav::before {display: inline-block; content: ''; clear: both;}*/
 
-/*.main_menu { display: inline-block; padding-top: 10px;}
+/*--------community menu---------*/
 
+.com_nav {}
+
+.com_main_menu {overflow: hidden;}
+.com_main_menu > li {
   float: left;
-  padding:20px 30px;
+  margin: 0 30px;
 }
-.main_menu li span { width: 100px;}
-
-.sub_menu {
-
-  display: none;
-  background-color: white; }
-.sub_menu li { padding: 10px 5px;}
-.sub_menu ul li {  float: none; }*/
+.com_main_menu > li > span {
+  line-height: 100px;
+}
+.com_main_menu > li > span > a {
+  font-size: 15px;
+  color: #444;
+}
 
 /*---------로그인 회원가입 디자인------------*/
 .user_menu { display: inline-block; width:125px; text-align: center;position: relative;float: right;}
@@ -157,8 +152,9 @@ a { text-decoration: none;;}
 .input_form div input {width: 400px; height: 45px; }
 .input_form div select {width: 400px; height: 45px; }
 
-.input_form .submit_btn { margin: 100px 0 60px;}
-.input_form .submit_btn button {
+/*SUBMIT button*/
+form .submit_btn { margin: 100px 0 60px;}
+form .submit_btn button {
   width: 140px; height: 60px;
   border: 1px solid rgb(255, 2, 129);
   background-color: rgb(255, 2, 129);
@@ -169,8 +165,25 @@ a { text-decoration: none;;}
   margin: 0 auto;
 }
 
+/*.input_form .submit_btn { margin: 100px 0 60px;}
+.input_form .submit_btn button {
+  width: 140px; height: 60px;
+  border: 1px solid rgb(255, 2, 129);
+  background-color: rgb(255, 2, 129);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  display: block;
+  margin: 0 auto;
+}*/
+
 /*animation*/
 .nav span:hover {
+  color: rgb(255, 2, 129);
+  cursor: pointer;
+}
+
+.com_main_menu span:hover a{
   color: rgb(255, 2, 129);
   cursor: pointer;
 }
@@ -185,9 +198,16 @@ a { text-decoration: none;;}
   display: block; cursor: pointer;
 }
 
-.input_form .submit_btn button:hover {
+form .submit_btn button:hover {
     color: rgb(255, 2, 129);
     background-color: rgba(255, 3, 129, 0.17);
     border: 1px solid rgb(255, 2, 129);
     cursor: pointer;
   }
+  
+/*.input_form .submit_btn button:hover {
+    color: rgb(255, 2, 129);
+    background-color: rgba(255, 3, 129, 0.17);
+    border: 1px solid rgb(255, 2, 129);
+    cursor: pointer;
+  }*/
