@@ -22,7 +22,7 @@ module.exports = function(app, fs)
 {
   app.get('/community', function(req, res){
     var postData = [];
-    dbConnection.query("SELECT * from ORDER BY postId DESC LIMIT 9", function(err, data){
+    dbConnection.query("SELECT * from ORDER BY postId DESC LIMIT 9;", function(err, data){
       if(err){
         console.log(err);
       } else {
