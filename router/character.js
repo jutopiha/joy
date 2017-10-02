@@ -201,6 +201,7 @@ module.exports = function(app, fs)
                   res.redirect('/character?state='+result.state);
                 } else{
                   console.log("android");
+				  res.json(result.state);
                 }
               }
 
