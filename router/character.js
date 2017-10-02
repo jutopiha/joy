@@ -195,14 +195,6 @@ module.exports = function(app, fs)
               if (err) {
                 console.log(err);
               }else {
-
-                if(isWeb == true) {
-                  console.log("web");
-                  res.redirect('/character?state='+result.state);
-                } else{
-                  console.log("android");
-				  res.json(result.state);
-                }
               }
 
             });
@@ -210,6 +202,14 @@ module.exports = function(app, fs)
           }
 
         });
+      }
+
+      if(isWeb == true) {
+        console.log("web");
+        res.redirect('/character?state='+result.state);
+      } else{
+        console.log("android");
+        res.json(result.state);
       }
 
 
