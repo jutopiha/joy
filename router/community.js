@@ -20,6 +20,19 @@ dbConnection.connect(function(err){
 //module.exports는 server.js에서 모듈로 불러올 수 있도록 사용됨
 module.exports = function(app, fs)
 {
+  app.get('/community', function(req, res){
+    var postData = [];
+    dbConnection.query("SELECT * from ORDER BY postId DESC LIMIT 9", function(err, data){
+      if(err){
+        console.log(err);
+      } else {
+
+      }
+      console.log(data);
+    });
+    res.render('community-write',{});
+  });
+
   app.get('/community/post-write', function(req, res){
     res.render('community-write',{});
   });
