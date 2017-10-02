@@ -4,8 +4,6 @@ var mysql = require('mysql');
 var dotenv = require('dotenv').config();
 var ss = require('simple-statistics');
 
-
-
 /*connect MySQL*/
 var dbConnection = mysql.createConnection({
     host: process.env.DB_HOST,
@@ -48,28 +46,28 @@ module.exports = function(app, fs)
   app.get('/statistic/monthly', function(req, res){
     console.log("***Statistic GET Request arrived***");
 
-	var currentUser;
-	var fromDate;
-	var toDate;
-	var isWeb = false;
+  	var currentUser;
+  	var fromDate;
+  	var toDate;
+  	var isWeb = false;
 
-	if( (req.query.uid == undefined)){ //web
-		currentUser = req.session.passport.user.userId;
+  	if( (req.query.uid == undefined)){ //web
+  		currentUser = req.session.passport.user.userId;
 
-		isWeb = true;
-	} else { //android
-		currentUser = req.query.uid;
-	}
+  		isWeb = true;
+  	} else { //android
+  		currentUser = req.query.uid;
+  	}
 
-	if( (req.query.month == undefined) ){ //기본값
-		fromDate = 20170900;
-		toDate = 20171000;
- 	} else{ //달 선택
-		fromDate = parseInt(req.query.month+"00");
-  		toDate = fromDate+100;
-	}
+  	if( (req.query.month == undefined) ){ //기본값
+  		fromDate = 20170900;
+  		toDate = 20171000;
+   	} else{ //달 선택
+  		fromDate = parseInt(req.query.month+"00");
+    		toDate = fromDate+100;
+  	}
 
-	console.log("curerntUser: "+currentUser);
+  	console.log("curerntUser: "+currentUser);
     var statistic = {
       "income": 0,
       "expense":0,
@@ -106,24 +104,20 @@ module.exports = function(app, fs)
     var utility = [0];
     var etc = [0];
 
-//	console.log("타입",Type(curruentUser));
-//	console.log("type2",Type(fromDate));
-//	console.log("type3",Type(toDate));
-	console.log("fromDate",fromDate);
-	console.log("toDate",toDate);
-
     dbConnection.query('SELECT sum(money) as money FROM Income WHERE userId =? AND date > ? AND date < ?;',[currentUser, fromDate, toDate], function(err, data){
       if(err) {
          console.log(err);
       }
-	  if (data[0].money != null) {
- 	     statistic.income = data[0].money;
-	  }
+  	  if (data[0].money != null) {
+   	     statistic.income = data[0].money;
+  	  }
+
       dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId =? AND date > ? AND date < ?;',[currentUser, fromDate, toDate], function(err, data){
         console.log(data[0].money);
-		if (data[0].money!=null) {
-          statistic.expense = data[0].money;
-		}
+    		if (data[0].money!=null) {
+              statistic.expense = data[0].money;
+    		}
+
         dbConnection.query('SELECT category, sum(money) as money FROM Expense WHERE userId =? AND date > ? AND date < ? GROUP BY(category);',[currentUser, fromDate, toDate], function(err, data){
           if(err) {
              console.log(err);
@@ -159,13 +153,13 @@ module.exports = function(app, fs)
             statistic.whole["공과금"] = ss.mean(utility);
             statistic.whole["기타"] = ss.mean(etc);
 
-			if(isWeb == true) {
-				res.render('monthlyStat', {
-					statistic: statistic, income: 5000, expense:1000
-				});
-			} else{
-            	res.json(statistic);
-			}
+      			if(isWeb == true) {
+      				res.render('monthlyStat', {
+      					statistic: statistic, income: 5000, expense:1000
+      				});
+      			} else{
+                  	res.json(statistic);
+      			}
           });
         });
       });
