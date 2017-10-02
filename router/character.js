@@ -142,6 +142,7 @@ console.log("state!!!"+req.query.state);
         res.redirect('/character');
       } else{
         console.log("android");
+		res.json("success");
       }
     });
 
