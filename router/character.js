@@ -202,6 +202,8 @@ module.exports = function(app, fs)
           }
 
         });
+      } else {
+        result.state = "fail";
       }
 
       if(isWeb == true) {
@@ -211,7 +213,6 @@ module.exports = function(app, fs)
         console.log("android");
         res.json(result.state);
       }
-
 
     });
 
