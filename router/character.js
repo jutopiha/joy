@@ -103,6 +103,7 @@ console.log("state!!!"+req.query.state);
       }
 
       result.state = "success";
+      // insert..
 
 
       if(isWeb == true) {
@@ -112,5 +113,38 @@ console.log("state!!!"+req.query.state);
         console.log("android");
       }
     });
+
   });
+
+  /* character main*/
+  app.get('/character/main', function(req, res){
+    console.log("***Character main GET Request arrived***");
+
+    var currentUser;
+    var isWeb = false;
+
+    if((req.query.uid == undefined)){ //web
+      isWeb = true;
+      currentUser = req.session.passport.user.userId;
+    } else { //android
+      currentUser = req.query.uid;
+    }
+
+    var result = {};
+
+    dbConnection.query('UPDATE User set mainCharacter=? WHERE userId=?;',[req.query.type, currentUser], function(err, data){
+      if(err) {
+         console.log(err);
+      }
+
+      if(isWeb == true) {
+        console.log("web");
+        res.redirect('/character');
+      } else{
+        console.log("android");
+      }
+    });
+
+  });
+
 };
