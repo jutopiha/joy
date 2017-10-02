@@ -103,17 +103,22 @@ module.exports = function(app, fs)
 
     var result = {};
 
-    dbConnection.query('SELECT type, quantity FROM Item WHERE userId=?;',[currentUser], function(err, data){
+    dbConnection.query('SELECT * FROM Item WHERE userId=?;',[currentUser], function(err, data){
       if(err) {
          console.log(err);
       }
 
-      for (var i in data ) {
-        var t = data[i].type;
-        var q = data[i].quantity;
-
-        item[t] = q;
-      }
+      item.bean = data[0].bean;
+      item.waterdrop= data[0].waterdrop;
+      item.ice= data[0].ice;
+      item.choco = data[0].choco;
+      item.greenteaPowder = data[0].greenteaPowder;
+      item.milk = data[0].milk;
+      item.grapefruit = data[0].grapefruit;
+      item.sparkling = data[0].sparkling;
+      item.syrup = data[0].syrup;
+      item.bluePigment = data[0].bluePigment;
+      item.lemon = data[0].lemon;
 
       switch(req.query.type){
         case 1:
