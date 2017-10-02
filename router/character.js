@@ -57,7 +57,6 @@ module.exports = function(app, fs)
         }
       }
 
-console.log("state!!!"+req.query.state);
       if(isWeb == true) {
         character.main = req.session.passport.user.mainCharacter;
       	res.render('character', {
@@ -81,6 +80,19 @@ console.log("state!!!"+req.query.state);
 
     var currentUser;
     var isWeb = false;
+    var item = {
+      bean: 0,
+      waterdrop: 0,
+      ice: 0,
+      choco: 0,
+      greenteaPowder: 0,
+      milk: 0,
+      grapefruit: 0,
+      sparkling: 0,
+      syrup: 0,
+      bluePigment: 0,
+      lemon:0,
+    };
 
     if((req.query.uid == undefined)){ //web
       isWeb = true;
@@ -91,27 +103,110 @@ console.log("state!!!"+req.query.state);
 
     var result = {};
 
-    dbConnection.query('SELECT characterType FROM Charact WHERE userId=?;',[currentUser], function(err, data){
+    dbConnection.query('SELECT type, quantity FROM Item WHERE userId=?;',[currentUser], function(err, data){
       if(err) {
          console.log(err);
       }
-      if (data[0] != null) {
-        // unlock 할 수 있는 상태인지
-        for (var i in data ) {
 
-        }
+      for (var i in data ) {
+        var t = data[i].type;
+        var q = data[i].quantity;
+
+        item[t] = q;
       }
 
-      result.state = "success";
-      // insert..
+      switch(req.query.type){
+        case 1:
+          if(item.bean>=3 && item.waterdrop>=5 && item.ice>=2) {
+            item.bean -= 3;
+            item.waterdrop -= 5;
+            item.ice -= 2;
 
+            result.state = "success";
+          }
+          break;
+        case 2:
+          if(item.bean>=2 && item.milk>=4 && item.ice>=2) {
+            item.bean -= 3;
+            item.milk -= 4;
+            item.ice -= 2;
 
-      if(isWeb == true) {
-        console.log("web");
-        res.redirect('/character?state='+result.state);
-      } else{
-        console.log("android");
+            result.state = "success";
+          }
+          break;
+        case 3:
+          if(item.bean>=2 && item.milk>=4 && item.ice>=2 && item.choco>=2) {
+            item.bean -= 2;
+            item.milk -= 4;
+            item.ice -= 2;
+            item.choco -= 2;
+
+            result.state = "success";
+          }
+          break;
+        case 4:
+          if(item.greenteaPowder>=3 && item.milk>=3 && item.ice>=2) {
+            item.greenteaPowder -= 3;
+            item.milk -= 3;
+            item.ice -= 2;
+
+            result.state = "success";
+          }
+          break;
+        case 5:
+          if(item.grapefruit>=3 && item.sparkling>=2 && item.ice>=2 && item.syrup>=1) {
+            item.grapefruit -= 3;
+            item.sparkling -= 2;
+            item.ice -= 2;
+            item.syrup -= 1;
+
+            result.state = "success";
+          }
+          break;
+        case 6:
+          if(item.bluePigment>=1 && item.lemon>=1 && item.sparkling>=3 && item.syrup>=1 && item.ice>=2) {
+            item.bluePigment -= 1;
+            item.lemon -= 1;
+            item.sparkling -= 3;
+            item.syrup -= 1;
+            item.ice -= 2;
+
+            result.state = "success";
+          }
+          break;
       }
+
+      if(result.state == "success") {
+        // insert to DB
+        dbConnection.query('INSERT into Charact VALUES (DEFAULT,?,?);', [req.params.type, uid], function (err, result, fields) {
+          if (err) {
+            console.log(err);
+          }else {
+
+
+            dbConnection.query('UPDATE Item set bean=?, waterdrop=?, ice=?, choco=?, greenteaPowder=?, milk=?, grapefruit=?, sparkling=?, syrup=?, bluePigment=?, lemon=? WHERE userId=?;'
+                              , [item.bean, item.waterdrop, item.ice, item.choco, item.greenteaPowder, item.milk, item.grapefruit, item.sparkling, item.syrup, item.bluePigment, item.lemon, currentUser]
+                              , function (err, result, fields) {
+              if (err) {
+                console.log(err);
+              }else {
+
+                if(isWeb == true) {
+                  console.log("web");
+                  res.redirect('/character?state='+result.state);
+                } else{
+                  console.log("android");
+                }
+              }
+
+            });
+
+          }
+
+        });
+      }
+
+
     });
 
   });
@@ -142,7 +237,7 @@ console.log("state!!!"+req.query.state);
         res.redirect('/character');
       } else{
         console.log("android");
-		res.json("success");
+	      res.json("success");
       }
     });
 
