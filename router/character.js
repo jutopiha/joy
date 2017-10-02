@@ -57,10 +57,11 @@ module.exports = function(app, fs)
         }
       }
 
+console.log("state!!!"+req.query.state);
       if(isWeb == true) {
         character.main = req.session.passport.user.mainCharacter;
       	res.render('character', {
-    			character: character, state: req.params.state
+    			character: character, state: req.query.state
     		});
       } else{
         dbConnection.query('SELECT mainCharacter FROM User WHERE userId=?;',[currentUser], function(err, data){
@@ -99,12 +100,14 @@ module.exports = function(app, fs)
         for (var i in data ) {
 
         }
-        result.state = success;
       }
+
+      result.state = "success";
+
 
       if(isWeb == true) {
         console.log("web");
-        res.redirect('/character?state'+result.state);
+        res.redirect('/character?state='+result.state);
       } else{
         console.log("android");
       }
