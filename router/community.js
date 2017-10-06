@@ -26,7 +26,8 @@ module.exports = function(app, fs)
       if(err){
         console.log(err);
       } else {
-          res.render('community', data);
+//		  console.log(data);
+          res.render('community', {data});
       }
       //console.log(data);
     });
@@ -62,7 +63,7 @@ module.exports = function(app, fs)
 //				result.STATUS = "Created";
 //				result.DATA = json;
 			}
-			res.redirect('/');
+			res.redirect('/community');
 		});
 	return;
 	});
