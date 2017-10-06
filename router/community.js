@@ -21,16 +21,17 @@ dbConnection.connect(function(err){
 module.exports = function(app, fs)
 {
   app.get('/community', function(req, res){
-    var postData = [];
+
+    //userId 로 검색 추가해야됨 WHERE userId = ?
     dbConnection.query("SELECT * from ORDER BY postId DESC LIMIT 9;", function(err, data){
       if(err){
         console.log(err);
       } else {
-
+        res.render('community', data);
       }
-      console.log(data);
+      //console.log(data);
     });
-    res.render('community-write',{});
+
   });
 
   app.get('/community/post-write', function(req, res){
