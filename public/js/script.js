@@ -1,6 +1,6 @@
 var doc = document;
 //페이지가 로드될때 실행되는 함수
-window.addEventListner("DOMContentLoaded", function(){
+window.addEventListener("DOMContentLoaded", function(){
   //포스트 데이터 가져오기
   var posts = response.data;
 
