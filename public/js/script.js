@@ -2,7 +2,7 @@ var doc = document;
 //페이지가 로드될때 실행되는 함수
 doc.addEventListner("DOMContentLoaded", function(){
   //포스트 데이터 가져오기
-  var posts = <%= data%>;
+  var posts = response.data;
 
   posts.forEach(function(post){
     //서버에서 가져온 데이터
