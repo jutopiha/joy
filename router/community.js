@@ -20,24 +20,76 @@ dbConnection.connect(function(err){
 //module.exports는 server.js에서 모듈로 불러올 수 있도록 사용됨
 module.exports = function(app, fs)
 {
+  //금융지식팁 메인페이지
   app.get('/community', function(req, res){
-    var postData = [];
-    dbConnection.query("SELECT * from Post ORDER BY postId DESC LIMIT 9;", function(err, data){
+    dbConnection.query("SELECT * from Post WHERE category='금융지식팁' ORDER BY postId DESC LIMIT 9;", function(err, data){
       if(err){
         console.log(err);
       } else {
 //		  console.log(data);
           res.render('community', {data});
       }
-      //console.log(data);
     });
-
   });
 
+  //게시글 조회
+  app.get('/community/post', function(req, res){
+    var postid = req.query.postid;
+    var postData = [];
+
+    dbConnection.query("SELECT * FROM Post WHERE postId=?;",[postid], function(err, data){
+      if(err){
+        console.log(err);
+      } else {
+        postData += data;
+        dbConnection("SELECT * FROM Comment WHERE postId=?",[postid], function(err, data){
+          postData += data;
+          console.log(postData);
+          res.render('community-post',{postData});
+        });
+      }
+    });
+  });
+
+  //자유게시판 메인페이지
+  app.get('/community/joy-free', function(req, res){
+    dbConnection.query("SELECT * from Post WHERE category='자유게시판' ORDER BY postId DESC LIMIT 9;", function(err, data){
+      if(err){
+        console.log(err);
+      } else {
+          res.render('community-joy-free', {data});
+      }
+    });
+  });
+
+  //다짐톡 메인페이지
+  app.get('/community/joy-fighting', function(req, res){
+    dbConnection.query("SELECT * from Post WHERE category='다짐톡' ORDER BY postId DESC LIMIT 9;", function(err, data){
+      if(err){
+        console.log(err);
+      } else {
+          res.render('community-joy-fighting', {data});
+      }
+    });
+  });
+
+  //소개톡 메인페이지
+  app.get('/community/joy-hello', function(req, res){
+    dbConnection.query("SELECT * from Post WHERE category='소개톡' ORDER BY postId DESC LIMIT 9;", function(err, data){
+      if(err){
+        console.log(err);
+      } else {
+          res.render('community-joy-hello', {data});
+      }
+    });
+  });
+
+  //게시글 작성 페이지
   app.get('/community/post-write', function(req, res){
     res.render('community-write',{});
   });
 
+  //게시글 작성 완료
 	app.post('/community/post-write-complete', function(req, res){
 		var result = {};
 		var json = {};
