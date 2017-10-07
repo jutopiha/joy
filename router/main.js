@@ -57,18 +57,24 @@ module.exports = function(app, fs)
         console.log("recentExpense:"+data[0].money);
         if (data[0].money != null) {
           mainObject.recentExpense = data[0].money;
+        } else{
+          mainObject.recentExpense = 0;
         }
 
         dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId = ? AND date = ?;',[req.query.uid, nowDate], function(err, data){
           console.log("todayExpense:"+data[0].money);
           if (data[0].money != null) {
             mainObject.todayExpense = data[0].money;
+          } else {
+            mainObject.todayExpense = 0;
           }
 
           dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId = ? AND date > ? AND date < ?;',[req.query.uid, beforeOneWeekDate, nowDate], function(err, data){
             console.log("weeklyExpense:"+data[0].money);
             if (data[0].money != null) {
               mainObject.weeklyExpense = data[0].money;
+            } else {
+              mainObject.weeklyExpense = 0;
             }
 
 
@@ -79,12 +85,16 @@ module.exports = function(app, fs)
               console.log("monthlyIncome:"+data[0].money);
           	  if (data[0].money != null) {
            	     mainObject.monthlyIncome = data[0].money;
-          	  }
+          	  } else {
+                mainObject.monthlyIncome = 0;
+              }
               dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId =? AND date > ? AND date < ?;',[req.query.uid, fromDate, nowDate], function(err, data){
                 console.log("monthlyExpense:"+data[0].money);
             		if (data[0].money!=null) {
                       mainObject.monthlyExpense = data[0].money;
-            		}
+            		} else {
+                  mainObject.monthlyExpense = 0;
+                }
                 res.json(mainObject);
                 console.log("mainObejct:"+mainObject);
               });
