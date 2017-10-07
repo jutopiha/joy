@@ -22,22 +22,24 @@ dbConnection.connect(function(err){
 //module.exports는 server.js에서 모듈로 불러올 수 있도록 사용됨
 module.exports = function(app, fs)
 {
-    //ejs HTML 파일에서 데이터 사용하기
-    app.get('/', function(req, res){
-      var username;
-      if (req.session.passport != undefined) {
-        var currentUser = req.session.passport.user;
-        username = currentUser.name;
-      } else {
-        username = "guest";
-      }
+  //ejs HTML 파일에서 데이터 사용하기
+  app.get('/', function(req, res){
+    var username;
+    var profilePicture;
+    if (req.session.passport != undefined) {
+      username = req.session.passport.user.name;
+      profilePicture = req.session.passport.user.profilePicture;
+    } else {
+      username = "guest";
+    }
 
-      res.render('index', {
-          title: "MY HOMEPAGE",
-          length: 5,
-          username: username
-	   	});
+    res.render('index', {
+        title: "MY HOMEPAGE",
+        length: 5,
+        username: username,
+        profilePicture: profilePicture
     });
+  });
 
   /* android main */
   app.get('/main', function(req, res){
@@ -134,7 +136,7 @@ module.exports = function(app, fs)
         result.DATA = json;
       }
 	  if(uid == '1234'){
-		res.redirect('/');	
+		res.redirect('/');
 	  } else{
       	res.json(result);
 	  }

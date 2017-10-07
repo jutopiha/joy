@@ -67,6 +67,8 @@
         <h3>지금 당장 시작해보세요</h3>
 		<% if (username!="guest"){ %>
 			<h3> <%= username %> </h3>
+      <img src=<%= profilePicture %> alt="profilePicture">
+
 		<% } else{ %>
         	<form action="/auth/facebook" method="get">
           		<button type="submit">페이스북으로 로그인</button>
