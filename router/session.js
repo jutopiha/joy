@@ -71,15 +71,16 @@ module.exports = function(app, fs)
               name: profile.displayName,
               birth: profile.birth,
               gender: profile.gender,
-              profilePicture: profile.profileUrl,
-              mainBank: "default",
+              profilePicture: profile._json.picture.data.url,
+              mainBank: "none",
               onAutoParse: false,
               onAutoAlarm: false,
-              point: 0
+              point: 0,
+              mainCharacter: 0
             };
 
             // insert to DB
-            dbConnection.query('INSERT into User VALUES (?,?,?,?,?,?,?,?,?);', [newUser.userId, newUser.name, newUser.birth, newUser.gender, newUser.profilePicture, newUser.mainBank, newUser.onAutoParse, newUser.onAutoAlarm, newUser.point], function (err, results, fields) {
+            dbConnection.query('INSERT into User VALUES (?,?,?,?,?,?,?,?,?,?);', [newUser.userId, newUser.name, newUser.birth, newUser.gender, newUser.profilePicture, newUser.mainBank, newUser.onAutoParse, newUser.onAutoAlarm, newUser.point, newUser.mainCharacter], function (err, results, fields) {
               if (err) {
                 throw error;
               }
