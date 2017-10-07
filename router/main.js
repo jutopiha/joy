@@ -55,15 +55,22 @@ module.exports = function(app, fs)
       mainObject.name = data[0].name;
       dbConnection.query('SELECT money FROM Expense WHERE userId = ? ORDER BY expenseId DESC LIMIT 1;',[req.query.uid, nowDate], function(err, data){
         console.log(data);
-        mainObject.recentExpense = data[0].money;
+        if (data[0].money != null) {
+          mainObject.recentExpense = data[0].money;
+        }
 
         dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId = ? AND date = ?;',[req.query.uid, nowDate], function(err, data){
           console.log(data);
-          mainObject.todayExpense = data[0].money;
+          if (data[0].money != null) {
+            mainObject.todayExpense = data[0].money;
+          }
 
           dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId = ? AND date > ? AND date < ?;',[req.query.uid, beforeOneWeekDate, nowDate], function(err, data){
             console.log(data);
-            mainObject.weeklyExpense = data[0].money;
+            if (data[0].money != null) {
+              mainObject.weeklyExpense = data[0].money;
+            }
+
 
             dbConnection.query('SELECT sum(money) as money FROM Income WHERE userId =? AND date > ? AND date < ?;',[req.query.uid, fromDate, nowDate], function(err, data){
               if(err) {
