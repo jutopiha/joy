@@ -1,4 +1,3 @@
-
 // item.js
 // 아이템
 var mysql = require('mysql');
@@ -52,7 +51,6 @@ module.exports = function(app, fs)
       }
     };
 
-
     dbConnection.query('SELECT * FROM Item WHERE userId=?;',[currentUser], function(err, data){
       if(err) {
          console.log(err);
@@ -88,5 +86,59 @@ module.exports = function(app, fs)
     });
   });
 
+  /* item 구입 */
+  app.get('/item/buy', function(req, res){
+    console.log("***Item BUY POST Request arrived***");
 
+  	var currentUser;
+  	var isWeb = false;
+
+  	if((req.query.uid == undefined)){ //web
+      isWeb = true;
+      currentUser = req.session.passport.user.userId;
+  	} else { //android
+  		currentUser = req.query.uid;
+  	}
+
+    console.log("body** "+req.body);
+    console.log("body.point** "+req.body.point);
+    console.log("body.list** "+req.body.list);
+    var json = JSON.parse(req.body);
+
+    var item = {
+      bean: json.list[1],
+      waterdrop: json.list[2],
+      ice: json.list[3],
+      choco: json.list[4],
+      greenteaPowder: json.list[5],
+      milk: json.list[6],
+      grapefruit: json.list[7],
+      sparkling: json.list[8],
+      syrup: json.list[9],
+      bluePigment: json.list[10],
+      lemon:json.list[11]
+    };
+    console.log("item!!"+item);
+
+    dbConnection.query('UPDATE User set point=? WHERE userId=?;',[json.point, currentUser], function(err, data){
+      if(err) {
+         console.log(err);
+      }
+
+      dbConnection.query('UPDATE Item set bean=?, waterdrop=?, ice=?, choco=?, greenteaPowder=?, milk=?, grapefruit=?, sparkling=?, syrup=?, bluePigment=?, lemon=? WHERE userId=?;'
+                        , [item.bean, item.waterdrop, item.ice, item.choco, item.greenteaPowder, item.milk, item.grapefruit, item.sparkling, item.syrup, item.bluePigment, item.lemon, currentUser]
+                        , function (err, result, fields) {
+        if (err) {
+          console.log(err);
+        }else {
+          if(isWeb == true) {
+            res.redirect('/item');
+          } else{
+            res.json("success");
+          }
+        }
+      });
+    });
+
+  });
 };
