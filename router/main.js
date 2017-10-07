@@ -55,7 +55,7 @@ module.exports = function(app, fs)
       mainObject.name = data[0].name;
       dbConnection.query('SELECT money FROM Expense WHERE userId = ? ORDER BY expenseId DESC LIMIT 1;',[req.query.uid, nowDate], function(err, data){
 
-        if (data[0].money != null) {
+        if (data[0] != null) {
           console.log("recentExpense:"+data[0].money);
           mainObject.recentExpense = data[0].money;
         } else{
@@ -63,7 +63,7 @@ module.exports = function(app, fs)
         }
 
         dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId = ? AND date = ?;',[req.query.uid, nowDate], function(err, data){
-          if (data[0].money != null) {
+          if (data[0] != null) {
             console.log("todayExpense:"+data[0].money);
             mainObject.todayExpense = data[0].money;
           } else {
@@ -71,7 +71,7 @@ module.exports = function(app, fs)
           }
 
           dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId = ? AND date > ? AND date < ?;',[req.query.uid, beforeOneWeekDate, nowDate], function(err, data){
-            if (data[0].money != null) {
+            if (data[0] != null) {
               console.log("weeklyExpense:"+data[0].money);
               mainObject.weeklyExpense = data[0].money;
             } else {
@@ -84,14 +84,14 @@ module.exports = function(app, fs)
                  console.log(err);
               }
 
-          	  if (data[0].money != null) {
+          	  if (data[0] != null) {
                 console.log("monthlyIncome:"+data[0].money);
            	    mainObject.monthlyIncome = data[0].money;
           	  } else {
                 mainObject.monthlyIncome = 0;
               }
               dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId =? AND date > ? AND date < ?;',[req.query.uid, fromDate, nowDate], function(err, data){
-            		if (data[0].money!=null) {
+            		if (data[0] != null) {
                   console.log("monthlyExpense:"+data[0].money);
                   mainObject.monthlyExpense = data[0].money;
             		} else {
