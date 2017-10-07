@@ -120,12 +120,12 @@ module.exports = function(app, fs)
     };
     console.log("item!!"+item);
 
-    dbConnection.query('UPDATE User set point=? WHERE userId=?;',[json.point, currentUser], function(err, data){
+    dbConnection.query('UPDATE User set point=point-? WHERE userId=?;',[json.point, currentUser], function(err, data){
       if(err) {
          console.log(err);
       }
 
-      dbConnection.query('UPDATE Item set bean=?, waterdrop=?, ice=?, choco=?, greenteaPowder=?, milk=?, grapefruit=?, sparkling=?, syrup=?, bluePigment=?, lemon=? WHERE userId=?;'
+      dbConnection.query('UPDATE Item set bean=bean+?, waterdrop=waterdrop+?, ice=ice+?, choco=choco+?, greenteaPowder=greenteaPowder+?, milk=milk+?, grapefruit=grapefruit+?, sparkling=sparkling+?, syrup=syrup+?, bluePigment=bluePigment+?, lemon=lemon+? WHERE userId=?;'
                         , [item.bean, item.waterdrop, item.ice, item.choco, item.greenteaPowder, item.milk, item.grapefruit, item.sparkling, item.syrup, item.bluePigment, item.lemon, currentUser]
                         , function (err, result, fields) {
         if (err) {
