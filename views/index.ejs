@@ -66,8 +66,9 @@
         <h2>당신만의 맞춤형 가계부</h2>
         <h3>지금 당장 시작해보세요</h3>
 		<% if (username!="guest"){ %>
-			<h3> <%= username %> </h3>
-      <img src=<%= profilePicture %> alt="profilePicture">
+			<h3>  </h3>
+      <img src="https://graph.facebook.com/"+<%= userId %>+"/picture?type=large" alt="profilePicture">
+
 
 		<% } else{ %>
         	<form action="/auth/facebook" method="get">

@@ -27,6 +27,7 @@ module.exports = function(app, fs)
     var username;
     var profilePicture;
     if (req.session.passport != undefined) {
+      userId = req.session.passport.user.userId;
       username = req.session.passport.user.name;
       profilePicture = req.session.passport.user.profilePicture;
     } else {
