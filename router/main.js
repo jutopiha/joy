@@ -54,24 +54,25 @@ module.exports = function(app, fs)
       mainObject.point = data[0].point;
       mainObject.name = data[0].name;
       dbConnection.query('SELECT money FROM Expense WHERE userId = ? ORDER BY expenseId DESC LIMIT 1;',[req.query.uid, nowDate], function(err, data){
-        console.log("recentExpense:"+data[0].money);
+
         if (data[0].money != null) {
+          console.log("recentExpense:"+data[0].money);
           mainObject.recentExpense = data[0].money;
         } else{
           mainObject.recentExpense = 0;
         }
 
         dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId = ? AND date = ?;',[req.query.uid, nowDate], function(err, data){
-          console.log("todayExpense:"+data[0].money);
           if (data[0].money != null) {
+            console.log("todayExpense:"+data[0].money);
             mainObject.todayExpense = data[0].money;
           } else {
             mainObject.todayExpense = 0;
           }
 
           dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId = ? AND date > ? AND date < ?;',[req.query.uid, beforeOneWeekDate, nowDate], function(err, data){
-            console.log("weeklyExpense:"+data[0].money);
             if (data[0].money != null) {
+              console.log("weeklyExpense:"+data[0].money);
               mainObject.weeklyExpense = data[0].money;
             } else {
               mainObject.weeklyExpense = 0;
@@ -82,16 +83,17 @@ module.exports = function(app, fs)
               if(err) {
                  console.log(err);
               }
-              console.log("monthlyIncome:"+data[0].money);
+
           	  if (data[0].money != null) {
-           	     mainObject.monthlyIncome = data[0].money;
+                console.log("monthlyIncome:"+data[0].money);
+           	    mainObject.monthlyIncome = data[0].money;
           	  } else {
                 mainObject.monthlyIncome = 0;
               }
               dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId =? AND date > ? AND date < ?;',[req.query.uid, fromDate, nowDate], function(err, data){
-                console.log("monthlyExpense:"+data[0].money);
             		if (data[0].money!=null) {
-                      mainObject.monthlyExpense = data[0].money;
+                  console.log("monthlyExpense:"+data[0].money);
+                  mainObject.monthlyExpense = data[0].money;
             		} else {
                   mainObject.monthlyExpense = 0;
                 }
