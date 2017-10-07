@@ -87,7 +87,7 @@ module.exports = function(app, fs)
   });
 
   /* item 구입 */
-  app.get('/item/buy', function(req, res){
+  app.post('/item/buy', function(req, res){
     console.log("***Item BUY POST Request arrived***");
 
   	var currentUser;

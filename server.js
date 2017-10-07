@@ -43,3 +43,4 @@ var session = require('./router/session')(app, fs);
 var statistic = require('./router/statistic')(app, fs);
 var community = require('./router/community')(app, fs);
 var character = require('./router/character') (app, fs);
+var item = require('./router/item') (app, fs);
