@@ -120,7 +120,7 @@ module.exports = function(app, fs)
       item.bluePigment = data[0].bluePigment;
       item.lemon = data[0].lemon;
 
-      switch(req.query.type){
+      switch(parseInt(req.query.type)){
         case 1:
           if(item.bean>=3 && item.waterdrop>=5 && item.ice>=2) {
             item.bean -= 3;
@@ -183,7 +183,7 @@ module.exports = function(app, fs)
 
       if(result.state == "success") {
         // insert to DB
-        dbConnection.query('INSERT into Charact VALUES (DEFAULT,?,?);', [req.params.type, uid], function (err, result, fields) {
+        dbConnection.query('INSERT into Charact VALUES (DEFAULT,?,?);', [req.query.type, currentUser], function (err, result, fields) {
           if (err) {
             console.log(err);
           }else {
