@@ -57,6 +57,7 @@ module.exports = function(app, fs)
   		isWeb = true;
   	} else { //android
   		currentUser = req.query.uid;
+		req.query.month = req.query.date;
   	}
 
   	if( (req.query.month == undefined) ){ //기본값
