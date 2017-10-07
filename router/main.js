@@ -27,9 +27,9 @@ module.exports = function(app, fs)
     var username;
     var profilePicture;
     if (req.session.passport != undefined) {
-      userId = req.session.passport.user.userId;
+      var userId = req.session.passport.user.userId;
       username = req.session.passport.user.name;
-      profilePicture = req.session.passport.user.profilePicture;
+      profilePicture = "https://graph.facebook.com/" + userId +"/picture?type=large";
     } else {
       username = "guest";
     }
