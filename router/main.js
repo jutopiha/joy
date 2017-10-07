@@ -54,19 +54,19 @@ module.exports = function(app, fs)
       mainObject.point = data[0].point;
       mainObject.name = data[0].name;
       dbConnection.query('SELECT money FROM Expense WHERE userId = ? ORDER BY expenseId DESC LIMIT 1;',[req.query.uid, nowDate], function(err, data){
-        console.log(data);
+        console.log("recentExpense:"+data[0].money);
         if (data[0].money != null) {
           mainObject.recentExpense = data[0].money;
         }
 
         dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId = ? AND date = ?;',[req.query.uid, nowDate], function(err, data){
-          console.log(data);
+          console.log("todayExpense:"+data[0].money);
           if (data[0].money != null) {
             mainObject.todayExpense = data[0].money;
           }
 
           dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId = ? AND date > ? AND date < ?;',[req.query.uid, beforeOneWeekDate, nowDate], function(err, data){
-            console.log(data);
+            console.log("weeklyExpense:"+data[0].money);
             if (data[0].money != null) {
               mainObject.weeklyExpense = data[0].money;
             }
@@ -76,16 +76,17 @@ module.exports = function(app, fs)
               if(err) {
                  console.log(err);
               }
-              console.log(data[0].money);
+              console.log("monthlyIncome:"+data[0].money);
           	  if (data[0].money != null) {
            	     mainObject.monthlyIncome = data[0].money;
           	  }
               dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId =? AND date > ? AND date < ?;',[req.query.uid, fromDate, nowDate], function(err, data){
-                console.log(data[0].money);
+                console.log("monthlyExpense:"+data[0].money);
             		if (data[0].money!=null) {
                       mainObject.monthlyExpense = data[0].money;
             		}
                 res.json(mainObject);
+                console.log("mainObejct:"+mainObject);
               });
             });
           });
