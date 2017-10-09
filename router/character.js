@@ -64,20 +64,22 @@ module.exports = function(app, fs)
         }
       }
 
-      if(isWeb == true) {
-        character.main = req.session.passport.user.mainCharacter;
-      	res.render('character', {
-    			character: character, state: req.query.state
-    		});
-      } else{
-        dbConnection.query('SELECT mainCharacter FROM User WHERE userId=?;',[currentUser], function(err, data){
-          if(err) {
-             console.log(err);
-          }
-          character.main = data[0].mainCharacter;
+      dbConnection.query('SELECT mainCharacter FROM User WHERE userId=?;',[currentUser], function(err, data){
+        if(err) {
+           console.log(err);
+        }
+        character.main = data[0].mainCharacter;
+
+        if(isWeb == true) {
+        	res.render('character', {
+      			character: character, state: req.query.state
+      		});
+        } else{
           res.json(character);
-      	});
-      }
+        }
+
+      });
+
     });
   });
 
