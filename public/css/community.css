@@ -54,7 +54,171 @@
 
 .post_form .submit_btn {margin: 30px 0;}
 
+/*community post*/
+.post_box {
+  width: 780px;
+  margin: 10px auto 0;
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.posted_title{display: inline-block; margin-bottom: 5px;}
+.posted_title h3 {font-size: 20px;}
+
+.posted_category{display: inline-block; margin-bottom: 5px; padding-left: 5px;border-left: 1px solid #ccc; }
+.posted_category span {font-size: 14px;}
+
+.posted_user { float: right;}
+.posted_user span {font-size: 13px; color: #bbb;}
+
+.posted_pic{}
+
+.posted_content{
+  border-top: 1px solid #eee;
+  width: 760px;
+  padding: 45px 10px 60px;
+}
+
+.posted_time{font-size: 13px;padding-bottom: 10px;}
+.posted_time span{}
+.posted_time p{}
+
+
+/*community comment_box*/
+.comment_box {
+  width: 780px;
+  margin: 0 auto;
+  padding: 0 10px 12px;
+  background-color: #eee;
+  border: 1px solid #ddd;
+}
+
+/*community comment form*/
+.comment_box .comment_form {
+  padding: 15px 5px;
+  overflow: hidden;
+}
+.comment_box .comment_form textarea{float: left;resize: none;}
+.comment_box .comment_form button{
+  width: 85px; height: 62px;
+  border: 1px solid rgb(255, 2, 129);
+  background-color: rgb(255, 215, 235);
+  color: rgb(255, 2, 129);
+  font-size: 13px;
+  font-weight: bold;
+  float: right;
+
+}
+
+/*community comments*/
+.comment_box .comments { background: #fff; padding: 0 15px;  border: 2px dotted #aaa;box-sizing: border-box;}
+.comment_box .comments .cmt {border-bottom: 1px solid#ccc; padding: 10px 0;}
+.comment_box .comments .cmt span {font-size: 14px; color: #aaa;}
+.comment_box .comments .cmt .comment_content {
+  padding: 10px 0;
+}
+.comment_box .comments .cmt .comment_rewrite{
+
+}
+.comment_box .comments .cmt .cmt_btn {
+  float: right;
+  background-color: white;
+  border: none;
+  padding-right: 5px;
+ }
+.comment_box .comments .cmt .cmt_delete {
+  float: right;
+  display: inline-block; border-left: 1px solid #ccc; padding-left: 5px;
+}
+
+/*rewrite form*/
+.comment_box .comments .cmt textarea {resize: none;}
+.comment_box .comments .cmt .rewrite-btn{
+  width: 43px; height: 46px;
+  border: 1px solid rgb(255, 2, 129);
+  background-color: rgb(254, 242, 248);
+  color: rgb(255, 2, 129);
+  font-size: 13px;
+  font-weight: bold;
+  float: right;
+}
+.comment_box .comments .cmt .cancel-btn{
+  width: 43px; height: 46px;
+  text-align: center;
+  line-height: 43px;
+  border: 1px solid rgb(3, 111, 255);
+  box-sizing: border-box;
+  margin-left: 5px;
+  background-color: rgb(242, 247, 251);
+  color: rgb(3, 111, 255);
+  font-size: 13px;
+  font-weight: bold;
+  float: right;
+
+}
+
+/*post buttons*/
+.post_buttons {text-align: center; margin: 20px 0;}
+/*rewrite*/
+.post_buttons .rewrite_btn {display: inline-block;}
+.post_buttons .rewrite_btn button {
+  width: 120px; height: 62px;
+  text-align: center;
+  border: 1px solid rgb(255, 2, 129);
+  box-sizing: border-box;
+  margin-left: 5px;text-align: center; margin: 20px 0;
+  background-color: white;
+  color: rgb(255, 5, 131);
+
+  font-size: 16px;
+  font-weight: bold;
+
+}
+/*delete*/
+.post_buttons .delete_btn {display: inline-block;}
+.post_buttons .delete_btn button {
+  width: 120px; height: 62px;
+  text-align: center;
+  border: 1px solid rgb(3, 111, 255);
+  box-sizing: border-box;
+  margin-left: 25px;
+  background-color: white;
+  color:rgb(3, 111, 255);
+
+  font-size: 16px;
+  font-weight: bold;
+
+}
 /*----------animation----------*/
 .box:hover {
   cursor: pointer;
+}
+
+.comment_box .comment_form button:hover{
+  cursor: pointer;
+  background-color: white;
+}
+
+.comment_box .comments .cmt button:hover {
+  cursor: pointer;
+  color: rgb(255, 2, 129);
+}
+
+.comment_box .comments .cmt .rewrite-btn:hover{
+  color: rgb(179, 0, 89);
+}
+.comment_box .comments .cmt .cancel-btn:hover{
+  cursor: pointer;
+  color: rgb(8, 3, 255);
+}
+
+.post_buttons .rewrite_btn button:hover {
+  cursor: pointer;
+  background-color: rgb(255, 2, 129);
+  color: rgb(251, 230, 241);
+}
+.post_buttons .delete_btn button:hover {
+  cursor: pointer;
+  background-color: rgb(3, 111, 255);
+  color: rgb(230, 240, 255);
 }
