@@ -76,6 +76,15 @@
         <img id="character-main-img" alt=" " src="img/character<%=character.main%>.png"/>
       </div>
 
+      <% var where = [] %>
+      <% for (var i in data ) { %>
+        <% if (character.list[i] == 0) {%>
+          where[i] = "/character/unlock?type="+character.list[i]
+        <% } else{%>
+          where[i] = "/character/unlock?main="+character.list[i]
+        <% }%>
+      <% }%>`
+
       <div class="character-list">
         <a class="shop button" href="https://dribbble.com/">
           <img id="shop-img" alt="Shop" src="img/image_shop.png"/>
@@ -85,32 +94,32 @@
         <label for="menu-toggler"></label>
         <ul>
           <li class="menu-item">
-            <a class="fa fa-facebook" href="https://www.facebook.com/" target="_blank">
+            <a class="fa fa-facebook" href="<%=where[1]%>" target="_blank">
               <img class="character-img" alt=" " src="img/character<%=character.list[1]%>.png"/>
             </a>
           </li>
           <li class="menu-item">
-            <a class="fa fa-google" href="https://www.google.com/" target="_blank">
+            <a class="fa fa-google" href="<%=where[2]%>" target="_blank">
               <img class="character-img" alt=" " src="img/character<%=character.list[2]%>.png"/>
             </a>
           </li>
           <li class="menu-item">
-            <a class="fa fa-dribbble" href="https://dribbble.com/" target="_blank">
+            <a class="fa fa-dribbble" href="<%=where[3]%>" target="_blank">
               <img class="character-img" alt=" " src="img/character<%=character.list[3]%>.png"/>
             </a>
           </li>
           <li class="menu-item">
-            <a class="fa fa-codepen" href="https://codepen.io/" target="_blank">
+            <a class="fa fa-codepen" href="<%=where[4]%>" target="_blank">
               <img class="character-img" alt=" " src="img/character<%=character.list[4]%>.png"/>
             </a>
           </li>
           <li class="menu-item">
-            <a class="fa fa-linkedin" href="https://www.linkedin.com/" target="_blank">
+            <a class="fa fa-linkedin" href="<%=where[5]%>" target="_blank">
               <img class="character-img" alt=" " src="img/character<%=character.list[5]%>.png"/>
             </a>
           </li>
           <li class="menu-item">
-            <a class="fa fa-github" href="https://github.com/" target="_blank">
+            <a class="fa fa-github" href="<%=where[6]%>" target="_blank">
               <img class="character-img" alt=" " src="img/character<%=character.list[6]%>.png"/>
             </a>
           </li>
