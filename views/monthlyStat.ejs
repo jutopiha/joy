@@ -18,47 +18,47 @@
         </a>
 
         <div class="nav">
-             <div class="top_menu">
-               <ul>
-                 <li class="main_menu mmu1">
-                   <span>내역 입력</span>
-                   <ul class="sub_menu">
-                     <li><a href="/income">수입 내역 입력</a></li>
-                     <li><a href="/expense">지출 내역 입력</a></li>
-                   </ul>
-                 </li>
+          <div class="top_menu">
+            <ul>
+              <li class="main_menu mmu1">
+                <span>내역 입력</span>
+                <ul class="sub_menu">
+                  <li><a href="/income">수입 내역 입력</a></li>
+                  <li><a href="/expense">지출 내역 입력</a></li>
+                </ul>
+              </li>
 
-                 <li class="main_menu mmu2">
-                   <span>통계 조회</span>
-                   <ul class="sub_menu">
-                     <li></li>
-                     <li><a href="/statistic/web">월별 통계</a></li>
-                   </ul>
-                 </li>
-                 <li class="main_menu mmu3">
-                   <span>퀘스트</span>
-                   <ul class="sub_menu">
-                     <li></li>
-                     <li></li>
-                   </ul>
-                 </li>
-                 <li class="main_menu mmu4">
-                   <span>캐릭터</span>
-                   <ul class="sub_menu">
-                     <li></li>
-                     <li></li>
-                   </ul>
-                 </li>
-                 <li class="main_menu mmu5">
-                   <span>커뮤니티</span>
-                   <ul class="sub_menu">
-                     <li><a href="/income">커뮤니티로 이동▶</a></li>
-                     <li></li>
-                   </ul>
-                 </li>
-               </ul>
-           </div>
-         </div>
+              <li class="main_menu mmu2">
+                <span>통계 조회</span>
+                <ul class="sub_menu">
+                  <li><a href="/statistic/web">일별 통계</a></li>
+                  <li><a href="/statistic/monthly?uid=web">월별 통계</a></li>
+                </ul>
+              </li>
+              <li class="main_menu mmu3">
+                <span>퀘스트</span>
+                <ul class="sub_menu">
+                  <li><a href="/quest/web">퀘스트</a></li>
+                  <li></li>
+                </ul>
+              </li>
+              <li class="main_menu mmu4">
+                <span>캐릭터</span>
+                <ul class="sub_menu">
+                  <li><a href="/character">캐릭터</a></li>
+                  <li></li>
+                </ul>
+              </li>
+              <li class="main_menu mmu5">
+                <span>커뮤니티</span>
+                <ul class="sub_menu">
+                  <li><a href="/income">커뮤니티로 이동▶</a></li>
+                  <li></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
 
       </div>
     </div>
@@ -214,7 +214,7 @@
     },
     "dataProvider": [{
       "country": "수입",
-      "litres": <%=statistic.income%> 
+      "litres": <%=statistic.income%>
     }, {
       "country": "지출",
       "litres": <%=statistic.expense%>
@@ -290,5 +290,3 @@ var myChart = new Chart(ctx, {
 });
 
 </script>
-
-

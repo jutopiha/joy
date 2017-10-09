@@ -57,28 +57,29 @@
                 </ul>
               </li>
             </ul>
-        </div>
           </div>
         </div>
+
       </div>
+    </div>
 
-      <div class="full home_content">
-        <h2>당신만의 맞춤형 가계부</h2>
-        <h3>지금 당장 시작해보세요</h3>
+    <div class="full home_content">
+      <h2>당신만의 맞춤형 가계부</h2>
+      <h3>지금 당장 시작해보세요</h3>
 
-		
-		<% if (username!="guest"){ %>
-      		<img src=<%= profilePicture %> alt="profilePicture">
-		<% } else{ %>
-        	<form action="/auth/facebook" method="get">
-          		<button type="submit">페이스북으로 로그인</button>
-       		</form>
-		<% } %>
 
-        <div class="footer">
-          <img class="btm_logo" alt=" " src="img/티끌모아태산.png"/>
-        </div>
+	<% if (username!="guest"){ %>
+    		<img src=<%= profilePicture %> alt="profilePicture">
+	<% } else{ %>
+      	<form action="/auth/facebook" method="get">
+        		<button type="submit">페이스북으로 로그인</button>
+     		</form>
+	<% } %>
+
+      <div class="footer">
+        <img class="btm_logo" alt=" " src="img/티끌모아태산.png"/>
       </div>
+    </div>
 
 
 
