@@ -79,9 +79,9 @@
       <% var where = [] %>
       <% for (var i in character.list ) { %>
         <% if (character.list[i] == 0) {%>
-          where[i] = "/character/unlock?type="+character.list[i]
+          <% where[i] = "/character/unlock?type="+i %>
         <% } else{%>
-          where[i] = "/character/unlock?main="+character.list[i]
+          <% where[i] = "/character/main?type="+i %>
         <% }%>
       <% }%>
 

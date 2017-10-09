@@ -126,8 +126,8 @@ module.exports = function(app, fs)
       item.syrup = data[0].syrup;
       item.bluePigment = data[0].bluePigment;
       item.lemon = data[0].lemon;
-
-      switch(parseInt(req.query.type)){
+console.log(req.query.type+"번 캐릭터를 풀려고 해");
+ switch(parseInt(req.query.type)){
         case 1:
           if(item.bean>=3 && item.waterdrop>=5 && item.ice>=2) {
             item.bean -= 3;
