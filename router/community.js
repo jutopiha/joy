@@ -42,7 +42,7 @@ module.exports = function(app, fs)
         console.log(err);
       } else {
         postData += data;
-        dbConnection("SELECT * FROM Comment WHERE postId=?",[postid], function(err, data){
+        dbConnection.query("SELECT * FROM Comment WHERE postId=?",[postid], function(err, data){
           postData += data;
           console.log(postData);
           res.render('community-post',{postData});
