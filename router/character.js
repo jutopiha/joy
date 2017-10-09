@@ -20,6 +20,13 @@ dbConnection.connect(function(err){
 
 module.exports = function(app, fs)
 {
+  app.get('/testc', function(req, res){
+    console.log("***Character GET Request arrived***");
+
+  	res.render('character');
+  });
+
+
 	/* character 첫 화면 */
   app.get('/character', function(req, res){
     console.log("***Character GET Request arrived***");
