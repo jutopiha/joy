@@ -60,7 +60,7 @@ module.exports = function(app, fs)
   	  if (data[0] != null) {
         for (var i in data ) {
         	var n = data[i].characterType
-        	character.list[n] = 1;
+        	character.list[n] = n;
         }
       }
 
