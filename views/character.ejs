@@ -77,13 +77,13 @@
       </div>
 
       <% var where = [] %>
-      <% for (var i in data ) { %>
+      <% for (var i in where ) { %>
         <% if (character.list[i] == 0) {%>
           where[i] = "/character/unlock?type="+character.list[i]
         <% } else{%>
           where[i] = "/character/unlock?main="+character.list[i]
         <% }%>
-      <% }%>`
+      <% }%>
 
       <div class="character-list">
         <a class="shop button" href="https://dribbble.com/">
