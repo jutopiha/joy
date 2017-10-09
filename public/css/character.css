@@ -1,0 +1,322 @@
+/* title */
+.row {
+	position: relative;
+	height: 50px;
+	z-index: 1;
+	clear: both;
+	margin-top: 30px;
+	text-align: center;
+}
+
+.row--intro {
+	font-size: 16px;
+	line-height: 28px;
+	font-weight: 300;
+	color: #fff;
+	opacity: 0.4;
+}
+
+.row--intro span {
+	font-size: 11px;
+}
+
+.skew-title {
+	font-size: 25px;
+}
+
+.skew-title span {
+	position: relative;
+	display: inline-block;
+	width: 40px;
+	height: 50px;
+	margin: auto;
+	z-index: 2;
+	text-align: center;
+	color: #fff;
+	font-family: 'roboto condensed';
+	font-weight: 700;
+	font-size: 35.714285714285715px;
+	line-height: 50px;
+	transform: skewY(-15deg);
+	transform-origin: 0 100%;
+	transition: all 0.2s;
+	cursor: default;
+}
+
+.skew-title span:after,
+.skew-title span:before {
+	display: block;
+	top: 0;
+	left: 0;
+	width: 40px;
+	height: 50px;
+	position: absolute;
+	background: #185a81;
+	content: ' ';
+	z-index: -1;
+	transition: all 0.2s;
+}
+
+.skew-title span:before {
+	background: rgba(0,0,0,0.1);
+	transform: skewY(15deg);
+	transform-origin: 0 0;
+}
+
+.skew-title span:nth-child(even) {
+	background-color: #144c6e;
+	transform: skewY(15deg);
+	transform-origin: 100% 100%;
+	color: #d9d9d9;
+}
+
+.skew-title span:nth-child(even):after {
+	background-color: #144c6e;
+}
+
+.skew-title span:nth-child(even):before {
+	transform-origin: 100% 0;
+	transform: skewY(-15deg);
+}
+
+.skew-title span.flat {
+	transform: skewY(0);
+	color: #fff;
+}
+
+.skew-title span.flat:before {
+	transform: skewY(0);
+}
+
+.skew-title span.flat:nth-child(even):after {
+	background-color: #185a81;
+}
+
+.skew-title span.alt:after {
+	background-color: #b94a2c;
+}
+
+.skew-title span.alt:nth-child(even):after {
+	background-color: #9d3f25;
+}
+
+.skew-title span.alt.flat:nth-child(even):after {
+	background-color: #b94a2c;
+}
+
+/* item shop button */
+a {
+    -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    display: block;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+a.button {
+  color: rgba(255, 255, 255, 0.85);
+  box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
+}
+
+a.button:hover {
+  color: rgba(30, 22, 54, 0.6);
+  box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
+}
+
+.character-img {
+  height: 60px;
+  display: block;
+  margin: auto;
+  padding-top: 10px;
+}
+
+.shop {
+  display: block;
+  margin: auto;
+  float: right;
+  background: rgba(255, 255, 255, 0.6);
+  padding-right: 10px;
+  padding-left: 10px;
+
+}
+#shop-img {
+  height: 40px;
+  padding-top: 6px;
+}
+#shop-text {
+  height: 40px;
+  padding-top: 14px;
+  float: right;
+  padding-left: 4px;
+}
+
+.character-main {
+  float: left;
+  width: 40%;
+  background: rgba(80, 80, 80, 0.2);
+  margin: 30px;
+  text-align: center;
+
+}
+#character-main-img {
+  width:400px;
+}
+
+.character-list {
+  height:500px;
+  position:relative;
+  float: left; width: 50%
+}
+
+
+
+body {
+  overflow: auto;
+  background: linear-gradient(to right, #fc354c, #CFB095);
+  font-family: Roboto, 'helvetica neue', Helvetica, Arial, sans-serif;
+}
+
+.menu-toggler {
+  position: absolute;
+  display: block;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  width: 40px;
+  height: 40px;
+  z-index: 2;
+  opacity: 0;
+  cursor: pointer;
+}
+.menu-toggler:hover + label, .menu-toggler:hover + label:before, .menu-toggler:hover + label:after {
+  background: white;
+}
+.menu-toggler:checked + label {
+  background: transparent;
+}
+.menu-toggler:checked + label:before, .menu-toggler:checked + label:after {
+  top: 0;
+  width: 40px;
+  transform-origin: 50% 50%;
+}
+.menu-toggler:checked + label:before {
+  transform: rotate(45deg);
+}
+.menu-toggler:checked + label:after {
+  transform: rotate(-45deg);
+}
+.menu-toggler:checked ~ ul .menu-item {
+  opacity: 1;
+}
+.menu-toggler:checked ~ ul .menu-item:nth-child(1) {
+  transform: rotate(0deg) translateX(-110px);
+}
+.menu-toggler:checked ~ ul .menu-item:nth-child(2) {
+  transform: rotate(60deg) translateX(-110px);
+}
+.menu-toggler:checked ~ ul .menu-item:nth-child(3) {
+  transform: rotate(120deg) translateX(-110px);
+}
+.menu-toggler:checked ~ ul .menu-item:nth-child(4) {
+  transform: rotate(180deg) translateX(-110px);
+}
+.menu-toggler:checked ~ ul .menu-item:nth-child(5) {
+  transform: rotate(240deg) translateX(-110px);
+}
+.menu-toggler:checked ~ ul .menu-item:nth-child(6) {
+  transform: rotate(300deg) translateX(-110px);
+}
+.menu-toggler:checked ~ ul .menu-item a {
+  pointer-events: auto;
+}
+.menu-toggler + label {
+  width: 40px;
+  height: 5px;
+  display: block;
+  z-index: 1;
+  border-radius: 2.5px;
+  background: rgba(255, 255, 255, 0.7);
+  transition: transform 0.5s, top 0.5s;
+  position: absolute;
+  display: block;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+}
+.menu-toggler + label:before, .menu-toggler + label:after {
+  width: 40px;
+  height: 5px;
+  display: block;
+  z-index: 1;
+  border-radius: 2.5px;
+  background: rgba(255, 255, 255, 0.7);
+  transition: transform 0.5s, top 0.5s;
+  content: "";
+  position: absolute;
+  left: 0;
+}
+.menu-toggler + label:before {
+  top: 10px;
+}
+.menu-toggler + label:after {
+  top: -10px;
+}
+.menu-item:nth-child(1) a {
+  transform: rotate(0deg);
+}
+.menu-item:nth-child(2) a {
+  transform: rotate(-60deg);
+}
+.menu-item:nth-child(3) a {
+  transform: rotate(-120deg);
+}
+.menu-item:nth-child(4) a {
+  transform: rotate(-180deg);
+}
+.menu-item:nth-child(5) a {
+  transform: rotate(-240deg);
+}
+.menu-item:nth-child(6) a {
+  transform: rotate(-300deg);
+}
+.menu-item {
+  position: absolute;
+  display: block;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  width: 80px;
+  height: 80px;
+  display: block;
+  opacity: 0;
+  transition: 0.5s;
+}
+.menu-item a {
+  display: block;
+  width: inherit;
+  height: inherit;
+  line-height: 80px;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  text-align: center;
+  text-decoration: none;
+  font-size: 40px;
+  pointer-events: none;
+  transition: 0.2s;
+}
+.menu-item a:hover {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+  color: white;
+  background: rgba(255, 255, 255, 0.3);
+  font-size: 44.44444px;
+}

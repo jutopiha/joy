@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <title>JOY</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script> <!--레이더 차트 가져오는곳-->
     <link rel = "stylesheet" type="text/css" href="../css/index.css"/>
     <link rel = "stylesheet" type="text/css" href="../css/wrapper.css"/>
-
+    <link rel = "stylesheet" type="text/css" href="../css/character.css"/>
+        <script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
   </head>
   <body>
 
@@ -62,13 +62,65 @@
       </div>
     </div>
 
+    <div class="container">
+  <h1 class="row skew-title">
+    <span>C</span><span>H</span><span>A</span><span>R</span><span>A</span><span>C</span><span>T</span><span>E</span><span class="last">R</span>
+    &nbsp;
+    <span class="alt">B</span><span class="alt">O</span><span class="alt">O</span><span class="alt last">K</span>
+  </h1>
+  <p class="row row--intro">Change your main character and Unlock new one!</p>
+</div>
+
     <div class="wrapper content">
-      <h2>캐릭캐릭터</h2>
-	<p>mainCharacter<%=character.main%></p>
-	<p>listlist <%=character.list%></p>
-	<p>state!!! <%=state%></p>
+      <div class="character-main">
+                <img id="character-main-img" alt=" " src="img/character1.png"/>
 
 
+      </div>
+
+      <div class="character-list">
+        <a class="shop button" href="https://dribbble.com/">
+          <img id="shop-img" alt="Shop" src="img/image_shop.png"/>
+          <h3 id="shop-text">Item Shop</h3>
+        </a>
+        <input checked="checked" class="menu-toggler" id="menu-toggler" type="checkbox"></input>
+        <label for="menu-toggler"></label>
+        <ul>
+          <li class="menu-item">
+            <a class="fa fa-facebook" href="https://www.facebook.com/" target="_blank">
+              <img class="character-img" alt=" " src="img/character1.png"/>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a class="fa fa-google" href="https://www.google.com/" target="_blank">
+              <img class="character-img" alt=" " src="img/character2.png"/>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a class="fa fa-dribbble" href="https://dribbble.com/" target="_blank">
+              <img class="character-img" alt=" " src="img/question_mark.png"/>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a class="fa fa-codepen" href="https://codepen.io/" target="_blank">
+              <img class="character-img" alt=" " src="img/character4.png"/>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a class="fa fa-linkedin" href="https://www.linkedin.com/" target="_blank">
+              <img class="character-img" alt=" " src="img/character5.png"/>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a class="fa fa-github" href="https://github.com/" target="_blank">
+              <img class="character-img" alt=" " src="img/character6.png"/>
+            </a>
+          </li>
+        </ul>
+
+      </div>
+
+    </div>
 
     <!--footer-->
     <div class="footer">
@@ -76,3 +128,23 @@
     </div>
   </body>
 </html>
+
+<script>
+$('.skew-title').children('span').hover((function() {
+  var $el, n;
+  $el = $(this);
+  n = $el.index() + 1;
+  $el.addClass('flat');
+  if (n % 2 === 0) {
+    return $el.prev().addClass('flat');
+  } else {
+    if (!$el.hasClass('last')) {
+      return $el.next().addClass('flat');
+    }
+  }
+}), function() {
+  return $('.flat').removeClass('flat');
+});
+
+
+</script>
