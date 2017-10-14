@@ -130,7 +130,7 @@ window.addEventListener("DOMContentLoaded", function(){
   divTag.appendChild(deleteBtnTag);
 
   //게시글 하단에 버튼 배치
-  doc.getElementsByClassName('container').appendChild(divTag);
+  doc.getElementsByClassName('container')[0].appendChild(divTag);
 
   //해당 post에 달린 덧글들 생성
   data.forEach(function(data, i){
@@ -181,7 +181,7 @@ window.addEventListener("DOMContentLoaded", function(){
 
     cmtDiv.appendChild(contentDiv);
 
-    doc.getElementsByClassName("comments").appendChild(cmtDiv);
+    doc.getElementsByClassName("comments")[0].appendChild(cmtDiv);
 
   });
 
