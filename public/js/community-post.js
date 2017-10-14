@@ -66,7 +66,7 @@ window.addEventListener("DOMContentLoaded", function(){
 //덧글 전체 틀 생성
   //덧글 작성란 form 생성
   var cmt_frmTag = doc.createElement("form");
-  cmt_frmTag.setAttribute('action','/community/community-write?postid='+postid+'&uid='+userid);
+  cmt_frmTag.setAttribute('action','/community/comment-write?postid='+postid+'&uid='+userid);
   cmt_frmTag.setAttribute('method', 'POST');
   cmt_frmTag.className = "comment_form";
 
@@ -74,6 +74,7 @@ window.addEventListener("DOMContentLoaded", function(){
   var cmt_textarea = doc.createElement("textarea");
   cmt_textarea.setAttribute('cols', '93');
   cmt_textarea.setAttribute('rows', '4');
+  cmt_textarea.setAttribute('name', 'content');
   cmt_textarea.setAttribute('placeholder', '덧글을 작성해주세요');
 
   //덧글 작성 완료 버튼 생성
@@ -132,10 +133,9 @@ window.addEventListener("DOMContentLoaded", function(){
   //게시글 하단에 버튼 배치
   doc.getElementsByClassName('container')[0].appendChild(divTag);
 
+	console.log(data[1]);
   //해당 post에 달린 덧글들 생성
-  data.forEach(function(data, i){
-    if (i == 0)
-      return true;
+  data[1].forEach(function(data, i){
 
     var html;
     var commentid = data.commentId;
@@ -155,8 +155,8 @@ window.addEventListener("DOMContentLoaded", function(){
     cmtDiv.appendChild(spanDiv);
 
     var formTag = doc.createElement("form");
-    formTag.setAttribute('action', 'community/comment-delete?postid='+postid+'&commentid='+commentid);
-    formTag.setAttribute('method', 'DELETE');
+    formTag.setAttribute('action', '/community/comment-delete?postid='+postid+'&commentid='+commentid);
+    formTag.setAttribute('method', 'POST');
 	formTag.className = 'cmt_delete';
 
     var buttonTag = doc.createElement("button");
