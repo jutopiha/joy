@@ -1,5 +1,5 @@
 var doc = document;
-window.addEventListener("DOMContetnLoaded", function(){
+window.addEventListener("DOMContentLoaded", function(){
   //post에 대한 정보 가져오기
   var postid = data[0].postId;
   var userid = data[0].userId;
