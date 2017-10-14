@@ -1,5 +1,6 @@
 var doc = document;
 window.addEventListener("DOMContetnLoaded", function(){
+  //post에 대한 정보 가져오기
   var postid = data[0].postId;
   var userid = data[0].userId;
   var title = data[0].title;
@@ -8,49 +9,94 @@ window.addEventListener("DOMContetnLoaded", function(){
   var image = data[0].image;
   var category = data[0].category;
 
+  //innerHTML 에 쓰일 변수
   var html;
 
+//post 생성
+  //post 제목
   var titleDiv = doc.createElement("div");
   titleDiv.className = 'posted_title';
   var h3Div = doc.createElement("h3");
   h3Div.innerHTML = title;
   titleDiv.appendChild(h3Div);
 
+  //post 카테고리
   var categoryDiv = doc.createElement("div");
   categoryDiv.className = 'posted_category';
   var spanDiv = doc.createElement("span");
   spanDiv.innerHTML = category;
   categoryDiv.appendChild(spanDiv);
 
+  //post 유저 아이디
   var userDiv = doc.createElement("div");
   userDiv.className = 'posted_user';
   spanDiv = doc.createElement("span");
   spanDiv.innerHTML = '작성자: '+userid;
   userDiv.appendChild(spanDiv);
 
+  //post 이미지
   var picDiv = doc.createElement("div");
-  userDiv.className = 'posted_pic';
+  picDiv.className = 'posted_pic';
 
+  //post 내용
   var contentDiv = doc.createElement("div");
-  userDiv.className = 'posted_content';
+  contentDiv.className = 'posted_content';
   contentDiv.innerHTML=content;
 
+  //post 작성일
   var timeDiv = doc.createElement("div");
-  userDiv.className = 'posted_time';
+  timeDiv.className = 'posted_time';
   spanDiv = doc.createElement("span");
+  html = '작성일';
+  spanDiv.innerHTML = html;
   timeDiv.appendChild(spanDiv);
   var pDiv = doc.createElement("p");
   pDiv.innerHTML = time;
   timeDiv.appendChild(pDiv);
 
-  doc.getElementsByClassName('post_box').appendChild(titleDiv);
-  doc.getElementsByClassName('post_box').appendChild(categoryDiv);
-  doc.getElementsByClassName('post_box').appendChild(userDiv);
-  doc.getElementsByClassName('post_box').appendChild(picDiv);
-  doc.getElementsByClassName('post_box').appendChild(contentDiv);
-  doc.getElementsByClassName('post_box').appendChild(timeDiv);
+  //전체 post 태그에 append
+  doc.getElementsByClassName('post_box')[0].appendChild(titleDiv);
+  doc.getElementsByClassName('post_box')[0].appendChild(categoryDiv);
+  doc.getElementsByClassName('post_box')[0].appendChild(userDiv);
+  doc.getElementsByClassName('post_box')[0].appendChild(picDiv);
+  doc.getElementsByClassName('post_box')[0].appendChild(contentDiv);
+  doc.getElementsByClassName('post_box')[0].appendChild(timeDiv);
 
 
+//덧글 전체 틀 생성
+  //덧글 작성란 form 생성
+  var cmt_frmTag = doc.createElement("form");
+  cmt_frmTag.setAttribute('action','/community/community-write?postid='+postid+'&uid='+userid);
+  cmt_frmTag.setAttribute('method', 'POST');
+  cmt_frmTag.className = "comment_form";
+
+  //덧글 작성 textarea 생성
+  var cmt_textarea = doc.createElement("textarea");
+  cmt_textarea.setAttribute('cols', '93');
+  cmt_textarea.setAttribute('rows', '4');
+  cmt_textarea.setAttribute('placeholder', '덧글을 작성해주세요');
+
+  //덧글 작성 완료 버튼 생성
+  var cmt_button = doc.createElement("button");
+  cmt_button.setAttribute('type', 'submit');
+  html = 'SUBMIT';
+  cmt_button.innerHTML = html;
+
+  //덧글 작성 form에 textare, button 태그 append
+  cmt_frmTag.appendChild(cmt_textarea);
+  cmt_frmTag.appendChild(cmt_button);
+
+  //해당 post에 대한 덧글들이 들어갈 comments div 태그 생성
+  var commentsDiv = doc.createElement("div");
+  commentsDiv.className = 'comments';
+
+  //전체 덧글 태그에 append
+  doc.getElementsByClassName('comment_box')[0].appendChild(cmt_frmTag);
+  doc.getElementsByClassName('comment_box')[0].appendChild(commentsDiv);
+
+
+//해당 post의 수정하기 + 삭제하기 버튼 생성
+  //수정하기 버튼을 감싸는 태그 생성
   divTag = doc.createElement("div");
   divTag.className = 'post_buttons';
 
@@ -66,6 +112,7 @@ window.addEventListener("DOMContetnLoaded", function(){
 
   rewriteBtnTag.appendChild(rewrite_btn);
 
+  //삭제하기 버튼을 감싸는 태그 생성
   var deleteBtnTag = doc.createElement("form");
   deleteBtnTag.className = 'delete_btn';
   deleteBtnTag.setAttribute('action', '/community/post-delete?postid=' + postid);
@@ -78,11 +125,14 @@ window.addEventListener("DOMContetnLoaded", function(){
 
   deleteBtnTag.appendChild(delete_btn);
 
+  //삭제하기 버튼과 수정하기 버튼 묶기
   divTag.appendChild(rewriteBtnTag);
   divTag.appendChild(deleteBtnTag);
 
+  //게시글 하단에 버튼 배치
   doc.getElementsByClassName('container').appendChild(divTag);
 
+  //해당 post에 달린 덧글들 생성
   data.forEach(function(data, i){
     if (i == 0)
       return true;
