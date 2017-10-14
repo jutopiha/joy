@@ -144,7 +144,7 @@ window.addEventListener("DOMContentLoaded", function(){
     var content = data.content;
 
     var cmtDiv = doc.createElement("div");
-    cmtDiv.className = 'cmt '+ userid ;
+    cmtDiv.className = 'cmt '+ commentid ;
 
     var spanDiv = doc.createElement("span");
     spanDiv.innerHTML = userid;
@@ -155,8 +155,9 @@ window.addEventListener("DOMContentLoaded", function(){
     cmtDiv.appendChild(spanDiv);
 
     var formTag = doc.createElement("form");
-    formTag.setAttribute('action', 'community/comment-delete?postid='+data[0].postId+'&commentid='+cmt_id);
+    formTag.setAttribute('action', 'community/comment-delete?postid='+postid+'&commentid='+commentid);
     formTag.setAttribute('method', 'DELETE');
+	formTag.className = 'cmt_delete';
 
     var buttonTag = doc.createElement("button");
     buttonTag.className = 'cmt_btn';
@@ -197,7 +198,8 @@ window.addEventListener("DOMContentLoaded", function(){
 function rewriteClick(cmt_id) {
   var erase1, erase2, erase3, content;
   var parent = doc.getElementsByClassName(cmt_id)["0"];
-  if(parent.lastChild.nodeName == '#text'){
+  console.log(cmt_id);
+	if(parent.lastChild.nodeName == '#text'){
   erase1 = parent.lastChild.previousSibling;
   erase2 = erase1.previousSibling.previousSibling;
   erase3 = erase2.previousSibling.previousSibling;
