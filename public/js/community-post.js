@@ -1,5 +1,5 @@
 var doc = document;
-window.addEventListener("DOMContetnLoaded", function(){
+window.addEventListener("DOMContentLoaded", function(){
   var postid = data[0].postId;
   var userid = data[0].userId;
   var title = data[0].title;
@@ -7,7 +7,8 @@ window.addEventListener("DOMContetnLoaded", function(){
   var content = data[0].content;
   var image = data[0].image;
   var category = data[0].category;
-
+console.log("hihi");
+console.log(data[0]);
   var html;
 
   var titleDiv = doc.createElement("div");
@@ -29,26 +30,53 @@ window.addEventListener("DOMContetnLoaded", function(){
   userDiv.appendChild(spanDiv);
 
   var picDiv = doc.createElement("div");
-  userDiv.className = 'posted_pic';
+  picDiv.className = 'posted_pic';
 
   var contentDiv = doc.createElement("div");
-  userDiv.className = 'posted_content';
+  contentDiv.className = 'posted_content';
   contentDiv.innerHTML=content;
 
   var timeDiv = doc.createElement("div");
-  userDiv.className = 'posted_time';
+  timeDiv.className = 'posted_time';
   spanDiv = doc.createElement("span");
+  html = '작성일';
+  spanDiv.innerHTML = html;
   timeDiv.appendChild(spanDiv);
   var pDiv = doc.createElement("p");
   pDiv.innerHTML = time;
   timeDiv.appendChild(pDiv);
 
-  doc.getElementsByClassName('post_box').appendChild(titleDiv);
-  doc.getElementsByClassName('post_box').appendChild(categoryDiv);
-  doc.getElementsByClassName('post_box').appendChild(userDiv);
-  doc.getElementsByClassName('post_box').appendChild(picDiv);
-  doc.getElementsByClassName('post_box').appendChild(contentDiv);
-  doc.getElementsByClassName('post_box').appendChild(timeDiv);
+  doc.getElementsByClassName('post_box')[0].appendChild(titleDiv);
+  doc.getElementsByClassName('post_box')[0].appendChild(categoryDiv);
+  doc.getElementsByClassName('post_box')[0].appendChild(userDiv);
+  doc.getElementsByClassName('post_box')[0].appendChild(picDiv);
+  doc.getElementsByClassName('post_box')[0].appendChild(contentDiv);
+  doc.getElementsByClassName('post_box')[0].appendChild(timeDiv);
+
+	var cmt_frmTag = doc.createElement("form");
+	cmt_frmTag.setAttribute('action', '/community/comment-write?postid='+postid+'&uid='+userid);
+	cmt_frmTag.setAttribute('method', 'POST');
+	cmt_frmTag.className="comment_form";
+
+	var cmt_textarea = doc.createElement("textarea");
+	cmt_textarea.setAttribute('cols', '93');
+	cmt_textarea.setAttribute('rows', '4');
+	cmt_textarea.setAttribute('placeholder', '덧글을 작성해주세요');
+
+	var cmt_button = doc.createElement("button");
+	cmt_button.setAttribute('type', 'submit');
+	html = 'SUBMIT';
+	cmt_button.innerHTML = html;
+
+	cmt_frmTag.appendChild(cmt_textarea);
+	cmt_frmTag.appendChild(cmt_button);
+	
+	var commentsDiv = doc.createElement("div");
+	commentsDiv.className = 'comments';
+
+	doc.getElementsByClassName('comment_box')[0].appendChild(cmt_frmTag);
+	doc.getElementsByClassName('comment_box')[0].appendChild(commentsDiv);
+
 
 
   divTag = doc.createElement("div");
@@ -73,7 +101,7 @@ window.addEventListener("DOMContetnLoaded", function(){
 
   var delete_btn = doc.createElement("button");
   delete_btn.setAttribute('type', 'submit');
-  html = '수정하기';
+  html = '삭제하기';
   delete_btn.innerHTML = html;
 
   deleteBtnTag.appendChild(delete_btn);
@@ -81,7 +109,7 @@ window.addEventListener("DOMContetnLoaded", function(){
   divTag.appendChild(rewriteBtnTag);
   divTag.appendChild(deleteBtnTag);
 
-  doc.getElementsByClassName('container').appendChild(divTag);
+  doc.getElementsByClassName('container')[0].appendChild(divTag);
 
   data.forEach(function(data, i){
     if (i == 0)
@@ -94,7 +122,7 @@ window.addEventListener("DOMContetnLoaded", function(){
     var content = data.content;
 
     var cmtDiv = doc.createElement("div");
-    cmtDiv.className = 'cmt '+ userid ;
+    cmtDiv.className = 'cmt '+ commentid ;
 
     var spanDiv = doc.createElement("span");
     spanDiv.innerHTML = userid;
@@ -105,7 +133,7 @@ window.addEventListener("DOMContetnLoaded", function(){
     cmtDiv.appendChild(spanDiv);
 
     var formTag = doc.createElement("form");
-    formTag.setAttribute('action', 'community/comment-delete?postid='+data[0].postId+'&commentid='+cmt_id);
+    formTag.setAttribute('action', 'community/comment-delete?postid='+data.postId+'&commentid='+commentid);
     formTag.setAttribute('method', 'DELETE');
 
     var buttonTag = doc.createElement("button");
@@ -130,8 +158,8 @@ window.addEventListener("DOMContetnLoaded", function(){
 
     cmtDiv.appendChild(contentDiv);
 
-    doc.getElementsByClassName("comments").appendChild(cmtDiv);
-
+    doc.getElementsByClassName("comments")[0].appendChild(cmtDiv);
+	
   });
 
 });
@@ -146,6 +174,7 @@ window.addEventListener("DOMContetnLoaded", function(){
 function rewriteClick(cmt_id) {
   var erase1, erase2, erase3, content;
   var parent = doc.getElementsByClassName(cmt_id)["0"];
+console.log(parent);
   if(parent.lastChild.nodeName == '#text'){
   erase1 = parent.lastChild.previousSibling;
   erase2 = erase1.previousSibling.previousSibling;

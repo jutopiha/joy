@@ -26,7 +26,7 @@ module.exports = function(app, fs)
       if(err){
         console.log(err);
       } else {
-//		  console.log(data);
+		  console.log(data);
           res.render('community', {data});
       }
     });
@@ -41,16 +41,45 @@ module.exports = function(app, fs)
       if(err){
         console.log(err);
       } else {
-        postData += data;
-        dbConnection.query("SELECT * FROM Comment WHERE postId=?",[postid], function(err, data){
-          postData += data;
-          console.log(postData);
-          res.render('community-post',{postData});
+        data = JSON.stringify(data);
+		data = data.substring(1, data.length-1);
+		data = JSON.parse(data);	
+		//postData += data;
+		postData.push(data);
+		
+		console.log(data);
+        console.log(postData);
+		dbConnection.query("SELECT * FROM Comment WHERE postId=?",[postid], function(err, data){
+		  	if(err){}
+			else {
+			data = JSON.stringify(data);
+			if(data !== '[]'){
+			data = data.substring(1, data.length-1);
+			data = JSON.parse(data);
+			console.log(data);
+			//postData += data;
+			postData.push(data);
+         	}
+		  	console.log(postData);
+		  	res.render('community-post',{postData});
+			}
         });
       }
     });
   });
+	
+	app.post('/community/comment-write', function(req, res){
+		console.log('entry');	
+	var postid = req.query.postid;
+		var userid = req.query.uid;
 
+		dbConnection.query("INSERT INTO Comment VALUES(DEFAULT, ?,?,DEFAULT,?);",[userid, postid, req.body.content], function(err, data){
+		if(err){
+		} else {
+			res.render('community-post?postid='+postid, {});
+		}
+	});
+	});
   //자유게시판 메인페이지
   app.get('/community/joy-free', function(req, res){
     dbConnection.query("SELECT * from Post WHERE category='자유게시판' ORDER BY postId DESC LIMIT 9;", function(err, data){
