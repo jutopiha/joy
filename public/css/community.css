@@ -17,6 +17,10 @@
 
 }
 
+.box a {
+  color: #444;
+}
+
 .post_pic {
   width: 246px;
   height: 200px;
