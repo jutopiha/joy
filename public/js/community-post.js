@@ -104,7 +104,7 @@ window.addEventListener("DOMContentLoaded", function(){
   var rewriteBtnTag = doc.createElement("form");
   rewriteBtnTag.className = 'rewrite_btn';
   rewriteBtnTag.setAttribute('action', '/community/post-rewrite?postid=' + postid);
-  rewriteBtnTag.setAttribute('method', 'GET');
+  rewriteBtnTag.setAttribute('method', 'POST');
 
   var rewrite_btn = doc.createElement("button");
   rewrite_btn.setAttribute('type', 'submit');
@@ -117,11 +117,11 @@ window.addEventListener("DOMContentLoaded", function(){
   var deleteBtnTag = doc.createElement("form");
   deleteBtnTag.className = 'delete_btn';
   deleteBtnTag.setAttribute('action', '/community/post-delete?postid=' + postid);
-  deleteBtnTag.setAttribute('method', 'DELETE');
+  deleteBtnTag.setAttribute('method', 'POST');
 
   var delete_btn = doc.createElement("button");
   delete_btn.setAttribute('type', 'submit');
-  html = '수정하기';
+  html = '삭제하기';
   delete_btn.innerHTML = html;
 
   deleteBtnTag.appendChild(delete_btn);
