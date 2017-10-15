@@ -221,11 +221,12 @@ function rewriteClick(cmt_id) {
   //수정하기 form 태그 붙이기
   var formTag = doc.createElement("form");
   formTag.setAttribute('action', '/community/comment-rewrite?postid='+data[0].postId+'&commentid='+cmt_id);
-  formTag.setAttribute('method', '/PUT');
+  formTag.setAttribute('method', '/POST');
   //form textarea
   var textareaTag = doc.createElement("textarea");
   textareaTag.setAttribute('cols', 90);
   textareaTag.setAttribute('rows', 3);
+  textareaTag.setAttribute('name', 'content');
   textareaTag.innerHTML = html;
   //form rewrite button
   var rewrite_buttonTag = doc.createElement("button");

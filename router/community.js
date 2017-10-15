@@ -43,10 +43,10 @@ module.exports = function(app, fs)
       } else {
         data = JSON.stringify(data);
 		data = data.substring(1, data.length-1);
-		data = JSON.parse(data);	
+		data = JSON.parse(data);
 		//postData += data;
 		postData.push(data);
-		
+
 		console.log(data);
         console.log(postData);
 		dbConnection.query("SELECT * FROM Comment WHERE postId=?",[postid], function(err, data){
@@ -56,7 +56,7 @@ module.exports = function(app, fs)
 			else {
 			data = JSON.stringify(data);
 			if(data !== '[]'){
-//			data = data.substring(1, data.length-1);	
+//			data = data.substring(1, data.length-1);
 			console.log(data)
 			data = JSON.parse(data);
 			console.log(data);
@@ -70,7 +70,8 @@ module.exports = function(app, fs)
       }
     });
   });
-	
+
+  //게시글 내 덧글 작성
 	app.post('/community/comment-write', function(req, res){
 		var postid = req.query.postid;
 		var userid = req.query.uid;
@@ -83,7 +84,8 @@ module.exports = function(app, fs)
 		}
 	});
 	});
-	
+
+  //게시글 내 덧글 삭제
 	app.post('/community/comment-delete', function(req, res){
 		console.log(req.query);
 		var postid = req.query.postid;
@@ -95,9 +97,24 @@ module.exports = function(app, fs)
 			} else {
 				res.redirect('/community/post?postid='+postid);
 			}
-		});	
+		});
 
 	});
+
+  //게시글 내 덧글 수정
+  app.post('/community/comment-rewrite', function(req, res){
+    var postid = req.query.postid;
+    var commentid = req.query.commentid;
+
+    dbConnection.query("UPDATE Comment SET content=?  WHERE commentid=?",[req.body.content, commentid], function(err, data){
+      if(err){
+        console.log(err);
+      } else {
+        res.redirect('/community/post?postid='+postid);
+      }
+    });
+
+  });
 
   //자유게시판 메인페이지
   app.get('/community/joy-free', function(req, res){
