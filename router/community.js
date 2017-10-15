@@ -79,14 +79,24 @@ module.exports = function(app, fs)
       if(err){
         console.log(err);
       } else {
-        res.render('community-rewrite', {data});
+      	console.log(data);
+   	    res.render('community-rewrite', {data});
       }
     });
   });
 
   //게시글 수정 완료
   app.post('/community/post-rewrite-complete', function(req, res){
-
+   var postid = req.query.postid;
+   console.log(req.body.title);
+   console.log(req.body.content);
+   dbConnection.query("UPDATE Post SET title=?,category=?,content=? WHERE postId=?", [req.body.title, req.body.category, req.body.smarteditor, postid], function(err, data){
+		if(err){
+			console.log(err);
+		} else {
+			res.redirect('/community/post?postid='+postid);
+		}
+	});
   });
 
   //게시글 삭제
