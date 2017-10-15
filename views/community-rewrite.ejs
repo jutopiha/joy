@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>JOY</title>
+    <link rel="stylesheet" type="text/css" href="../css/index.css" />
+    <link rel="stylesheet" type="text/css" href="../css/wrapper.css" />
+    <link rel="stylesheet" type="text/css" href="../css/community.css" />
+    <script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
+    <script>
+      const data = <%-JSON.stringify(data)%>;
+    //console.log(data);
+    //console.log(data[0]);
+    </script>
+    <script src="../js/community-post-rewrite.js"></script>
+    <script type="text/javascript" src="../smarteditor/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+        <script>
+        $(function(){
+          //전역변수선언
+          var editor_object = [];
+            nhn.husky.EZCreator.createInIFrame({
+                oAppRef: editor_object,
+                elPlaceHolder: "smarteditor",
+                sSkinURI: "../smarteditor/SmartEditor2Skin.html",
+                htParams : {
+                    // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
+                    bUseToolbar : true,
+                    // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+                    bUseVerticalResizer : true,
+                    // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
+                    bUseModeChanger : true,
+                },
+                fCreator: "createSEditor2"
+            });
+
+            //전송버튼 클릭이벤트
+            $("#savebutton").click(function(){
+                //id가 smarteditor인 textarea에 에디터에서 대입
+                editor_object.getById["smarteditor"].exec("UPDATE_CONTENTS_FIELD", []);
+
+                // 이부분에 에디터 validation 검증
+
+                //폼 submit
+                $("#frm").submit();
+            })
+        })
+        </script>
+  </head>
+  <body>
+      <div class="header">
+        <div class="wrapper">
+        <img class="logo" alt=" " src="../img/티끌모아태산.png"/>
+
+    		<div class="com_nav">
+          <ul class="com_main_menu">
+            <li>
+              <span><a href="">금융지식팁</a></span>
+            </li>
+            <li>
+              <span><a href="">자유게시판</a></span>
+            </li>
+            <li>
+              <span><a href="">다짐톡</a></span>
+            </li>
+            <li>
+              <span><a href="">소개톡</a></span>
+            </li>
+            <li>
+              <span><a href="">홈페이지로 이동→</a></span>
+            </li>
+          </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="container wrapper">
+        <h2>POST 쓰기</h2>
+        <form id="frm" class="post_form" action="/community/post-rewrite-complete?postid="+<%=data.postid%> method="POST">
+          <div>
+            <span>카테고리</span>
+            <select name="category">
+              <option disabled>분류 선택</option>
+              <option value="금융지식팁">금융지식팁</option>
+              <option value="자유게시판">자유게시판</option>
+            </select>
+          </div>
+          <div>
+            <span>제목</span>
+            <input type="text" name="title" placeholder="제목을 입력하세요" maxlength="50" required/><br />
+          </div>
+          <div>
+            <textarea name="smarteditor" id="smarteditor" cols="100" rows="10" placeholder="내용을 작성하세요"  required></textarea><br />
+          </div>
+          <div>
+            <span>이미지 첨부</span>
+            <input type="file" name="image" accept="image/*"/>
+          </div>
+          <div class="submit_btn">
+            <button id="savebutton" type="submit">SUBMIT</button>
+          </div>
+        </form>
+
+      </div>
+
+      <div class="footer">
+        <img class="btm_logo" alt="footer image" src="../img/티끌모아태산.png"/>
+      </div>
+
+
+  </body>
+</html>

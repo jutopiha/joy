@@ -57,7 +57,7 @@ module.exports = function(app, fs)
 			data = JSON.stringify(data);
 			if(data !== '[]'){
 //			data = data.substring(1, data.length-1);
-			console.log(data)
+			console.log(data);
 			data = JSON.parse(data);
 			console.log(data);
 			//postData += data;
@@ -66,6 +66,45 @@ module.exports = function(app, fs)
 		  	console.log(postData);
 		  	res.render('community-post',{postData});
 			}
+        });
+      }
+    });
+  });
+
+  //게시글 수정
+  app.post('/community/post-rewrite', function(req, res){
+    var postid = req.query.postid;
+
+    dbConnection.query("SELECT * FROM Post WHERE postId=?", [postid], function(err, data){
+      if(err){
+        console.log(err);
+      } else {
+        res.render('community-rewrite', {data});
+      }
+    });
+  });
+
+  //게시글 수정 완료
+  app.post('/community/post-rewrite-complete', function(req, res){
+
+  });
+
+  //게시글 삭제
+  app.post('/community/post-delete', function(req, res){
+    var postid = req.query.postid;
+
+    //게시글 내 덧글 정보 삭제
+    dbConnection.query("DELETE FROM Comment WHERE postId=?",[postid],function(err, data){
+      if(err){
+        console.log(err);
+      } else {
+        //게시글 삭제
+        dbConnection.query("DELETE FROM Post WHERE postId=?",[postid], function(err, data){
+          if(err){
+            console.log(err);
+          } else {
+            res.redirect('/community');
+          }
         });
       }
     });
