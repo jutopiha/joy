@@ -2,6 +2,7 @@
 // 퀘스트
 var mysql = require('mysql');
 var dotenv = require('dotenv').config();
+var moment = require('moment');
 
 /*connect MySQL*/
 var dbConnection = mysql.createConnection({
@@ -21,7 +22,7 @@ dbConnection.connect(function(err){
 module.exports = function(app, fs)
 {
   /* quest 첫화면 */
-  app.post('/quest', function(req, res){
+  app.get('/quest', function(req, res){
     console.log("***Quest POST Request arrived***");
 
     var currentUser;
@@ -34,15 +35,18 @@ module.exports = function(app, fs)
       currentUser = req.query.uid;
     }
 
-    dbConnection.query('SELECT * FROM Quest WHERE userId = ?;',[cureentUser], function(err, data){
+    dbConnection.query('SELECT * FROM Quest WHERE userId = ?;',[currentUser], function(err, data){
       if (err) {
         console.log(err);
       }else {
-        console.log("퀘스트 조회"+data);
+		if(data[0].type == "weekly") {
         var endDate = parseInt(moment(data[0].startDate, 'YYYYMMDD').add(+7, 'days').format('YYYYMMDD'));
+} else if(data[0].type == "monthly") {
+var endDate = parseInt(moment(data[0].startDate, 'YYYYMMDD').add(1, 'M').format('YYYYMMDD'));
+}
+console.log(endDate);
 
         dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId = ? AND date >= ? AND date <= ?;',[req.query.uid, startDate, endDate], function(err, data){
-          console.log("일주일 조회"+data);
           if(isWeb == true) {
             res.redirect('/quest');
           } else{
@@ -70,14 +74,9 @@ module.exports = function(app, fs)
       json = JSON.parse(req.body);
   	}
 
-		//날짜 시간
-		json.startDate = moment(req.body.date, 'YYYYMMDD').format('YYYYMMDD');
-		json.startDate = parseInt(req.body.date);
 
-    console.log("body** "+req.body);
-    console.log("body.type** "+req.body.type);
-    console.log("body.money** "+req.body.money);
-
+json.startDate = parseInt(moment().format('YYYYMMDD'));
+console.log(json);
     dbConnection.query('INSERT into Quest VALUES (DEFAULT,?,?,?,?);', [json.type, currentUser, json.startDate, json.money], function (err, result, fields) {
       if (err) {
         console.log(err);
