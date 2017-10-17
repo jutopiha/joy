@@ -71,7 +71,7 @@ module.exports = function(app, fs)
             mainObject.todayExpense = 0;
           }
 
-          dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId = ? AND date > ? AND date < ?;',[req.query.uid, beforeOneWeekDate, nowDate], function(err, data){
+          dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId = ? AND date >= ? AND date <= ?;',[req.query.uid, beforeOneWeekDate, nowDate], function(err, data){
             if (data[0] != null) {
               console.log("weeklyExpense:"+data[0].money);
               mainObject.weeklyExpense = data[0].money;
