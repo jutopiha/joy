@@ -2,6 +2,7 @@
 // 퀘스트
 var mysql = require('mysql');
 var dotenv = require('dotenv').config();
+var moment = require('moment');
 
 /*connect MySQL*/
 var dbConnection = mysql.createConnection({
@@ -36,13 +37,9 @@ module.exports = function(app, fs)
       json = JSON.parse(req.body);
   	}
 
-		//날짜 시간
-		json.startDate = moment(req.body.date, 'YYYYMMDD').format('YYYYMMDD');
-		json.startDate = parseInt(req.body.date);
+json.startDate = parseInt(moment().format('YYMMDD'));
 
-    console.log("body** "+req.body);
-    console.log("body.type** "+req.body.type);
-    console.log("body.money** "+req.body.money);
+console.log(json.type+currentUser+json.startDate+json.money);
 
     dbConnection.query('INSERT into Quest VALUES (DEFAULT,?,?,?,?);', [json.type, currentUser, json.startDate, json.money], function (err, result, fields) {
       if (err) {
