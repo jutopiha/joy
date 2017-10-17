@@ -47,7 +47,10 @@ module.exports = function(app, fs)
     console.log("***GET /main***");
     var mainObject = {};
     var beforeOneWeekDate = parseInt(moment().add(-7, 'days').format('YYYYMMDD'));
+	console.log(moment().format('YYYYMMDD'));
     var nowDate = parseInt(moment().format('YYYYMMDD'));
+	var temp = parseInt(moment().format('YYYYMMDDHHmm'));
+	console.log("temp" + temp);
     var fromDate = parseInt(nowDate / 100) * 100 + 1;
 	console.log("nowDate=" + nowDate +"fromDate="+ fromDate);
 
