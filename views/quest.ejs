@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>JOY</title>
+    <link rel = "stylesheet" type="text/css" href="../css/index.css"/>
+    <link rel = "stylesheet" type="text/css" href="../css/wrapper.css"/>
+    <link rel = "stylesheet" type="text/css" href="../css/monthlyStat.css"/>
+  </head>
+  <body>
+    <div class="header">
+      <div class="wrapper">
+        <a href="/">
+          <img class="logo" src="../img/티끌모아태산.png" alt="이미지">
+        </a>
+        <div class="nav">
+          <div class="top_menu">
+            <ul>
+              <li class="main_menu mmu1">
+                <span>내역 입력</span>
+                <ul class="sub_menu">
+                  <li><a href="/income">수입 내역 입력</a></li>
+                  <li><a href="/expense">지출 내역 입력</a></li>
+                </ul>
+              </li>
+
+              <li class="main_menu mmu2">
+                <span>통계 조회</span>
+                <ul class="sub_menu">
+                  <li><a href="/statistic/web">일별 통계</a></li>
+                  <li><a href="/statistic/monthly">월별 통계</a></li>
+                </ul>
+              </li>
+              <li class="main_menu mmu3">
+                <span>퀘스트</span>
+                <ul class="sub_menu">
+                  <li><a href="/quest/web">퀘스트</a></li>
+                  <li></li>
+                </ul>
+              </li>
+              <li class="main_menu mmu4">
+                <span>캐릭터</span>
+                <ul class="sub_menu">
+                  <li><a href="/character">캐릭터</a></li>
+                  <li><a href="item">아이템</a></li>
+                </ul>
+              </li>
+              <li class="main_menu mmu5">
+                <span>커뮤니티</span>
+                <ul class="sub_menu">
+                  <li><a href="/income">커뮤니티로 이동▶</a></li>
+                  <li></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+
+    <div class="wrapper content">
+      <h2 style="margin-bottom: 50px">퀘스트</h2>
+
+      <!--두가지 퀘스트 탭 부분-->
+      <ul class="tablist" role="tablist">
+        <li class="tab" role="tab"><a href="#panel1">주간 지출 목표</a></li>
+        <li class="tab" role="tab"><a href="#panel2">월간 지출 목표</a></li>
+
+        <li class="tab-menu">
+          <div class="line"></div>
+          <div class="line"></div>
+        </li>
+      </ul>
+
+      <!--주간 지출 목표-->
+      <div class="tabpanel" id="panel1" role="tabpanel">
+		<div style="text-align:center">
+			<div style="text-align: center; margin-top : 150px; margin-bottom: 300px">
+         		<p>등록된 퀘스트가 없습니다.</p>
+          		<p>퀘스트를 등록해 주세요.</p>
+          		<button>등록하기</button>
+        </div>
+		</div>
+      </div>
+
+      <!--월간 지출 목표-->
+      <div class="tabpanel" id="panel2" role="tabpanel"style="margin-left:100px; margin-right:100px; margin-bottom:300px;">
+			<div class="quest-list">시작일</div>
+	        <p>2017-04-04</p>
+        	<div class="quest-list">종료일</div>
+    	    <p>2017-04-30</p>
+	        <div class="quest-list">목표금액</div>
+	        <p>100000</p>
+	        <div class="quest-list">현재금액</div>
+			<p>55000</p>
+      </div>
+    </div>
+
+    <!--footer-->
+    <div class="footer">
+      <img class="btm_logo" alt=" " src="img/티끌모아태산.png"/>
+    </div>
+  </body>
+</html>
+
+<!--태그 자바스크립트-->
+<script>
+  (function() {
+
+  function activateTab() {
+    if(activeTab) {
+      resetTab.call(activeTab);
+    }
+    this.parentNode.className = 'tab tab-active';
+    activeTab = this;
+    activePanel = document.getElementById(activeTab.getAttribute('href').substring                                                                                      (1));
+    activePanel.className = 'tabpanel show';
+    activePanel.setAttribute('aria-expanded', true);
+  }
+
+  function resetTab() {
+    activeTab.parentNode.className = 'tab';
+    if(activePanel) {
+      activePanel.className = 'tabpanel hide';
+      activePanel.setAttribute('aria-expanded', false);
+    }
+  }
+
+  var doc = document,
+      tabs = doc.querySelectorAll('.tab a'),
+      panels = doc.querySelectorAll('.tabpanel'),
+      activeTab = tabs[0],
+      activePanel;
+
+  activateTab.call(activeTab);
+
+  for(var i = tabs.length - 1; i >= 0; i--) {
+    tabs[i].addEventListener('click', activateTab, false);
+  }
+
+  })();
+
+</script>
+<script>
+$(function() {
+  $( "#button" ).click(function() {
+    $( "#button" ).addClass( "onclic", 250, validate);
+  });
+
+  function validate() {
+    setTimeout(function() {
+      $( "#button" ).removeClass( "onclic" );
+      $( "#button" ).addClass( "validate", 450, callback );
+    }, 2250 );
+  }
+    function callback() {
+      setTimeout(function() {
+        $( "#button" ).removeClass( "validate" );
+      }, 1250 );
+    }
+  });
+</script>
+
+
