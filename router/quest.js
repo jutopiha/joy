@@ -36,11 +36,21 @@ module.exports = function(app, fs)
     }
 
     var result = {};
+ 
+var finishRequest = function() {
+
+		if(isWeb == true) {
+          res.redirect('/quest');
+        } else{
+          res.json(result);
+        }
+      }
 
     dbConnection.query('SELECT * FROM Quest WHERE userId = ?;',[currentUser], function(err, data){
       if (err) {
         console.log(err);
       }else {
+		var lock = data.length;
         for(var i in data) {
           var endDate;
           if(data[i].type == "weekly") {
@@ -49,30 +59,38 @@ module.exports = function(app, fs)
             weekly.startDate = data[i].startDate;
             weekly.endDate = parseInt(moment(data[0].startDate, 'YYYYMMDD').add(+7, 'days').format('YYYYMMDD'));
             weekly.goalMoney = data[i].money;
-            dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId = ? AND date >= ? AND date <= ?;',[req.query.uid, startDate, endDate], function(err, data){
-              weekly.nowMoney = data[0].money;
-            });
+            dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId = ? AND date >= ? AND date <= ?;',[req.query.uid, weekly.startDate, weekly.endDate], function(err, data){
+              if(data[0].money != null ) {
+weekly.nowMoney = data[0].money;
+} else {
+weekly.nowMoney = 0;
+}
+			  lock--;
+console.log("wee");
             result.weekly = weekly;
+			if(lock==0) finishRequest();
+            });
           } else if(data[i].type == "monthly") {
             var monthly = {};
             monthly.type = "monthly";
             monthly.startDate = data[i].startDate;
             monthly.endDate = parseInt(moment(data[0].startDate, 'YYYYMMDD').add(1, 'M').format('YYYYMMDD'));
             monthly.goalMoney = data[i].money;
-            dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId = ? AND date >= ? AND date <= ?;',[req.query.uid, startDate, endDate], function(err, data){
-              monthly.nowMoney = data[0].money;
-            });
+            dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId = ? AND date >= ? AND date <= ?;',[req.query.uid, monthly.startDate, monthly.endDate], function(err, data){
+if(data[0].money != null ) {
+              
+monthly.nowMoney = data[0].money;
+} else {
+monthly.nowMoney = 0;
+}
+ 			  lock--;
             result.monthly = monthly;
+			if(lock==0) finishRequest();
+            });
           }
         }
-
-        if(isWeb == true) {
-          res.redirect('/quest');
-        } else{
-          res.json(result);
-        }
-      }
-    });
+}
+           });
   });
 
 
