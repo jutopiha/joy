@@ -17,6 +17,42 @@ dbConnection.connect(function(err){
         return;
     }
 });
+
+// response
+var finishRequest = function() {
+  if(isWeb == true) {
+    res.redirect('/quest');
+  } else{
+    res.json(result);
+  }
+};
+
+// 가중치에 따라 랜덤하게 추출
+function weightedRand(spec) {
+  var i, j, table=[];
+  for (i in spec) {
+    // The constant 10 below should be computed based on the
+    // weights in the spec for a correct and optimal table size.
+    // E.g. the spec {0:0.999, 1:0.001} will break this impl.
+    for (j=0; j<spec[i]*10; j++) {
+      table.push(i);
+    }
+  }
+  return function() {
+    return table[Math.floor(Math.random() * table.length)];
+  };
+}
+
+// num개의 랜덤 결과를 배열로 반환
+function selectItem(num) {
+  var i, items = [];
+  var rand = weightedRand({0:0.2, 1:0.2, 2:0.1, 3:0.1, 4:0.08, 5:0.08, 6:0.05, 7:0.05, 8:0.05, 9:0.05, 10:0.04});
+  for(i=0; i<num; ++i){
+      items.push(rand());
+  }
+
+  return items;
+}
 module.exports = function(app, fs)
 {
   /* quest 첫화면 */
@@ -34,13 +70,7 @@ module.exports = function(app, fs)
 
 
     var result = {};
-    var finishRequest = function() {
-		  if(isWeb == true) {
-        res.redirect('/quest');
-      } else{
-        res.json(result);
-      }
-    };
+
 
     dbConnection.query('SELECT * FROM Quest WHERE userId = ?;',[currentUser], function(err, data){
       if (err) {
@@ -122,9 +152,10 @@ module.exports = function(app, fs)
   app.get('/quest/giveup', function(req, res){
     console.log("***Quest DELETE Request arrived***");
 
+    var result = {};
     var currentUser;
     var isWeb = false;
-    var result = {};
+
 
     if((req.query.uid == undefined)){ //web
       isWeb = true;
@@ -155,6 +186,7 @@ module.exports = function(app, fs)
   app.get('/quest/complete', function(req, res){
     console.log("***Quest 완료하기 Request arrived***");
 
+    var result = {};
     var currentUser;
     var isWeb = false;
     if((req.query.uid == undefined)){ //web
@@ -164,42 +196,6 @@ module.exports = function(app, fs)
       currentUser = req.query.uid;
     }
 
-    var result = {};
-    var finishRequest = function() {
-      if(isWeb == true) {
-        res.redirect('/quest');
-      } else{
-        res.json(result);
-      }
-    };
-
-	
-// 가중치에 따라 랜덤하게 추출
-function weightedRand(spec) {
-  var i, j, table=[];
-  for (i in spec) {
-    // The constant 10 below should be computed based on the
-    // weights in the spec for a correct and optimal table size.
-    // E.g. the spec {0:0.999, 1:0.001} will break this impl.
-    for (j=0; j<spec[i]*10; j++) {
-      table.push(i);
-    }
-  }
-  return function() {
-    return table[Math.floor(Math.random() * table.length)];
-  };
-}
-
-// num개의 랜덤 결과를 배열로 반환
-function selectItem(num) {
-  var i, items = [];
-  var rand = weightedRand({0:0.2, 1:0.2, 2:0.1, 3:0.1, 4:0.08, 5:0.08, 6:0.05, 7:0.05, 8:0.05, 9:0.05, 10:0.04});
-  for(i=0; i<num; ++i){
-      items.push(rand());
-  }
-
-return items;
-}
 
     dbConnection.query('SELECT * FROM Quest WHERE userId = ? AND type = ?;',[currentUser, req.query.type], function(err, data){
       if (err) {
@@ -245,11 +241,11 @@ return items;
                        console.log(err);
                     } else {
                       quantity = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-console.log(reward.item);
+
                       for(var i in reward.item) {
                         var rand_item = parseInt(reward.item[i]);
                         quantity[rand_item]++;
-console.log(quantity);
+
                         switch(rand_item){
                           case 0:
                             reward.item[i] = "bean";
@@ -292,6 +288,7 @@ console.log(quantity);
                         if (err) {
                           console.log(err);
                         }else {
+                          result.reward = reward;
                           finishRequest();
                         }
                       });
