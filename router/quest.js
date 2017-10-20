@@ -17,36 +17,11 @@ dbConnection.connect(function(err){
         return;
     }
 });
-
-// 가중치에 따라 랜덤하게 추출
-function weightedRand(spec) {
-  var i, j, table=[];
-  for (i in spec) {
-    // The constant 10 below should be computed based on the
-    // weights in the spec for a correct and optimal table size.
-    // E.g. the spec {0:0.999, 1:0.001} will break this impl.
-    for (j=0; j<spec[i]*10; j++) {
-      table.push(i);
-    }
-  }
-  return function() {
-    return table[Math.floor(Math.random() * table.length)];
-  };
-}
-
-// num개의 랜덤 결과를 배열로 반환
-function selectItem(num) {
-  var i, items = [];
-  var rand = weightedRand({0:0.2, 1:0.2, 2:0.1, 3:0.1, 4:0.08, 5:0.08, 6:0.05, 7:0.05, 8:0.05, 9:0.05, 10:0.04});
-  for(i=0; i<num; ++i){
-      items.push(rand());
-  }
-}
 module.exports = function(app, fs)
 {
   /* quest 첫화면 */
   app.get('/quest', function(req, res){
-    console.log("***Quest POST Request arrived***");
+    console.log("***Quest GET Request arrived***");
 
     var currentUser;
     var isWeb = false;
@@ -198,7 +173,35 @@ module.exports = function(app, fs)
       }
     };
 
-    dbConnection.query('SELECT * FROM Quest WHERE userId = ?;',[currentUser], function(err, data){
+	
+// 가중치에 따라 랜덤하게 추출
+function weightedRand(spec) {
+  var i, j, table=[];
+  for (i in spec) {
+    // The constant 10 below should be computed based on the
+    // weights in the spec for a correct and optimal table size.
+    // E.g. the spec {0:0.999, 1:0.001} will break this impl.
+    for (j=0; j<spec[i]*10; j++) {
+      table.push(i);
+    }
+  }
+  return function() {
+    return table[Math.floor(Math.random() * table.length)];
+  };
+}
+
+// num개의 랜덤 결과를 배열로 반환
+function selectItem(num) {
+  var i, items = [];
+  var rand = weightedRand({0:0.2, 1:0.2, 2:0.1, 3:0.1, 4:0.08, 5:0.08, 6:0.05, 7:0.05, 8:0.05, 9:0.05, 10:0.04});
+  for(i=0; i<num; ++i){
+      items.push(rand());
+  }
+
+return items;
+}
+
+    dbConnection.query('SELECT * FROM Quest WHERE userId = ? AND type = ?;',[currentUser, req.query.type], function(err, data){
       if (err) {
         console.log(err);
       }else {
@@ -242,9 +245,11 @@ module.exports = function(app, fs)
                        console.log(err);
                     } else {
                       quantity = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+console.log(reward.item);
                       for(var i in reward.item) {
                         var rand_item = parseInt(reward.item[i]);
                         quantity[rand_item]++;
+console.log(quantity);
                         switch(rand_item){
                           case 0:
                             reward.item[i] = "bean";
