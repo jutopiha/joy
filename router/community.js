@@ -47,6 +47,12 @@ module.exports = function(app, fs)
 		data = JSON.parse(data);
 		//postData += data;
 		postData.push(data);
+		
+		console.log(data.length);
+		 console.log(data.length);
+ console.log(data.length);
+ console.log(data.length);
+ console.log(data.length);
 
 		console.log(data);
         console.log(postData);
