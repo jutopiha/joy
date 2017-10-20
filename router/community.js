@@ -22,6 +22,7 @@ module.exports = function(app, fs)
 {
   //금융지식팁 메인페이지
   app.get('/community', function(req, res){
+    var currentUser	= req.session.passport.user.userId;
     dbConnection.query("SELECT * from Post WHERE category='금융지식팁' ORDER BY postId DESC LIMIT 9;", function(err, data){
       if(err){
         console.log(err);
@@ -182,7 +183,7 @@ module.exports = function(app, fs)
       if(err){
         console.log(err);
       } else {
-          res.render('community-joy-fighting', {data});
+          res.render('community-cards', {data});
       }
     });
   });
