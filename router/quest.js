@@ -243,8 +243,9 @@ module.exports = function(app, fs)
                     } else {
                       quantity = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
                       for(var i in reward.item) {
-                        quantity[reward.item[i]]++;
-                        switch(reward.item[i]){
+                        var rand_item = parseInt(reward.item[i]);
+                        quantity[rand_item]++;
+                        switch(rand_item){
                           case 0:
                             reward.item[i] = "bean";
                             break;
