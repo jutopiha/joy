@@ -149,6 +149,8 @@ module.exports = function(app, fs)
 
     var currentUser;
     var isWeb = false;
+    var result = {};
+
     if((req.query.uid == undefined)){ //web
       isWeb = true;
       currentUser = req.session.passport.user.userId;

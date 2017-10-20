@@ -6,51 +6,8 @@
     <link rel = "stylesheet" type="text/css" href="../css/index.css"/>
     <link rel = "stylesheet" type="text/css" href="../css/wrapper.css"/>
     <link rel = "stylesheet" type="text/css" href="../css/item.css"/>
-
-	<script src="../js/jquery-1.3.2-vsdoc2.js" type="text/javascript"></script>
-    <script>
-      var totalMoney =0;
-      $(document).ready(function(){
-        //변경될 때
-        $('#item1').change(function(){
-          totalMoney += $("item1:selected");
-        });
-        $('#item2').change(function(){
-          totalMoney += $("item2:selected");
-        });
-        $('#item3').change(function(){
-          totalMoney += $("item3:selected");
-        });
-        $('#item4').change(function(){
-          totalMoney += $("itme4:selected");
-        });
-        $('#item5').change(function(){
-          totalMoney += $("item5:selected");
-        });
-        $('#item6').change(function(){
-          totalMoney += $("item6:selected");
-        });
-        $('#item7').change(function(){
-          totalMoney += $("item7:selected");
-        });
-        $('#item8').change(function(){
-          totalMoney += $("item8:selected");
-        });
-        $('#item9').change(function(){
-          totalMoney += $("itme9:selected");
-        });
-        $('#item10').change(function(){
-          totalMoney += $("itme10:selected");
-        });
-        $('#item11').change(function(){
-          totalMoney += $("item11:selected");
-        });
-      });
-	  function onk(){
-		//if(totalMoney > <%=item.point%>)
-			alert('포인트 초과.');
-	  };
-    </script>
+	<script type ="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
+    <script type = "text/javascript" src="../js/item.js"></script>
   </head>
   <body>
 
@@ -105,9 +62,10 @@
 
       </div>
     </div>
-
+	<div class="wrapper content">
     <h2 style="margin-bottom: 50px">아이템</h2>
     <p style="text-align:center; margin-bottom: 50px">내 포인트 : <%=item.point%></p>
+	<div style="display:block ">
     <div id="cuadricula">
         <div class="item">
           <img src="../img/image_waterdrop.png">
@@ -154,13 +112,13 @@
           <p><%=item.list[11]%></p>
         </div>
       </div>
+	</div>
 
-
-    <form action="/" data-confirm="아이템을 구입하시겠어요?">
+    <form action="/item/buy" method="post">
       <div id="div_item_list">
         <ul class="item_list">
             <li>원두 (50p)
-              <select name="List.1" id="item1">
+              <select name="list[0]" id="item0" onClick='item0Select()'>
                 <option value=0 selected>0</option>
                 <option value=1>1</option>
                 <option value=2>2</option>
@@ -170,7 +128,7 @@
               </select>
             </li>
             <li>물 (70p)
-              <select name="List[2]"id="item2">
+              <select name="list[1]"id="item1" onClick='item1Select()'>
                 <option value=0 selected>0</option>
                 <option value=1>1</option>
                 <option value=2>2</option>
@@ -180,7 +138,7 @@
               </select>
             </li>
             <li>얼음 (30p)
-              <select name="List[3]"id="item3">
+              <select name="list[2]"id="item2" onClick='item2Select()'>
                 <option value=0 selected>0</option>
                 <option value=1>1</option>
                 <option value=2>2</option>
@@ -190,7 +148,7 @@
               </select>
             </li>
             <li>우유 (150p)
-              <select name="List[4]"id="item4">
+              <select name="list[3]"id="item3" onClick='item3Select()'>
                 <option value=0 selected>0</option>
                 <option value=1>1</option>
                 <option value=2>2</option>
@@ -200,7 +158,7 @@
               </select>
             </li>
             <li>초코 (350p)
-              <select name="List[5]"id="item5">
+              <select name="list[4]"id="item4" onClick='item4Select()'>
                 <option value=0 selected>0</option>
                 <option value=1>1</option>
                 <option value=2>2</option>
@@ -210,7 +168,7 @@
               </select>
             </li>
             <li>녹차가루 (500p)
-              <select name="List[6]"id="item6">
+              <select name="list[5]"id="item5" onClick='item5Select()'>
                 <option value=0 selected>0</option>
                 <option value=1>1</option>
                 <option value=2>2</option>
@@ -220,7 +178,7 @@
               </select>
             </li>
             <li>자몽청 (700p)
-              <select name="List[7]" id="item7">
+              <select name="list[6]" id="item6" onClick='item6Select()'>
                 <option value=0 selected>0</option>
                 <option value=1>1</option>
                 <option value=2>2</option>
@@ -230,7 +188,7 @@
               </select>
             </li>
             <li>시럽 (200p)
-              <select name="List[8]" id="item8">
+              <select name="list[7]" id="item7" onClick='item7Select()'>
                 <option value=0 selected>0</option>
                 <option value=1>1</option>
                 <option value=2>2</option>
@@ -240,7 +198,7 @@
               </select>
             </li>
             <li>탄산수 (200p)
-              <select name="List[9]" id="item9">
+              <select name="list[8]" id="item8" onClick='item8Select()'>
                 <option value=0 selected>0</option>
                 <option value=1>1</option>
                 <option value=2>2</option>
@@ -250,7 +208,7 @@
               </select>
             </li>
             <li>파란색소 (800p)
-              <select name"'List[10]" id="item10">
+              <select name = "list[9]" id="item9" onClick='item9Select()'>
                 <option value=0 selected>0</option>
                 <option value=1>1</option>
                 <option value=2>2</option>
@@ -260,7 +218,7 @@
               </select>
             </li>
             <li>레몬 (1000p)
-              <select name="List[11]" id="item11">
+              <select name="list[10]" id="item10" onClick='item10Select()'>
                 <option value=0 selected>0</option>
                 <option value=1>1</option>
                 <option value=2>2</option>
@@ -269,17 +227,17 @@
                 <option value=5>5</option>
               </select>
             </li>
-			<input type="hidden" name="point" value="&{totalMoney};"/>
-            <div style="padidng-bottom:100px">
-              <button type="submit" style="float:right; margin-bottm:100px" onClick='onk()'>구입하기</button>
-            </div>
+			<div style="border:none; margin:30px 0; width:100%">
+              <button type="submit" id="submit_btn" onClick='calculateMoney()' >구입하기</button>
+			</div>
         </ul>
       </div>
     </form>
     </div>
+</div>
     <!--footer-->
     <div class="footer">
-      <img class="btm_logo" alt=" " src="img/티끌모아태산.png"/>
+      <img class="btm_logo"style="margin-top:50px;" alt=" " src="img/티끌모아태산.png"/>
     </div>
   </body>
 </html>

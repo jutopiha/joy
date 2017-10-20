@@ -178,11 +178,33 @@ module.exports = function(app, fs)
 
   //다짐톡 메인페이지
   app.get('/community/joy-fighting', function(req, res){
+    var allData = [];
     dbConnection.query("SELECT * from Post WHERE category='다짐톡' ORDER BY postId DESC LIMIT 9;", function(err, data){
       if(err){
         console.log(err);
       } else {
-          res.render('community-joy-fighting', {data});
+        console.log(data);
+
+        var db_str = "SELECT * FROM Comment Where ";
+        for(var i=0; i<data.length; i++){
+          db_str += "postId=" + data[i].postId + " ";
+          if(i != (data.length - 1))
+            db_str += 'OR ';
+        }
+        db_str += "ORDER BY postId DESC, commentId ASC;"
+
+        allData.push(data);
+        dbConnection.query(db_str, function(err, data){
+            if(err) {
+              console.log(err);
+            } else {
+              console.log(allData);
+              console.log(data);
+              allData.push(data);
+              res.render('community-cards', {allData});
+            }
+        });
+
       }
     });
   });

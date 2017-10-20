@@ -69,20 +69,20 @@ module.exports = function(app, fs)
         item.list[11] = data[0].lemon;
       }
 
-      if(isWeb == true) {
-        character.point = req.session.passport.user.point;
-      	res.render('item', {
-    			item: item
-    		});
-      } else{
-        dbConnection.query('SELECT point FROM User WHERE userId=?;',[currentUser], function(err, data){
-          if(err) {
-             console.log(err);
-          }
-          item.point = data[0].point;
+dbConnection.query('SELECT point FROM User WHERE userId=?;',[currentUser], function(err, data){
+        if(err) {
+           console.log(err);
+        }
+        item.point = data[0].point;
+        if(isWeb == true) {
+          res.render('item', {
+            item: item
+          });
+        } else {
           res.json(item);
-      	});
-      }
+        }
+   });
+
     });
   });
 
@@ -92,33 +92,36 @@ module.exports = function(app, fs)
 
   	var currentUser;
   	var isWeb = false;
+	var json = {};
 
   	if((req.query.uid == undefined)){ //web
       isWeb = true;
       currentUser = req.session.passport.user.userId;
+	  json = req.body;
   	} else { //android
   		currentUser = req.query.uid;
+		json = JSON.parse(req.body);
   	}
 
     console.log("body** "+req.body);
     console.log("body.point** "+req.body.point);
+	
     console.log("body.list** "+req.body.list);
-    var json = JSON.parse(req.body);
-
+	console.log(json);
     var item = {
-      bean: json.list[1],
-      waterdrop: json.list[2],
-      ice: json.list[3],
-      choco: json.list[4],
-      greenteaPowder: json.list[5],
-      milk: json.list[6],
-      grapefruit: json.list[7],
-      sparkling: json.list[8],
-      syrup: json.list[9],
-      bluePigment: json.list[10],
-      lemon:json.list[11]
+      bean: json.list[0],
+      waterdrop: json.list[1],
+      ice: json.list[2],
+      choco: json.list[3],
+      greenteaPowder: json.list[4],
+      milk: json.list[5],
+      grapefruit: json.list[6],
+      sparkling: json.list[7],
+      syrup: json.list[8],
+      bluePigment: json.list[9],
+      lemon:json.list[10]
     };
-    console.log("item!!"+item);
+    console.log(item);
 
     dbConnection.query('UPDATE User set point=point-? WHERE userId=?;',[json.point, currentUser], function(err, data){
       if(err) {
