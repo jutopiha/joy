@@ -18,14 +18,7 @@ dbConnection.connect(function(err){
     }
 });
 
-// response
-var finishRequest = function(isWeb, result) {
-  if(isWeb == true) {
-    res.redirect('/quest');
-  } else{
-    res.json(result);
-  }
-};
+
 
 
 // 가중치에 따라 랜덤하게 추출
@@ -61,6 +54,15 @@ module.exports = function(app, fs)
     console.log("***Quest GET Request arrived***");
 
     var result = {};
+    // response
+    var finishRequest = function() {
+      if(isWeb == true) {
+        res.redirect('/quest');
+      } else{
+        res.json(result);
+      }
+    };
+
     var currentUser;
     var isWeb = false;
     if((req.query.uid == undefined)){ //web
@@ -185,6 +187,14 @@ module.exports = function(app, fs)
     console.log("***Quest 완료하기 Request arrived***");
 
     var result = {};
+    // response
+    var finishRequest = function() {
+      if(isWeb == true) {
+        res.redirect('/quest');
+      } else{
+        res.json(result);
+      }
+    };
     var currentUser;
     var isWeb = false;
     if((req.query.uid == undefined)){ //web
