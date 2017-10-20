@@ -19,13 +19,14 @@ dbConnection.connect(function(err){
 });
 
 // response
-var finishRequest = function() {
+var finishRequest = function(isWeb, result) {
   if(isWeb == true) {
     res.redirect('/quest');
   } else{
     res.json(result);
   }
 };
+
 
 // 가중치에 따라 랜덤하게 추출
 function weightedRand(spec) {
@@ -59,6 +60,7 @@ module.exports = function(app, fs)
   app.get('/quest', function(req, res){
     console.log("***Quest GET Request arrived***");
 
+    var result = {};
     var currentUser;
     var isWeb = false;
     if((req.query.uid == undefined)){ //web
@@ -67,10 +69,6 @@ module.exports = function(app, fs)
     } else { //android
       currentUser = req.query.uid;
     }
-
-
-    var result = {};
-
 
     dbConnection.query('SELECT * FROM Quest WHERE userId = ?;',[currentUser], function(err, data){
       if (err) {
@@ -93,7 +91,7 @@ module.exports = function(app, fs)
               }
 			        lock--;
               result.weekly = weekly;
-        			if(lock==0) finishRequest();
+        			if(lock==0) finishRequest(isWeb, result);;
             });
           } else if(data[i].type == "monthly") {
             var monthly = {};
@@ -109,7 +107,7 @@ module.exports = function(app, fs)
               }
        			  lock--;
               result.monthly = monthly;
-      			  if(lock==0) finishRequest();
+      			  if(lock==0) finishRequest(isWeb, result);;
             });
           }
         }
@@ -289,7 +287,7 @@ module.exports = function(app, fs)
                           console.log(err);
                         }else {
                           result.reward = reward;
-                          finishRequest();
+                          finishRequest(isWeb, result);
                         }
                       });
                     }
@@ -306,7 +304,7 @@ module.exports = function(app, fs)
               result.STATUS = "OK";
               result.DATA = "fail";
 
-              finishRequest();
+              finishRequest(isWeb, result);
             }
 
 
