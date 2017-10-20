@@ -292,11 +292,15 @@ module.exports = function(app, fs)
                       }
                       dbConnection.query('UPDATE Item set bean=bean+?, waterdrop=waterdrop+?, ice=ice+?, choco=choco+?, greenteaPowder=greenteaPowder+?, milk=milk+?, grapefruit=grapefruit+?, sparkling=sparkling+?, syrup=syrup+?, bluePigment=bluePigment+?, lemon=lemon+? WHERE userId=?;'
                                         , [quantity[0], quantity[1], quantity[2], quantity[3], quantity[4], quantity[5], quantity[6], quantity[7], quantity[8], quantity[9], quantity[10], currentUser]
-                                        , function (err, result, fields) {
+                                        , function (err, results, fields) {
                         if (err) {
                           console.log(err);
                         }else {
                           result.reward = reward;
+console.log(result);
+console.log(result.reward);
+console.log(result.reward[0]);
+console.log(reward);
                           finishRequest();
                         }
                       });
