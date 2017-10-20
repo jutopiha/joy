@@ -121,4 +121,32 @@ module.exports = function(app, fs)
     });
   });
 
+  /* quest 삭제하기 */
+  app.get('/quest/giveup', function(req, res){
+    console.log("***Quest DELETE Request arrived***");
+
+    var currentUser;
+    var isWeb = false;
+
+    if((req.query.uid == undefined)){ //web
+      isWeb = true;
+      currentUser = req.session.passport.user.userId;
+    } else { //android
+      currentUser = req.query.uid;
+    }
+
+    dbConnection.query('DELETE FROM Quest WHERE userId = ? AND type = ?;',[currentUser, req.query.type], function(err,data){
+      if (err) {
+        result.CODE = 400;
+        result.STATUS = "Database Error";
+        throw error;
+      }else {
+        result.CODE = 200;
+        result.STATUS = "OK";
+      }
+
+      res.json(result);
+    });
+  });
+
 };
