@@ -18,7 +18,30 @@ dbConnection.connect(function(err){
     }
 });
 
+// 가중치에 따라 랜덤하게 추출
+function weightedRand(spec) {
+  var i, j, table=[];
+  for (i in spec) {
+    // The constant 10 below should be computed based on the
+    // weights in the spec for a correct and optimal table size.
+    // E.g. the spec {0:0.999, 1:0.001} will break this impl.
+    for (j=0; j<spec[i]*10; j++) {
+      table.push(i);
+    }
+  }
+  return function() {
+    return table[Math.floor(Math.random() * table.length)];
+  };
+}
 
+// num개의 랜덤 결과를 배열로 반환
+function selectItem(num) {
+  var i, items = [];
+  var rand = weightedRand({0:0.2, 1:0.2, 2:0.1, 3:0.1, 4:0.08, 5:0.08, 6:0.05, 7:0.05, 8:0.05, 9:0.05, 10:0.04});
+  for(i=0; i<num; ++i){
+      items.push(rand());
+  }
+}
 module.exports = function(app, fs)
 {
   /* quest 첫화면 */
@@ -179,12 +202,17 @@ module.exports = function(app, fs)
       }else {
         if(data != null) {
           var quest = {};
+          var reward = {};
           quest.type = data[0].type;
           quest.startDate = data[0].startDate;
           if(quest.type == "weekly") {
             quest.endDate = parseInt(moment(data[0].startDate, 'YYYYMMDD').add(+7, 'days').format('YYYYMMDD'));
+            reward.point = 120;
+            reward.item = selectItem(1);
           } else if(quest.type == "monthly") {
             quest.endDate = parseInt(moment(data[0].startDate, 'YYYYMMDD').add(1, 'M').format('YYYYMMDD'));
+            reward.point = 600;
+            reward.item = selectItem(5);
           }
           quest.goalMoney = data[0].money;
 
@@ -205,21 +233,78 @@ module.exports = function(app, fs)
                 }else {
                   result.CODE = 200;
                   result.STATUS = "OK";
-                  result.DATA = "complete";
+                  result.DATA = "success";
+
+                  dbConnection.query('UPDATE User set point=point+? WHERE userId=?;',[reward.point, currentUser], function(err, data){
+                    if(err) {
+                       console.log(err);
+                    } else {
+                      quantity = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                      for(var i in reward.item) {
+                        quantity[reward.item[i]]++;
+                        switch(reward.item[i]){
+                          case 0:
+                            reward.item[i] = "bean";
+                            break;
+                          case 1:
+                            reward.item[i] = "waterdrop";
+                            break;
+                          case 2:
+                            reward.item[i] = "ice";
+                            break;
+                          case 3:
+                            reward.item[i] = "choco";
+                            break;
+                          case 4:
+                            reward.item[i] = "greenteaPowder";
+                            break;
+                          case 5:
+                            reward.item[i] = "milk";
+                            break;
+                          case 6:
+                            reward.item[i] = "grapefruit";
+                            break;
+                          case 7:
+                            reward.item[i] = "sparkling";
+                            break;
+                          case 8:
+                            reward.item[i] = "syrup";
+                            break;
+                          case 9:
+                            reward.item[i] = "bluePigment";
+                            break;
+                          case 10:
+                            reward.item[i] = "lemon";
+                            break;
+                        }
+                      }
+                      dbConnection.query('UPDATE Item set bean=bean+?, waterdrop=waterdrop+?, ice=ice+?, choco=choco+?, greenteaPowder=greenteaPowder+?, milk=milk+?, grapefruit=grapefruit+?, sparkling=sparkling+?, syrup=syrup+?, bluePigment=bluePigment+?, lemon=lemon+? WHERE userId=?;'
+                                        , [quantity[0], quantity[1], quantity[2], quantity[3], quantity[4], quantity[5], quantity[6], quantity[7], quantity[8], quantity[9], quantity[10], currentUser]
+                                        , function (err, result, fields) {
+                        if (err) {
+                          console.log(err);
+                        }else {
+                          finishRequest();
+                        }
+                      });
+                    }
+
+                  });
+
                 }
 
-                finishRequest();
+
 
               });
             } else {
               result.CODE = 200;
               result.STATUS = "OK";
-              result.DATA = "overspending"
+              result.DATA = "fail";
 
               finishRequest();
             }
 
-            
+
 
           });
         }
