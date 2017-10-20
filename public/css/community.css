@@ -87,6 +87,108 @@
 .posted_time span{}
 .posted_time p{}
 
+/*community talk*/
+.talk_box {
+  width: 780px;
+  margin: 0 auto;
+  padding: 0 10px 12px;
+
+}
+
+.talk_wrt_section {
+  width: 760px;
+  padding: 8px;
+  background-color: #eee;
+}
+.talk_wrt_section .talk_form {
+  overflow: hidden;
+}
+.talk_wrt_section .talk_form .tlk_wrt {
+  padding: 10px 13px 10px 10px;
+  background-color: white;
+}
+.talk_wrt_section .talk_form .tlk_wrt textarea {
+  width: 740px;
+  border: none;
+  resize:vertical;
+}
+.talk_wrt_section .talk_form .tlk_wrt .tlk_wrt_btn {
+  position: relative;
+  height: 35px;
+  padding-right: 3px;
+}
+.talk_wrt_section .talk_form .tlk_wrt .tlk_wrt_btn button {
+  width: 85px; height: 32px;
+  border: 1px solid rgb(255, 2, 129);
+  background-color: rgb(255, 215, 235);
+  color: rgb(255, 2, 129);
+  font-size: 13px;
+  font-weight: bold;
+  position: absolute;
+  top: 3px;
+  right: 0;
+}
+
+.talks {
+  margin: 10px auto 0;
+  padding: 10px 0;
+  box-sizing: border-box;
+}
+.talks .tlk {
+  width: 760px;
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.tlk span { font-size: 16px;}
+.tlk .tlk_delete {
+    float: right;
+    display: inline-block;
+    border-left: 1px solid #ccc;
+    padding-left: 5px;
+}
+.tlk .tlk_btn {
+  float: right;
+  background-color: white;
+  border: none;
+  padding-right: 5px;
+}
+.tlk .tlk_btn .talk-rewrite {}
+.tlk .tlk_content {
+  padding: 20px 0 20px 10px;
+}
+.tlk .open_btn {
+  font-size: 12px;
+  color: #777;
+}
+
+.tlk .tlk_comments {
+  border: 1px solid #efefef;
+  padding: 10px;
+}
+.tlk .tlk_comments .open_cmt {}
+.tlk .tlk_comments .cmt {
+  border-bottom: 1px dashed #ddd;
+}
+
+.tlk .tlk_comments .cmt span { font-size: 14px;}
+.tlk .tlk_comments .cmt .cmt_delete {
+  float: right;
+  display: inline-block;
+  border-left: 1px solid #ccc;
+  padding-left: 5px;
+}
+.tlk .tlk_comments .cmt .cmt_btn {
+  float: right;
+  background-color: white;
+  border: none;
+  padding-right: 5px;
+  font-size: 12px;
+}
+.tlk .tlk_comments .cmt .comment_content {
+  padding: 8px 8px;
+  font-size: 13px;
+}
 
 /*community comment_box*/
 .comment_box {
