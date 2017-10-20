@@ -93,7 +93,7 @@ module.exports = function(app, fs)
               }
 			        lock--;
               result.weekly = weekly;
-        			if(lock==0) finishRequest(isWeb, result);;
+        			if(lock==0) finishRequest();;
             });
           } else if(data[i].type == "monthly") {
             var monthly = {};
@@ -109,7 +109,7 @@ module.exports = function(app, fs)
               }
        			  lock--;
               result.monthly = monthly;
-      			  if(lock==0) finishRequest(isWeb, result);;
+      			  if(lock==0) finishRequest();;
             });
           }
         }
@@ -297,7 +297,7 @@ module.exports = function(app, fs)
                           console.log(err);
                         }else {
                           result.reward = reward;
-                          finishRequest(isWeb, result);
+                          finishRequest();
                         }
                       });
                     }
@@ -314,7 +314,7 @@ module.exports = function(app, fs)
               result.STATUS = "OK";
               result.DATA = "fail";
 
-              finishRequest(isWeb, result);
+              finishRequest();
             }
 
 
