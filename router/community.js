@@ -47,12 +47,6 @@ module.exports = function(app, fs)
 		//postData += data;
 		postData.push(data);
 		
-		console.log(data.length);
-		 console.log(data.length);
- console.log(data.length);
- console.log(data.length);
- console.log(data.length);
-
 		console.log(data);
         console.log(postData);
 		dbConnection.query("SELECT * FROM Comment WHERE postId=?",[postid], function(err, data){
@@ -190,27 +184,33 @@ module.exports = function(app, fs)
         console.log(err);
       } else {
         console.log(data);
-
-        var db_str = "SELECT * FROM Comment Where ";
-        for(var i=0; i<data.length; i++){
-          db_str += "postId=" + data[i].postId + " ";
-          if(i != (data.length - 1))
-            db_str += 'OR ';
-        }
-        db_str += "ORDER BY postId DESC, commentId ASC;"
-
-        allData.push(data);
-        dbConnection.query(db_str, function(err, data){
-            if(err) {
-              console.log(err);
-            } else {
-              console.log(allData);
-              console.log(data);
-              allData.push(data);
-              res.render('community-cards', {allData});
-            }
-        });
-
+		
+		if(data.length > 0 ){
+        	var db_str = "SELECT * FROM Comment Where ";
+    	    for(var i=0; i<data.length; i++){
+	          db_str += "postId=" + data[i].postId + " ";
+        	  if(i != (data.length - 1))
+    	        db_str += 'OR ';
+	        }
+        	db_str += "ORDER BY postId DESC, commentId ASC;"
+			allData.push(data);
+        	dbConnection.query(db_str, function(err, data){
+            	if(err) {
+	              console.log(err);
+    	        } else {
+        	      console.log(allData);
+            	  console.log(data);
+              	  
+				  allData.push(data);
+	              res.render('community-cards', {allData});
+    	        }
+        	});
+		} else {
+			console.log("I'm In!!");
+			console.log(allData);
+			res.render('community-cards', {allData});
+		}
+       
       }
     });
   });
