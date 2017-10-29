@@ -211,3 +211,10 @@ form .submit_btn button:hover {
     border: 1px solid rgb(255, 2, 129);
     cursor: pointer;
   }*/
+
+/* juha */
+.user_profile {
+	width: 100px; height: 100px;
+	object-fit: cover;
+    border-radius: 50%;
+}

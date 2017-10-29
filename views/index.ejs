@@ -46,7 +46,7 @@
                 <span>캐릭터</span>
                 <ul class="sub_menu">
                   <li><a href="/character">캐릭터</a></li>
-                  <li></li>
+                  <li><a href="/item">아이템</a></li>
                 </ul>
               </li>
               <li class="main_menu mmu5">
@@ -69,7 +69,7 @@
 
 
 	<% if (username!="guest"){ %>
-    		<img src=<%= profilePicture %> alt="profilePicture">
+    		<img class="user_profile" src=<%= profilePicture %> alt="profilePicture">
 	<% } else{ %>
       	<form action="/auth/facebook" method="get">
         		<button type="submit">페이스북으로 로그인</button>
