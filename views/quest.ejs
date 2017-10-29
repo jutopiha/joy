@@ -6,8 +6,11 @@
     <link rel = "stylesheet" type="text/css" href="../css/index.css"/>
     <link rel = "stylesheet" type="text/css" href="../css/wrapper.css"/>
     <link rel = "stylesheet" type="text/css" href="../css/monthlyStat.css"/>
-	<script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
 
+    <link rel = "stylesheet" type="text/css" href="../css/modal.css"/>
+    <script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+    <script type="text/javascript" src="../js/modal.js"></script>
   </head>
   <body>
     <div class="header">
@@ -79,27 +82,59 @@
 
       <!--주간 지출 목표-->
       <div class="tabpanel" id="panel1" role="tabpanel">
-		<div style="text-align:center">
-			<div style="text-align: center; margin-top : 150px; margin-bottom: 300px">
-         		<p>등록된 퀘스트가 없습니다.</p>
-          		<p>퀘스트를 등록해 주세요.</p>
-          		<button>등록하기</button>
-        </div>
-		</div>
+    		<div style="text-align:center">
+    			<div style="text-align: center; margin-top : 150px; margin-bottom: 300px">
+
+            <!-- 퀘스트 시작하기 모달 -->
+            <div>
+              <div class="intro">
+                <h1>등록된 퀘스트가 없습니다.</h1>
+                <h2>퀘스트를 등록 해 주세요.</h2>
+              </div>
+              <button class="open-modal">새로운 퀘스트 시작하기</button>
+
+              <div class="modal-overlay"></div>
+
+              <div class="modal">
+                <button class="close-modal">×</button>
+                <div class="icon">
+                  <i class="fa fa-user-plus">QUEST</i>
+                  <i class="fa fa-user-plus">✔️</i>
+                </div>
+                <i class="fa fa-user-plus" style="font-size: 23px;">목표 달성 시에는 아이템과 포인트를 얻을 수 있어요!</h1>
+
+                <form action="/quest/start" method="post">
+                  <input class="input-text" type="hidden" name="type" value="weekly"/>
+                  <input class="input-text" type="text" placeholder="당신의 목표 금액은?" name="money" style="margin-top: 20px;"/>
+
+                  <input class="input-submit" type="submit" value="START"/>
+                </form>
+              </div>
+              <svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="filters">
+                  <defs>
+                    <filter id="blur">
+                        <feGaussianBlur id="blur-filter" in="SourceGraphic" stdDeviation="0,0" />
+                    </filter>
+                </defs>
+              </svg>
+            </div>
+          </div>
+    		</div>
       </div>
 
       <!--월간 지출 목표-->
       <div class="tabpanel" id="panel2" role="tabpanel"style="margin-left:100px; margin-right:100px; margin-bottom:300px;">
-			<div class="quest-list">시작일</div>
-	        <p>2017-04-04</p>
-        	<div class="quest-list">종료일</div>
-    	    <p>2017-04-30</p>
-	        <div class="quest-list">목표금액</div>
-	        <p>100000</p>
-	        <div class="quest-list">현재금액</div>
-			<p>55000</p>
+    		<div class="quest-list">시작일</div>
+        <p>2017-04-04</p>
+      	<div class="quest-list">종료일</div>
+  	    <p>2017-04-30</p>
+        <div class="quest-list">목표금액</div>
+        <p>100000</p>
+        <div class="quest-list">현재금액</div>
+  	    <p>55000</p>
       </div>
     </div>
+
 
     <!--footer-->
     <div class="footer">
@@ -107,63 +142,3 @@
     </div>
   </body>
 </html>
-
-<!--태그 자바스크립트-->
-<script>
-  (function() {
-
-  function activateTab() {
-    if(activeTab) {
-      resetTab.call(activeTab);
-    }
-    this.parentNode.className = 'tab tab-active';
-    activeTab = this;
-    activePanel = document.getElementById(activeTab.getAttribute('href').substring                                                                                      (1));
-    activePanel.className = 'tabpanel show';
-    activePanel.setAttribute('aria-expanded', true);
-  }
-
-  function resetTab() {
-    activeTab.parentNode.className = 'tab';
-    if(activePanel) {
-      activePanel.className = 'tabpanel hide';
-      activePanel.setAttribute('aria-expanded', false);
-    }
-  }
-
-  var doc = document,
-      tabs = doc.querySelectorAll('.tab a'),
-      panels = doc.querySelectorAll('.tabpanel'),
-      activeTab = tabs[0],
-      activePanel;
-
-  activateTab.call(activeTab);
-
-  for(var i = tabs.length - 1; i >= 0; i--) {
-    tabs[i].addEventListener('click', activateTab, false);
-  }
-
-  })();
-
-</script>
-<script>
-$(function() {
-  $( "#button" ).click(function() {
-    $( "#button" ).addClass( "onclic", 250, validate);
-  });
-
-  function validate() {
-    setTimeout(function() {
-      $( "#button" ).removeClass( "onclic" );
-      $( "#button" ).addClass( "validate", 450, callback );
-    }, 2250 );
-  }
-    function callback() {
-      setTimeout(function() {
-        $( "#button" ).removeClass( "validate" );
-      }, 1250 );
-    }
-  });
-</script>
-
-
