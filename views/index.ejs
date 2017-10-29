@@ -67,15 +67,17 @@
       <h2>당신만의 맞춤형 가계부</h2>
       <h3>지금 당장 시작해보세요</h3>
 
-
+<div style="margin: 20px;">
 	<% if (username!="guest"){ %>
     		<img class="user_profile" src=<%= profilePicture %> alt="profilePicture">
+
+			<h4> <%= username %> </h4>
 	<% } else{ %>
       	<form action="/auth/facebook" method="get">
         		<button type="submit">페이스북으로 로그인</button>
      		</form>
 	<% } %>
-
+</div>
       <div class="footer">
         <img class="btm_logo" alt=" " src="img/티끌모아태산.png"/>
       </div>
