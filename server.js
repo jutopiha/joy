@@ -44,3 +44,4 @@ var statistic = require('./router/statistic')(app, fs);
 var community = require('./router/community')(app, fs);
 var character = require('./router/character') (app, fs);
 var item = require('./router/item') (app, fs);
+var quest = require('./router/quest') (app, fs);
