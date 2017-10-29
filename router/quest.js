@@ -57,7 +57,7 @@ module.exports = function(app, fs)
     // response
     var finishRequest = function() {
       if(isWeb == true) {
-        res.redirect('/quest');
+        res.render('quest');
       } else{
         res.json(result);
       }
@@ -76,6 +76,8 @@ module.exports = function(app, fs)
       if (err) {
         console.log(err);
       }else {
+
+		  if(data[0] != null) {
 		    var lock = data.length;
         for(var i in data) {
           var endDate;
@@ -109,10 +111,15 @@ module.exports = function(app, fs)
               }
        			  lock--;
               result.monthly = monthly;
-      			  if(lock==0) finishRequest();;
+      			  if(lock==0) finishRequest();
             });
           }
         }
+		}
+		else {
+console.log("c없자나");
+			finishRequest();
+		}
       }
     });
   });
