@@ -18,9 +18,6 @@ dbConnection.connect(function(err){
     }
 });
 
-
-
-
 // 가중치에 따라 랜덤하게 추출
 function weightedRand(spec) {
   var i, j, table=[];
@@ -47,8 +44,32 @@ function selectItem(num) {
 
   return items;
 }
+
+
 module.exports = function(app, fs)
 {
+
+  app.get('/quest2', function(req, res){
+    console.log("***Quest GET Request arrived***");
+    res.render('quest2');
+  });
+
+  app.get('/quest3', function(req, res){
+    console.log("***Quest GET Request arrived***");
+    res.render('quest3');
+  });
+
+  /* quest 시작 */
+  app.post('/quest/start', function(req, res){
+    console.log("***Quest Start POST Request arrived***");
+    console.log("여기에 타입이 온다구!");
+    console.log(req.body.type);
+    console.log(req.body.money);
+
+    res.redirect('/quest2');
+  });
+
+
   /* quest 첫화면 */
   app.get('/quest', function(req, res){
     console.log("***Quest GET Request arrived***");
