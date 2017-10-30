@@ -4,7 +4,7 @@ window.addEventListener("DOMContentLoaded", function(){
   var postid = data[0].postId;
   var userid = data[0].userId;
   var title = data[0].title;
-  var time = data[0].currentTime;
+  var time = data[0].createdTime;
   var content = data[0].content;
   var image = data[0].image;
   var category = data[0].category;
@@ -140,7 +140,7 @@ window.addEventListener("DOMContentLoaded", function(){
     var html;
     var commentid = data.commentId;
     var userid = data.userId;
-    var time = data.currentTime;
+    var time = data.createdTime;
     var content = data.content;
 
     var cmtDiv = doc.createElement("div");

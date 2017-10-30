@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="../css/community.css" />
     <script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
 	<script>
-		const post = <%-JSON.stringify(data)%>;
+		const post = <%-JSON.stringify(postData)%>;
 		console.log(post);
 	</script>
    <script type="text/javascript" src="../js/community_main.js"></script>
@@ -41,6 +41,10 @@
       </div>
 
       <div class="container wrapper">
+		<div class="community_header">
+			<h2>자유게시판</h2>
+		</div>
+		<a class="post_wrt_link" href='/community/post-write'>글 쓰기▶</a>
       </div>
 
       <div class="footer">

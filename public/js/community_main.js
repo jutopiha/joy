@@ -3,8 +3,13 @@ var doc = document;
 window.addEventListener("DOMContentLoaded", function(){
   //포스트 데이터 가져오기
 //  var posts = response.data;
+  var postNum = post[0];
+  console.log(post[0]);
+  console.log(post[1]);
 
-  post.forEach(function(post){
+  var html;
+
+  post[1].forEach(function(post){
     //서버에서 가져온 데이터
     var postid = post.postId;
     var userId = post.userId;
@@ -14,8 +19,6 @@ window.addEventListener("DOMContentLoaded", function(){
     var image = post.image;
 
     //ejs 사용해서 가져오기
-
-    var html;
 
     var aLink = doc.createElement("a");
     aLink.setAttribute('href', '/community/post?postid='+postid);
@@ -53,4 +56,31 @@ window.addEventListener("DOMContentLoaded", function(){
 
     doc.getElementsByClassName('container')[0].appendChild(aLink);
   });
+
+  var category = post[1][0].category;
+  if((postNum % 9) == 0) {
+	if(postNum == 0)
+		return;
+  var moreDiv = doc.createElement("div");
+  moreDiv.className = 'moreDiv';
+
+  var moreForm = doc.createElement("form");
+  moreForm.className = 'moreForm';
+  if(category == '금융지식팁')
+	  moreForm.setAttribute('action', '/community?postNum='+postNum);
+  else
+	  moreForm.setAttribute('action', '/community/joy-free?postNum='+postNum);
+  moreForm.setAttribute('method', 'POST');
+
+  var moreBtn = doc.createElement("button");
+  moreBtn.className = 'moreBtn';
+  moreBtn.setAttribute('type', 'submit');
+  html = 'MORE';
+  moreBtn.innerHTML = html;
+
+  moreForm.appendChild(moreBtn);
+  moreDiv.appendChild(moreForm);
+
+  doc.getElementsByClassName('container')[0].appendChild(moreDiv);
+  }
 });

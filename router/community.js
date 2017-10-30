@@ -21,20 +21,57 @@ dbConnection.connect(function(err){
 module.exports = function(app, fs)
 {
   //금융지식팁 메인페이지
-  app.get('/community', function(req, res){
-    dbConnection.query("SELECT * from Post WHERE category='금융지식팁' ORDER BY postId DESC LIMIT 9;", function(err, data){
+  app.post('/community', function(req, res){
+    var currentUser = req.session.passport.user.userId;
+	var postNum;
+	var postData = [];
+	if(req.query.postNum == undefined){
+		postNum = 9;
+	} else {
+		postNum = req.query.postNum;
+		postNum += 9;
+	}
+
+	dbConnection.query("SELECT * from Post WHERE category='금융지식팁' ORDER BY postId DESC LIMIT ?;",[postNum], function(err, data){
       if(err){
         console.log(err);
       } else {
+		  postData.push(postNum);
 		  console.log(data);
-          res.render('community', {data});
+		  postData.push(data);
+          res.render('community', {postData});
       }
     });
   });
 
+ app.get('/community', function(req, res){
+    var currentUser = req.session.passport.user.userId;
+    var postNum;
+    var postData = [];
+    if(req.query.postNum == undefined){
+        postNum = 9;
+    } else {
+        postNum = req.query.postNum;
+        postNum += 9;
+    }
+
+    dbConnection.query("SELECT * from Post WHERE category='금융지식팁' ORDER BY postId DESC LIMIT ?;",[postNum], function(err, data){
+      if(err){
+        console.log(err);
+      } else {
+          postData.push(postNum);
+          console.log(data);
+          postData.push(data);
+          res.render('community', {postData});
+      }
+    });
+  });
+
+
   //게시글 조회
   app.get('/community/post', function(req, res){
     var postid = req.query.postid;
+	var currentUser = req.session.passport.user.userId;
     var postData = [];
 
     dbConnection.query("SELECT * FROM Post WHERE postId=?;",[postid], function(err, data){
@@ -74,6 +111,7 @@ module.exports = function(app, fs)
   //게시글 수정
   app.post('/community/post-rewrite', function(req, res){
     var postid = req.query.postid;
+	var currentUser = req.session.passport.user.userId;
 
     dbConnection.query("SELECT * FROM Post WHERE postId=?", [postid], function(err, data){
       if(err){
@@ -88,6 +126,7 @@ module.exports = function(app, fs)
   //게시글 수정 완료
   app.post('/community/post-rewrite-complete', function(req, res){
    var postid = req.query.postid;
+
    console.log(req.body.title);
    console.log(req.body.content);
    dbConnection.query("UPDATE Post SET title=?,category=?,content=? WHERE postId=?", [req.body.title, req.body.category, req.body.smarteditor, postid], function(err, data){
@@ -123,9 +162,10 @@ module.exports = function(app, fs)
   //게시글 내 덧글 작성
 	app.post('/community/comment-write', function(req, res){
 		var postid = req.query.postid;
-		var userid = req.query.uid;
+		var currentUser = req.session.passport.user.userId;
 
-		dbConnection.query("INSERT INTO Comment VALUES(DEFAULT, ?,?,DEFAULT,?);",[userid, postid, req.body.content], function(err, data){
+
+		dbConnection.query("INSERT INTO Comment VALUES(DEFAULT, ?,?,DEFAULT,?);",[currentUser, postid, req.body.content], function(err, data){
 		if(err){
 			console.log(err);
 		} else {
@@ -166,24 +206,75 @@ module.exports = function(app, fs)
   });
 
   //자유게시판 메인페이지
-  app.get('/community/joy-free', function(req, res){
-    dbConnection.query("SELECT * from Post WHERE category='자유게시판' ORDER BY postId DESC LIMIT 9;", function(err, data){
+  app.post('/community/joy-free', function(req, res){
+    var currentUser = req.session.passport.user.userId;
+	var postNum;
+    var postData = [];
+    if(req.query.postNum == undefined){
+        postNum = 9;
+    } else {
+        postNum = req.query.postNum;
+        postNum += 9;
+    }
+
+    dbConnection.query("SELECT * from Post WHERE category='자유게시판' ORDER BY postId DESC LIMIT ?;", [postNum],function(err, data){
       if(err){
         console.log(err);
       } else {
-          res.render('community-joy-free', {data});
+		  postData.push(postNum);
+          postData.push(data);
+
+          res.render('community-joy-free', {postData});
       }
     });
   });
 
-  //다짐톡 메인페이지
-  app.get('/community/joy-fighting', function(req, res){
-    var allData = [];
-    dbConnection.query("SELECT * from Post WHERE category='다짐톡' ORDER BY postId DESC LIMIT 9;", function(err, data){
+ app.get('/community/joy-free', function(req, res){
+    var currentUser = req.session.passport.user.userId;
+    var postNum;
+    var postData = [];
+    if(req.query.postNum == undefined){
+        postNum = 9;
+    } else {
+        postNum = req.query.postNum;
+        postNum += 9;
+    }
+
+    dbConnection.query("SELECT * from Post WHERE category='자유게시판' ORDER BY postId DESC LIMIT ?;", [postNum],function(err, data){
       if(err){
         console.log(err);
       } else {
-        console.log(data);
+          postData.push(postNum);
+          postData.push(data);
+
+          res.render('community-joy-free', {postData});
+      }
+    });
+  });
+
+
+  //다짐톡 메인페이지
+  app.post('/community/joy-fighting', function(req, res){
+    var allData = [];
+    var postNum;
+
+	console.log('postNum is ', req.query.postNum);
+	if(req.query.postNum == undefined){
+		postNum = 9;
+	} else {
+		postNum = parseInt(req.query.postNum);
+		postNum *= 2;
+	}
+	console.log(postNum);
+
+	allData.push(postNum);
+
+    var currentUser = req.session.passport.user.userId;
+    dbConnection.query("SELECT * from Post WHERE category='다짐톡' ORDER BY postId DESC LIMIT ?;",[postNum], function(err, data){
+      if(err){
+        console.log(err);
+      } else {
+        console.log('community 다짐톡 post 정보(data)\n'+data);
 		
 		if(data.length > 0 ){
         	var db_str = "SELECT * FROM Comment Where ";
@@ -198,8 +289,8 @@ module.exports = function(app, fs)
             	if(err) {
 	              console.log(err);
     	        } else {
-        	      console.log(allData);
-            	  console.log(data);
+        	      console.log('community 다짐톡 post+comment 정보(allData)\n'+allData);
+            	  console.log('community 다짐톡 comment 정보(data)\n' + data);
               	  
 				  allData.push(data);
 	              res.render('community-cards', {allData});
@@ -215,17 +306,291 @@ module.exports = function(app, fs)
     });
   });
 
-  //소개톡 메인페이지
-  app.get('/community/joy-hello', function(req, res){
-    dbConnection.query("SELECT * from Post WHERE category='소개톡' ORDER BY postId DESC LIMIT 9;", function(err, data){
+ app.get('/community/joy-fighting', function(req, res){
+    var allData = [];
+    var postNum;
+
+    console.log('postNum is ', req.query.postNum);
+    if(req.query.postNum == undefined){
+        postNum =9;
+    } else {
+        postNum = req.query.postNum;
+        postNum += 9;
+    }
+
+    allData.push(postNum);
+
+    var currentUser = req.session.passport.user.userId;
+    dbConnection.query("SELECT * from Post WHERE category='다짐톡' ORDER BY postId DESC LIMIT 9;", function(err, data){
       if(err){
         console.log(err);
       } else {
-          res.render('community-joy-hello', {data});
+        console.log('community 다짐톡 post 정보(data)\n'+data);
+
+        if(data.length > 0 ){
+            var db_str = "SELECT * FROM Comment Where ";
+            for(var i=0; i<data.length; i++){
+              db_str += "postId=" + data[i].postId + " ";
+              if(i != (data.length - 1))
+                db_str += 'OR ';
+            }
+            db_str += "ORDER BY postId DESC, commentId ASC;"
+            allData.push(data);
+            dbConnection.query(db_str, function(err, data){
+                if(err) {
+                  console.log(err);
+                } else {
+                  console.log('community 다짐톡 post+comment 정보(allData)\n'+allData);
+                  console.log('community 다짐톡 comment 정보(data)\n' + data);
+
+                  allData.push(data);
+                  res.render('community-cards', {allData});
+                }
+            });
+        } else {
+			 console.log("I'm In!!");
+            console.log(allData);
+            res.render('community-cards', {allData});
+        }
+
       }
     });
   });
 
+  app.post('/community/joy-fighting/write-complete', function(req, res){
+	 var currentUser = req.session.passport.user.userId;
+
+	dbConnection.query("INSERT INTO Post VALUES(DEFAULT,?,?,DEFAULT,'',?,'')",[currentUser, '다짐톡', req.body.content ],function(err, data){
+		if(err) {
+			console.log(err);
+		} else {
+			res.redirect('/community/joy-fighting');
+		}
+
+	});
+
+  });
+
+  app.post('/community/joy-fighting/rewrite-complete',function(req, res){
+	var postid = req.query.postid;
+	console.log('Im in bebe');
+	dbConnection.query('UPDATE Post SET content = ? WHERE postId = ?;',[req.body.content, postid],function(err, data){
+		if(err) {
+			console.log(err);
+		} else {
+			res.redirect('/community/joy-fighting');
+		}
+
+
+	});
+
+  });
+
+  app.post('/community/joy-fighting/delete', function(req, res){
+	var postid = req.query.postid;
+	dbConnection.query('DELETE FROM Post WHERE postId = ?', [postid], function(err, data){
+		if(err) {
+			console.log(err);
+		} else {
+			res.redirect('/community/joy-fighting');
+		}
+	});
+  });
+
+  app.post('/community/joy-fighting/comment-write',function(req,res){
+	var postid = req.query.postid;
+	var content = req.body.content;
+
+	dbConnection.query("INSERT INTO Comment VALUES(DEFAULT,'1234', ?, DEFAULT, ?)",[postid, content],function(err, data){
+		if(err) {
+			console.log(err);
+		} else {
+			res.redirect('/community/joy-fighting');
+		}
+	});
+  });
+
+  app.post('/community/joy-fighting/comment-rewrite', function(req, res){
+	var commentid = req.query.commentid;
+
+	dbConnection.query('UPDATE Comment SET content = ? WHERE commentId = ?', [req.body.content, commentid], function(err, data){
+		if(err) {
+			console.log(err);
+		} else {
+			res.redirect('/community/joy-fighting');
+		}
+	});
+  });
+
+  app.post('/community/joy-fighting/comment-delete',function(req, res){
+	var commentid = req.query.commentid;
+	
+	dbConnection.query('DELETE FROM Comment WHERE commentId = ?',[commentid],function(err, data){
+		if(err){
+			console.log(err);
+		} else {
+			res.redirect('/community/joy-fighting');
+		}
+	});	
+  });
+
+  //소개톡 메인페이지
+  app.post('/community/joy-hello', function(req, res){
+	var allData = [];
+	 var currentUser = req.session.passport.user.userId;
+    dbConnection.query("SELECT * from Post WHERE category='소개톡' ORDER BY postId DESC LIMIT 9;", function(err, data){
+      if(err){
+        console.log(err);
+      } else {
+        console.log('community 소개톡 post 정보(data)\n'+data);
+
+        if(data.length > 0 ){
+            var db_str = "SELECT * FROM Comment Where ";
+            for(var i=0; i<data.length; i++){
+              db_str += "postId=" + data[i].postId + " ";
+              if(i != (data.length - 1))
+                db_str += 'OR ';
+            }
+            db_str += "ORDER BY postId DESC, commentId ASC;"
+            allData.push(data);
+            dbConnection.query(db_str, function(err, data){
+                if(err) {
+                  console.log(err);
+                } else {
+                  console.log('community 소개톡 post+comment 정보(allData)\n'+allData);
+                  console.log('community 소개톡 comment 정보(data)\n' + data);
+
+                  allData.push(data);
+                  res.render('community-cards', {allData});
+                }
+            });
+        } else {
+            console.log("I'm In!!");
+            console.log(allData);
+            res.render('community-cards', {allData});
+        }
+
+      }
+    });
+
+  });
+
+app.get('/community/joy-hello', function(req, res){
+    var allData = [];
+     var currentUser = req.session.passport.user.userId;
+    dbConnection.query("SELECT * from Post WHERE category='소개톡' ORDER BY postId DESC LIMIT 9;", function(err, data){
+      if(err){
+        console.log(err);
+      } else {
+        console.log('community 소개톡 post 정보(data)\n'+data);
+
+        if(data.length > 0 ){
+            var db_str = "SELECT * FROM Comment Where ";
+            for(var i=0; i<data.length; i++){
+              db_str += "postId=" + data[i].postId + " ";
+              if(i != (data.length - 1))
+                db_str += 'OR ';
+            }
+            db_str += "ORDER BY postId DESC, commentId ASC;"
+            allData.push(data);
+            dbConnection.query(db_str, function(err, data){
+                if(err) {
+                  console.log(err);
+                } else {
+                  console.log('community 소개톡 post+comment 정보(allData)\n'+allData);
+                  console.log('community 소개톡 comment 정보(data)\n' + data);
+
+                  allData.push(data);
+                  res.render('community-cards', {allData});
+                }
+            });
+        } else {
+            console.log("I'm In!!");
+            console.log(allData);
+            res.render('community-cards', {allData});
+        }
+
+      }
+    });
+
+  });
+
+ app.post('/community/joy-hello/write-complete', function(req, res){
+    var currentUser = req.session.passport.user.userId;
+
+    dbConnection.query("INSERT INTO Post VALUES(DEFAULT,?,?,DEFAULT,'',?,'')",[currentUser, '소개톡', req.body.content ],function(err, data){
+        if(err) {
+            console.log(err);
+        } else {
+            res.redirect('/community/joy-hello');
+        }
+
+    });
+
+  });
+
+  app.post('/community/joy-hello/rewrite-complete',function(req, res){
+    var postid = req.query.postid;
+    dbConnection.query('UPDATE Post SET content = ? WHERE postId = ?;',[req.body.content, postid],function(err, data){
+        if(err) {
+            console.log(err);
+        } else {
+            res.redirect('/community/joy-hello');
+        }
+
+
+    });
+
+  });
+
+  app.post('/community/joy-hello/delete', function(req, res){
+    var postid = req.query.postid;
+    dbConnection.query('DELETE FROM Post WHERE postId = ?', [postid], function(err, data){
+        if(err) {
+            console.log(err);
+        } else {
+            res.redirect('/community/joy-hello');
+        }
+    });
+  });
+
+
+  app.post('/community/joy-hello/comment-write',function(req,res){
+    var postid = req.query.postid;
+    var content = req.body.content;
+
+    dbConnection.query("INSERT INTO Comment VALUES(DEFAULT,'1234', ?, DEFAULT, ?)",[postid, content],function(err, data){
+        if(err) {
+            console.log(err);
+        } else {
+            res.redirect('/community/joy-hello');
+        }
+    });
+  });
+
+  app.post('/community/joy-hello/comment-rewrite', function(req, res){
+    var commentid = req.query.commentid;
+
+    dbConnection.query('UPDATE Comment SET content = ? WHERE commentId = ?', [req.body.content, commentid], function(err, data){
+        if(err) {
+            console.log(err);
+        } else {
+            res.redirect('/community/joy-hello');
+        }
+    });
+  });
+
+  app.post('/community/joy-hello/comment-delete',function(req, res){
+    var commentid = req.query.commentid;
+
+    dbConnection.query('DELETE FROM Comment WHERE commentId = ?',[commentid],function(err, data){
+        if(err){
+            console.log(err);
+        } else {
+            res.redirect('/community/joy-hello');
+        }
+    });
+  });
   //게시글 작성 페이지
   app.get('/community/post-write', function(req, res){
     res.render('community-write',{});
@@ -235,7 +600,9 @@ module.exports = function(app, fs)
 	app.post('/community/post-write-complete', function(req, res){
 		var result = {};
 		var json = {};
-		var uid = '1234';
+//		var uid = '1234';
+		 var currentUser = req.session.passport.user.userId;
+
 
 		//community POST request
 		console.log("***New COMMUNITY POST Request id arrived***");
@@ -246,7 +613,7 @@ module.exports = function(app, fs)
 		console.log(json.smarteditor);
 
 		//insert to DB
-		dbConnection.query("INSERT into Post VALUES(DEFAULT,?,?,DEFAULT,?,?,?);",[uid, json.category, json.title, json.smarteditor, json.image], function(err, result, fields){
+		dbConnection.query("INSERT into Post VALUES(DEFAULT,?,?,DEFAULT,?,?,?);",[currentUser, json.category, json.title, json.smarteditor, json.image], function(err, result, fields){
 			if(err) {
 			console.log(err);
 //				result.CODE = 400;

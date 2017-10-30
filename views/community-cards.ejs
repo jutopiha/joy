@@ -14,7 +14,7 @@
 	  } else {data = '아무것도 없음';}
       console.log(data);
     </script>
-    <!-- <script src="../js/community-talk.js"></script> -->
+    <script src="../js/community-cards.js"></script>
   </head>
   <body>
       <div class="header">
@@ -46,50 +46,6 @@
       <div class="container wrapper">
         <div class="talk_box">
 
-          <div class="talks">
-            <div id="tlk_id" class="tlk" >
-              <span>ID</span>
-              <span>Time</span>
-              <form class="tlk_delete" action="/community/joy-fighting/delete?postid='tlkid'" method="POST">
-                <button class="tlk_btn" type="submit">삭제</button>
-              </form>
-              <button class="tlk_btn talk-rewrite" onClick="talk_rewriteClick('tlk_id')">수정</button>
-              <div class="tlk_content">
-                <p>
-                  Hello
-                </p>
-              </div>
-              <span class="open_btn" onClick="openComment()">덧글 숨기기</span>
-              <div class="tlk_comments open_cmt">
-                <div class="cmt commentid1">
-                  <span>아이디</span>
-                  <span>2017/10/09 18:00</span>
-                  <form class="cmt_delete" action="community/comment-delete?commentid=1" method="DELETE">
-                    <button class="cmt_btn" type="submit">삭제</button>
-                  </form>
-                  <button class="comment-rewrite cmt_btn" onclick="rewriteClick('commentid')">수정</button>
-                  <div class="comment_content">
-                    <p>
-                      덧글 덧글내용내용
-                    </p>
-                  </div>
-                </div>
-                <div class="cmt commentid2">
-                  <span>아이디</span>
-                  <span>2017/10/09 18:00</span>
-                  <form class="cmt_delete" action="community/comment-delete?commentid=1" method="DELETE">
-                    <button class="cmt_btn" type="submit">삭제</button>
-                  </form>
-                  <button class="comment-rewrite cmt_btn" onclick="rewriteClick('commentid')">수정</button>
-                  <div class="comment_content">
-                    <p>
-                      덧글 덧글내용내용
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
