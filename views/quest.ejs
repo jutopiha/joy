@@ -82,8 +82,17 @@
 
       <!--주간 지출 목표-->
       <div class="tabpanel" id="panel1" role="tabpanel">
-        <% if weekly == {} {%>
-      		<div style="text-align:center">
+        <% if weekly != {} {%>
+          <div class="quest-list">시작일</div>
+          <p><%= weekly.startDate %></p>
+          <div class="quest-list">종료일</div>
+          <p><%= weekly.endDate %></p>
+          <div class="quest-list">목표금액</div>
+          <p><%= weekly.goalMoney %></p>
+          <div class="quest-list">현재금액</div>
+          <p><%= weekly.nowMoney %></p>
+        <% } else { %>
+          <div style="text-align:center">
       			<div style="text-align: center; margin-top : 150px; margin-bottom: 300px">
 
               <!-- 퀘스트 시작하기 모달 -->
@@ -120,22 +129,23 @@
                 </svg>
               </div>
             </div>
-      		</div>`
-        <% } else { %>
-          <div class="quest-list">시작일</div>
-          <p><%= weekly.startDate %></p>
-          <div class="quest-list">종료일</div>
-          <p><%= weekly.endDate %></p>
-          <div class="quest-list">목표금액</div>
-          <p><%= weekly.goalMoney %></p>
-          <div class="quest-list">현재금액</div>
-          <p><%= weekly.nowMoney %></p>
+      		</div>
         <% } %>
       </div>
 
       <!--월간 지출 목표-->
       <div class="tabpanel" id="panel2" role="tabpanel"style="margin-left:100px; margin-right:100px; margin-bottom:300px;">
-        <% if monthly == {} {%>
+        <% if monthly != {} {%>
+          <div class="quest-list">시작일</div>
+          <p><%= monthly.startDate %></p>
+          <div class="quest-list">종료일</div>
+          <p><%= monthly.endDate %></p>
+          <div class="quest-list">목표금액</div>
+          <p><%= monthly.goalMoney %></p>
+          <div class="quest-list">현재금액</div>
+          <p><%= monthly.nowMoney %></p>
+
+        <% } else { %>
           <div style="text-align:center">
             <div style="text-align: center; margin-top : 150px; margin-bottom: 300px">
 
@@ -174,15 +184,6 @@
               </div>
             </div>
           </div>
-        <% } else { %>
-          <div class="quest-list">시작일</div>
-          <p><%= monthly.startDate %></p>
-        	<div class="quest-list">종료일</div>
-    	    <p><%= monthly.endDate %></p>
-          <div class="quest-list">목표금액</div>
-          <p><%= monthly.goalMoney %></p>
-          <div class="quest-list">현재금액</div>
-    	    <p><%= monthly.nowMoney %></p>
         <% } %>
       </div>
     </div>
