@@ -68,6 +68,8 @@ module.exports = function(app, fs)
     var isWeb = false;
   	var weekly = {};
   	var monthly = {};
+    var today = parseInt(moment().format('YYYYMMDD'));
+
     if((req.query.uid == undefined)){ //web
       isWeb = true;
       currentUser = req.session.passport.user.userId;
@@ -88,6 +90,11 @@ module.exports = function(app, fs)
               weekly.startDate = data[i].startDate;
               weekly.endDate = parseInt(moment(data[0].startDate, 'YYYYMMDD').add(+7, 'days').format('YYYYMMDD'));
               weekly.goalMoney = data[i].money;
+              if ( today > weekly.endDate ){
+                weekly.isEnd = 0;
+              } else {
+                weekly.isEnd = 1;
+              }
               dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId = ? AND date >= ? AND date <= ?;',[currentUser, weekly.startDate, weekly.endDate], function(err, data){
                 if(data[0].money != null ) {
                   weekly.nowMoney = data[0].money;
@@ -103,6 +110,11 @@ module.exports = function(app, fs)
               monthly.startDate = data[i].startDate;
               monthly.endDate = parseInt(moment(data[0].startDate, 'YYYYMMDD').add(1, 'M').format('YYYYMMDD'));
               monthly.goalMoney = data[i].money;
+              if ( today > monthly.endDate ){
+                monthly.isEnd = 0;
+              } else {
+                monthly.isEnd = 1;
+              }
               dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId = ? AND date >= ? AND date <= ?;',[currentUser, monthly.startDate, monthly.endDate], function(err, data){
                 if(data[0].money != null ) {
                   monthly.nowMoney = data[0].money;

@@ -83,8 +83,8 @@
 
       <!--주간 지출 목표-->
       <div class="tabpanel" id="panel1" role="tabpanel">
-        
-	<% if (JSON.stringify(weekly) != '{}') {%> 
+
+	<% if (JSON.stringify(weekly) != '{}') {%>
 		<div class="quest-list">시작일</div>
           <p><%= weekly.startDate %></p>
           <div class="quest-list">종료일</div>
@@ -93,6 +93,15 @@
           <p><%= weekly.goalMoney %></p>
           <div class="quest-list">현재금액</div>
           <p><%= weekly.nowMoney %></p>
+          <% if (weekly.isEnd != 0) {%>
+            <form action="/quest/complete?type=weekly" method="get">
+              <input class="input-submit" type="submit" value="보상을 받을래요!"/>
+            </form>
+          <% } else { %>
+            <form action="/quest/giveup?type=weekly" method="get">
+              <input class="input-submit" type="submit" value="포기하겠습니다."/>
+            </form>
+          <% } %>
         <% } else { %>
           <div style="text-align:center">
       			<div style="text-align: center; margin-top : 150px; margin-bottom: 300px">
@@ -137,8 +146,8 @@
 
       <!--월간 지출 목표-->
       <div class="tabpanel" id="panel2" role="tabpanel"style="margin-left:100px; margin-right:100px; margin-bottom:300px;">
-	<% if (JSON.stringify(monthly) != '{}') {%> 
-	
+	<% if (JSON.stringify(monthly) != '{}') {%>
+
           <div class="quest-list">시작일</div>
           <p><%= monthly.startDate %></p>
           <div class="quest-list">종료일</div>
@@ -147,7 +156,15 @@
           <p><%= monthly.goalMoney %></p>
           <div class="quest-list">현재금액</div>
           <p><%= monthly.nowMoney %></p>
-
+          <% if (monthly.isEnd != 0) {%>
+            <form action="/quest/complete?type=monthly" method="get">
+              <input class="input-submit" type="submit" value="보상을 받을래요!"/>
+            </form>
+          <% } else { %>
+            <form action="/quest/giveup?type=monthly" method="get">
+              <input class="input-submit" type="submit" value="포기하겠습니다."/>
+            </form>
+          <% } %>
         <% } else { %>
           <div style="text-align:center">
             <div style="text-align: center; margin-top : 150px; margin-bottom: 300px">
