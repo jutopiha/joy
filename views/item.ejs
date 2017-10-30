@@ -6,8 +6,9 @@
     <link rel = "stylesheet" type="text/css" href="../css/index.css"/>
     <link rel = "stylesheet" type="text/css" href="../css/wrapper.css"/>
     <link rel = "stylesheet" type="text/css" href="../css/item.css"/>
+
 	<script type ="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
-    <script type = "text/javascript" src="../js/item.js"></script>
+
   </head>
   <body>
 
@@ -114,7 +115,7 @@
       </div>
 	</div>
 
-    <form action="/item/buy" method="post">
+    <form class="f_buy"action="/item/buy" method="post">
       <div id="div_item_list">
         <ul class="item_list">
             <li>원두 (50p)
@@ -228,7 +229,7 @@
               </select>
             </li>
 			<div style="border:none; margin:30px 0; width:100%">
-              <button type="submit" id="submit_btn" onClick='calculateMoney()' >구입하기</button>
+			<button type="button" class="b_buy">구입하기</button>
 			</div>
         </ul>
       </div>
@@ -241,5 +242,138 @@
     </div>
   </body>
 </html>
+<script>
+var doc = document;
+var item = [
+        {
+        "name": "원두",
+        "num": 0,
+        "point": 50
+    },
+        {
+        "name": "물",
+        "num": 0,
+        "point": 70
+    },
+        {
+        "name": "얼음",
+        "num": 0,
+        "point": 30
+    },
+        {
+        "name": "우유",
+        "num": 0,
+        "point": 150
+    },
+        {
+        "name": "초코",
+        "num": 0,
+        "point": 350
+    },
+        {
+        "name": "녹차가루",
+        "num": 0,
+        "point": 500
+    },
+        {
+        "name": "자몽청",
+        "num": 0,
+        "point": 700
+    },
+        {
+        "name": "탄산수",
+        "num": 0,
+        "point": 200
+    },
+        {
+        "name": "시럽",
+        "num": 0,
+        "point": 200
+    },
+        {
+        "name": "파란색소",
+        "num": 0,
+        "point": 800
+    },
+        {
+        "name": "레몬",
+        "num": 0,
+        "point": 1000
+    }
+];
+var totalMoney = 0;
 
+function item0Select(){
+  item[0].num = document.getElementById("item0").value;
+}
+
+function item1Select(){
+  item[1].num = document.getElementById("item1").value;
+}
+
+function item2Select(){
+  item[2].num  = document.getElementById("item2").value;
+}
+
+function item3Select(){
+  item[3].num  = document.getElementById("item3").value;
+}
+
+function item4Select(){
+  item[4].num  = document.getElementById("item4").value;
+}
+
+function item5Select(){
+  item[5].num  = document.getElementById("item5").value;
+}
+
+function item6Select(){
+  item[6].num  = document.getElementById("item6").value;
+}
+
+function item7Select(){
+  item[7].num  = document.getElementById("item7").value;
+}
+
+function item8Select(){
+  item[8].num  = document.getElementById("item8").value;
+}
+
+function item9Select(){
+  item[9].num  = document.getElementById("item9").value;
+}
+
+function item10Select(){
+  item[10].num  = document.getElementById("item10").value;
+}
+
+$(".b_buy").click(function(){
+
+	var message= "";
+	for(var i=0; i<11; i++){
+    	totalMoney += item[i].num * item[i].point;
+        if(item[i].num != 0)
+        	message += item[i].name+"  "+item[i].num+"개"+"\n";
+    }
+
+	if( totalMoney >= <%=item.point%>){
+		alert("포인트가 부족합니다.");
+		return;
+	}
+	else{
+	    message += "총 "+totalMoney+"   point\n";
+  	 	message += "구입하시겠어요?";
+		alert(message);
+
+        var inputTag = doc.createElement("input");
+        inputTag.setAttribute('type', 'hidden');
+        inputTag.setAttribute('name','point');
+        inputTag.setAttribute('value', totalMoney);
+
+        doc.getElementsByTagName("form")[0].appendChild(inputTag);
+	
+		$(".f_buy").submit();
+	}
+});
+</script>
 
