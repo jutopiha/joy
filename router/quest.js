@@ -91,10 +91,13 @@ module.exports = function(app, fs)
               weekly.endDate = parseInt(moment(data[0].startDate, 'YYYYMMDD').add(+7, 'days').format('YYYYMMDD'));
               weekly.goalMoney = data[i].money;
               if ( today > weekly.endDate ){
-                weekly.isEnd = 0;
-              } else {
                 weekly.isEnd = 1;
+              } else {
+                weekly.isEnd = 0;
               }
+				console.log(weekly.endDate);
+				console.log(today);
+				console.log(weekly.isEnd);
               dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId = ? AND date >= ? AND date <= ?;',[currentUser, weekly.startDate, weekly.endDate], function(err, data){
                 if(data[0].money != null ) {
                   weekly.nowMoney = data[0].money;
@@ -111,9 +114,9 @@ module.exports = function(app, fs)
               monthly.endDate = parseInt(moment(data[0].startDate, 'YYYYMMDD').add(1, 'M').format('YYYYMMDD'));
               monthly.goalMoney = data[i].money;
               if ( today > monthly.endDate ){
-                monthly.isEnd = 0;
-              } else {
                 monthly.isEnd = 1;
+              } else {
+                monthly.isEnd = 0;
               }
               dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId = ? AND date >= ? AND date <= ?;',[currentUser, monthly.startDate, monthly.endDate], function(err, data){
                 if(data[0].money != null ) {
@@ -174,20 +177,20 @@ module.exports = function(app, fs)
     var currentUser;
     var isWeb = false;
 
-
     if((req.query.uid == undefined)){ //web
       isWeb = true;
       currentUser = req.session.passport.user.userId;
     } else { //android
       currentUser = req.query.uid;
     }
-
+console.log(req.query.type);
     dbConnection.query('DELETE FROM Quest WHERE userId = ? AND type = ?;',[currentUser, req.query.type], function(err,data){
       if (err) {
         result.CODE = 400;
         result.STATUS = "Database Error";
         throw error;
       }else {
+	console.log("isis ok");
         result.CODE = 200;
         result.STATUS = "OK";
       }

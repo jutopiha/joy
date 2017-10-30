@@ -94,11 +94,14 @@
           <div class="quest-list">현재금액</div>
           <p><%= weekly.nowMoney %></p>
           <% if (weekly.isEnd != 0) {%>
-            <form action="/quest/complete?type=weekly" method="get">
+            <form action="/quest/complete" method="get">
+              
+<input class="input-text" type="hidden" name="type" value="weekly"/>
               <input class="input-submit" type="submit" value="보상을 받을래요!"/>
             </form>
           <% } else { %>
-            <form action="/quest/giveup?type=weekly" method="get">
+            <form action="/quest/giveup" method="get">
+				<input class="input-text" type="hidden" name="type" value="weekly"/>
               <input class="input-submit" type="submit" value="포기하겠습니다."/>
             </form>
           <% } %>
@@ -157,12 +160,14 @@
           <div class="quest-list">현재금액</div>
           <p><%= monthly.nowMoney %></p>
           <% if (monthly.isEnd != 0) {%>
-            <form action="/quest/complete?type=monthly" method="get">
+            <form action="/quest/complete" method="get">
               <input class="input-submit" type="submit" value="보상을 받을래요!"/>
+<input class="input-text" type="hidden" name="type" value="monthly"/>
             </form>
           <% } else { %>
-            <form action="/quest/giveup?type=monthly" method="get">
+            <form action="/quest/giveup" method="get">
               <input class="input-submit" type="submit" value="포기하겠습니다."/>
+<input class="input-text" type="hidden" name="type" value="monthly"/>
             </form>
           <% } %>
         <% } else { %>
