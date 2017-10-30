@@ -95,7 +95,7 @@
 
               <div class="modal-overlay"></div>
 
-              <div class="modal">
+              <div id="juha" class="modal">
                 <button class="close-modal">×</button>
                 <div class="icon">
                   <i class="fa fa-user-plus">QUEST</i>
@@ -125,13 +125,13 @@
       <!--월간 지출 목표-->
       <div class="tabpanel" id="panel2" role="tabpanel"style="margin-left:100px; margin-right:100px; margin-bottom:300px;">
     		<div class="quest-list">시작일</div>
-        <p>2017-04-04</p>
+        <p><%= monthly.startDate %></p>
       	<div class="quest-list">종료일</div>
-  	    <p>2017-04-30</p>
+  	    <p><%= monthly.endDate %></p>
         <div class="quest-list">목표금액</div>
-        <p>100000</p>
+        <p><%= monthly.goalMoney %></p>
         <div class="quest-list">현재금액</div>
-  	    <p>55000</p>
+  	    <p><%= monthly.nowMoney %></p>
       </div>
     </div>
 

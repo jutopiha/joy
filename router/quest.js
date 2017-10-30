@@ -48,37 +48,17 @@ function selectItem(num) {
 
 module.exports = function(app, fs)
 {
-
-  app.get('/quest2', function(req, res){
-    console.log("***Quest GET Request arrived***");
-    res.render('quest2');
-  });
-
-  app.get('/quest3', function(req, res){
-    console.log("***Quest GET Request arrived***");
-    res.render('quest3');
-  });
-
-  /* quest 시작 */
-  app.post('/quest/start', function(req, res){
-    console.log("***Quest Start POST Request arrived***");
-    console.log("여기에 타입이 온다구!");
-    console.log(req.body.type);
-    console.log(req.body.money);
-
-    res.redirect('/quest2');
-  });
-
-
   /* quest 첫화면 */
   app.get('/quest', function(req, res){
     console.log("***Quest GET Request arrived***");
 
     var result = {};
     // response
-    var finishRequest = function() {
+    var finishRequest = function(weekly, monthly) {
       if(isWeb == true) {
-        res.render('quest');
+		console.log(weekly);
+		console.log(monthly);
+        res.render('quest', {weekly:weekly, monthly:monthly, test:"juha"});
       } else{
         res.json(result);
       }
@@ -86,6 +66,8 @@ module.exports = function(app, fs)
 
     var currentUser;
     var isWeb = false;
+	var weekly = {};
+	var monthly = {};
     if((req.query.uid == undefined)){ //web
       isWeb = true;
       currentUser = req.session.passport.user.userId;
@@ -97,13 +79,11 @@ module.exports = function(app, fs)
       if (err) {
         console.log(err);
       }else {
-
-		  if(data[0] != null) {
-		    var lock = data.length;
+			var lock = data.length;
+		  if(lock != 0) {
         for(var i in data) {
           var endDate;
           if(data[i].type == "weekly") {
-            var weekly = {};
             weekly.type = "weekly";
             weekly.startDate = data[i].startDate;
             weekly.endDate = parseInt(moment(data[0].startDate, 'YYYYMMDD').add(+7, 'days').format('YYYYMMDD'));
@@ -116,10 +96,10 @@ module.exports = function(app, fs)
               }
 			        lock--;
               result.weekly = weekly;
-        			if(lock==0) finishRequest();;
+console.log("weekly");
+        			if(lock==0) finishRequest(weekly, monthly);;
             });
           } else if(data[i].type == "monthly") {
-            var monthly = {};
             monthly.type = "monthly";
             monthly.startDate = data[i].startDate;
             monthly.endDate = parseInt(moment(data[0].startDate, 'YYYYMMDD').add(1, 'M').format('YYYYMMDD'));
@@ -132,14 +112,15 @@ module.exports = function(app, fs)
               }
        			  lock--;
               result.monthly = monthly;
-      			  if(lock==0) finishRequest();
+console.log("monthly");
+      			  if(lock==0) finishRequest(weekly, monthly);
             });
           }
         }
 		}
 		else {
-console.log("c없자나");
-			finishRequest();
+console.log("nothing");
+			if(lock==0) finishRequest(weekly, monthly);
 		}
       }
     });
