@@ -227,7 +227,7 @@ module.exports = function(app, fs)
       if (err) {
         console.log(err);
       }else {
-        if(data != null) {
+        if(data.length != 0) {
           var quest = {};
           var reward = {};
           quest.type = data[0].type;
