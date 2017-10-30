@@ -56,9 +56,9 @@ module.exports = function(app, fs)
     // response
     var finishRequest = function(weekly, monthly) {
       if(isWeb == true) {
-		console.log(weekly);
-		console.log(monthly);
-        res.render('quest', {weekly:weekly, monthly:monthly, test:"juha"});
+	      console.log(weekly);
+        console.log(monthly);
+        res.render('quest', {weekly:weekly, monthly:monthly});
       } else{
         res.json(result);
       }
@@ -66,8 +66,8 @@ module.exports = function(app, fs)
 
     var currentUser;
     var isWeb = false;
-	var weekly = {};
-	var monthly = {};
+  	var weekly = {};
+  	var monthly = {};
     if((req.query.uid == undefined)){ //web
       isWeb = true;
       currentUser = req.session.passport.user.userId;
@@ -79,49 +79,46 @@ module.exports = function(app, fs)
       if (err) {
         console.log(err);
       }else {
-			var lock = data.length;
-		  if(lock != 0) {
-        for(var i in data) {
-          var endDate;
-          if(data[i].type == "weekly") {
-            weekly.type = "weekly";
-            weekly.startDate = data[i].startDate;
-            weekly.endDate = parseInt(moment(data[0].startDate, 'YYYYMMDD').add(+7, 'days').format('YYYYMMDD'));
-            weekly.goalMoney = data[i].money;
-            dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId = ? AND date >= ? AND date <= ?;',[currentUser, weekly.startDate, weekly.endDate], function(err, data){
-              if(data[0].money != null ) {
-                weekly.nowMoney = data[0].money;
-              } else {
-                weekly.nowMoney = 0;
-              }
-			        lock--;
-              result.weekly = weekly;
-console.log("weekly");
-        			if(lock==0) finishRequest(weekly, monthly);;
-            });
-          } else if(data[i].type == "monthly") {
-            monthly.type = "monthly";
-            monthly.startDate = data[i].startDate;
-            monthly.endDate = parseInt(moment(data[0].startDate, 'YYYYMMDD').add(1, 'M').format('YYYYMMDD'));
-            monthly.goalMoney = data[i].money;
-            dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId = ? AND date >= ? AND date <= ?;',[currentUser, monthly.startDate, monthly.endDate], function(err, data){
-              if(data[0].money != null ) {
-                monthly.nowMoney = data[0].money;
-              } else {
-                monthly.nowMoney = 0;
-              }
-       			  lock--;
-              result.monthly = monthly;
-console.log("monthly");
-      			  if(lock==0) finishRequest(weekly, monthly);
-            });
+  			var lock = data.length;
+  		  if(lock != 0) {
+          for(var i in data) {
+            var endDate;
+            if(data[i].type == "weekly") {
+              weekly.type = "weekly";
+              weekly.startDate = data[i].startDate;
+              weekly.endDate = parseInt(moment(data[0].startDate, 'YYYYMMDD').add(+7, 'days').format('YYYYMMDD'));
+              weekly.goalMoney = data[i].money;
+              dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId = ? AND date >= ? AND date <= ?;',[currentUser, weekly.startDate, weekly.endDate], function(err, data){
+                if(data[0].money != null ) {
+                  weekly.nowMoney = data[0].money;
+                } else {
+                  weekly.nowMoney = 0;
+                }
+  			        lock--;
+                result.weekly = weekly;
+          			if(lock==0) finishRequest(weekly, monthly);;
+              });
+            } else if(data[i].type == "monthly") {
+              monthly.type = "monthly";
+              monthly.startDate = data[i].startDate;
+              monthly.endDate = parseInt(moment(data[0].startDate, 'YYYYMMDD').add(1, 'M').format('YYYYMMDD'));
+              monthly.goalMoney = data[i].money;
+              dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId = ? AND date >= ? AND date <= ?;',[currentUser, monthly.startDate, monthly.endDate], function(err, data){
+                if(data[0].money != null ) {
+                  monthly.nowMoney = data[0].money;
+                } else {
+                  monthly.nowMoney = 0;
+                }
+         			  lock--;
+                result.monthly = monthly;
+        			  if(lock==0) finishRequest(weekly, monthly);
+              });
+            }
           }
         }
-		}
-		else {
-console.log("nothing");
-			if(lock==0) finishRequest(weekly, monthly);
-		}
+    		else {
+    			if(lock==0) finishRequest(weekly, monthly);
+    		}
       }
     });
   });
