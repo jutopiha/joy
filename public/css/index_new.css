@@ -1,0 +1,236 @@
+/*font*/
+@font-face {
+  font-family: 'BareunDotum';
+  font-style: normal;
+  font-weight: 400;
+  src: url('//cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kpa/BareunDotum/BareunDotumOTFPro2.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kpa/BareunDotum/BareunDotumOTFPro2.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'BareunDotum';
+  font-style: normal;
+  font-weight: 700;
+  src: url('//cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kpa/BareunDotum/BareunDotumOTFPro3.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kpa/BareunDotum/BareunDotumOTFPro3.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'BareunDotum';
+  font-style: normal;
+  font-weight: 300;
+  src: url('//cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kpa/BareunDotum/BareunDotumOTFPro1.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kpa/BareunDotum/BareunDotumOTFPro1.woff') format('woff');
+}
+/*init*/
+li { list-style: none;}
+span { font-family: 'BareunDotum'; width: 100px;}
+/*body {background:rgb(242, 233, 236);}*/
+body {background:#E64C3D;}
+a { text-decoration: none;;}
+
+/*design*/
+.btm_logo {
+  height: 55px;
+  display: block;
+  margin: auto;
+}
+
+.header {
+  padding-bottom: 30px;
+  border-bottom: 2px rgb(255, 2, 129) solid;
+  overflow: hidden;
+  height:100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("../img/main_hand.png")
+  /*background-color: white;*/
+}
+#main_img{
+  width:100%;
+  height:auto;
+}
+.main_wrapper{
+    width: 1000px;
+    margin: 0 auto;
+    position: relative;
+    height:100%;
+}
+
+.logo {
+  float: left;
+  height: 100px;
+  margin-right: 30px;
+
+}
+
+
+.nav { float: right;}
+.top_menu {}
+.top_menu > ul > li {float: left; text-align: center;}
+.top_menu > ul > li > span { line-height: 100px;}
+.main_menu {color: lightgray; }
+.mmu1 {width: 100px;}
+.mmu2 {width: 100px;}
+.mmu3 {width: 100px;}
+.mmu4 {width: 100px;}
+.mmu5 {width: 100px;}
+
+/*.sub_menu*/
+.top_menu > ul > li > ul { position: absolute;
+  z-index: 900;
+  background-color: transparent;
+  top: 80px;
+  visibility: hidden;
+}
+/* 간격간격 */
+.top_menu > ul > li > ul > li {
+  width: 100px;
+  height: 30px;
+  text-align: center;
+}
+.top_menu > ul > li > ul > li > a {
+  font-size: 13px;
+  height: 60px;
+  color: white;
+  line-height: 80px;
+}
+
+/*--------community menu---------*/
+
+.com_nav {}
+
+.com_main_menu {overflow: hidden;}
+.com_main_menu > li {
+  float: left;
+  margin: 0 30px;
+}
+.com_main_menu > li > span {
+  line-height: 100px;
+}
+.com_main_menu > li > span > a {
+  font-size: 15px;
+  color: #444;
+}
+
+/*---------로그인 회원가입 디자인------------*/
+.user_menu { display: inline-block; width:125px; text-align: center;position: relative;float: right;}
+.user_menu li { display: inline-block;}
+.user_menu li span {padding: 7px; color:rgb(0, 158, 208); font-weight: 300; font-size: 13px;}
+
+/*---------홈 컨텐츠 디자인------------*/
+.home_content{
+  text-align: center;
+  padding: 150px 0 0;
+}
+.home_content h2 {
+  font-size: 55px;
+  margin-bottom: 10px;
+  color: white;
+}
+.home_content h3 {
+  font-size: 47px;
+}
+.home_content button {
+  margin: 55px 0;
+  width: 300px; height: 50px;
+  border: 0;
+  border-radius: 5px;
+  background-color: white;
+  font-weight: bold;
+  font-size: 15px;
+  color: rgb(255, 2, 129);
+  cursor: pointer;
+}
+
+.home_content .footer {
+  margin-top: 30px;
+}
+
+/*-----------입력 양식 디자인--------------*/
+.content h2 {
+  text-align: center;
+  padding: 50px 0 0;
+  font-size: 30px;
+  color: rgb(255, 2, 129);
+  /*border-bottom: 2px solid rgb(255, 2, 129);*/
+}
+.input_form {
+  width: 410px;
+  margin: 0 auto 100px;
+  padding: 60px 0 0;
+  overflow: hidden;
+}
+
+.input_form div { margin: 20px 0;}
+.input_form div span {
+  margin: 10px 5px;
+  font-size: 18px; font-weight: 700;
+  display: block;
+}
+.input_form div input {width: 400px; height: 45px; }
+.input_form div select {width: 400px; height: 45px; }
+
+/*SUBMIT button*/
+form .submit_btn { margin: 100px 0 60px;}
+form .submit_btn button {
+  width: 140px; height: 60px;
+  border: 1px solid rgb(255, 2, 129);
+  background-color: rgb(255, 2, 129);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  display: block;
+  margin: 0 auto;
+}
+
+/*.input_form .submit_btn { margin: 100px 0 60px;}
+.input_form .submit_btn button {
+  width: 140px; height: 60px;
+  border: 1px solid rgb(255, 2, 129);
+  background-color: rgb(255, 2, 129);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  display: block;
+  margin: 0 auto;
+}*/
+
+/*animation*/
+.nav span:hover {
+  color: rgb(255, 2, 129);
+  cursor: pointer;
+}
+
+.com_main_menu span:hover a{
+  color: rgb(255, 2, 129);
+  cursor: pointer;
+}
+
+.main_menu:hover .sub_menu{
+  transform: translateY(-25px);
+  visibility: visible;
+  display: block; cursor: pointer;
+}
+
+.sub_menu:hover {
+  display: block; cursor: pointer;
+}
+
+form .submit_btn button:hover {
+    color: rgb(255, 2, 129);
+    background-color: rgba(255, 3, 129, 0.17);
+    border: 1px solid rgb(255, 2, 129);
+    cursor: pointer;
+  }
+
+/*.input_form .submit_btn button:hover {
+    color: rgb(255, 2, 129);
+    background-color: rgba(255, 3, 129, 0.17);
+    border: 1px solid rgb(255, 2, 129);
+    cursor: pointer;
+  }*/
+
+/* juha */
+.user_profile {
+	width: 100px; height: 100px;
+	object-fit: cover;
+    border-radius: 50%;
+}
