@@ -34,7 +34,7 @@ module.exports = function(app, fs)
       username = "guest";
     }
 
-    res.render('index', {
+    res.render('index_new', {
         title: "MY HOMEPAGE",
         length: 5,
         username: username,
@@ -55,6 +55,8 @@ module.exports = function(app, fs)
 	console.log("nowDate=" + nowDate +"fromDate="+ fromDate);
 
     dbConnection.query('SELECT * FROM User WHERE userId = ?;',[req.query.uid], function(err, data){
+	  console.log('point error 찾기: data='+data+'\n');
+	  console.log('point error 찾기: data[0]='+data[0]+'\n');
       mainObject.point = data[0].point;
       mainObject.name = data[0].name;
       dbConnection.query('SELECT money FROM Expense WHERE userId = ? ORDER BY expenseId DESC LIMIT 1;',[req.query.uid, nowDate], function(err, data){
