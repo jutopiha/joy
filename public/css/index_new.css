@@ -25,6 +25,28 @@ span { font-family: 'BareunDotum'; width: 100px;}
 /*body {background:rgb(242, 233, 236);}*/
 body {background:#E64C3D;}
 a { text-decoration: none; color: lightgray;}
+a:hover {
+  color: #E64C3D;
+  cursor: pointer;
+}
+
+#fb_button {
+  width: 280px; height: 44px;
+  border: 0;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 16px;
+  color: lightgray;
+  cursor: pointer;
+  background-color: #3b5998;
+  position:absolute;
+  right:90px;
+  bottom:70px;
+}
+
+#fb_button:hover {
+  background-color:  #324772;
+}
 
 /*design*/
 .btm_logo {
@@ -35,7 +57,6 @@ a { text-decoration: none; color: lightgray;}
 
 .header {
   padding-bottom: 30px;
-  border-bottom: 2px rgb(255, 2, 129) solid;
   overflow: hidden;
   height:100vh;
   background-repeat: no-repeat;
@@ -77,13 +98,13 @@ a { text-decoration: none; color: lightgray;}
 .top_menu > ul > li > ul { position: absolute;
   z-index: 900;
   background-color: transparent;
-  top: 80px;
+  top: 68px;
   visibility: hidden;
 }
 /* 간격간격 */
 .top_menu > ul > li > ul > li {
   width: 100px;
-  height: 30px;
+  height: 24px;
   text-align: center;
 }
 .top_menu > ul > li > ul > li > a {
@@ -195,7 +216,7 @@ form .submit_btn button {
 
 /*animation*/
 .nav span:hover {
-  color: rgb(255, 2, 129);
+  color: #E64C3D;
   cursor: pointer;
 }
 

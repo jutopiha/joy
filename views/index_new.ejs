@@ -7,16 +7,12 @@
     <link rel="stylesheet" type="text/css" href="./css/wrapper.css" />
   </head>
   <body>
-      <div class="header">
-        <div class="main_wrapper">
-          <a href="/">
-            <img class="logo" src="img/티끌모아태산_white.png" />
-          </a>
+    <div class="header">
+      <div class="main_wrapper">
+        <a href="/">
+          <img class="logo" src="img/티끌모아태산_white.png" />
+        </a>
 
-        <!-- <ul class="user_menu">
-          <li><span>로그인</span></li>
-          <li><span>회원가입</span></li>
-        </ul> -->
         <div class="nav">
           <div class="top_menu">
             <ul>
@@ -56,32 +52,33 @@
               </li>
             </ul>
           </div>
-        </div>
+        </div> <!-- nav -->
 
-      </div>
     </div>
 
-    <div class="full home_content">
-      <img style = "width: 400px;" alt=" " src="img/capture_main.png"/>
-      <!--<h2>당신만의 맞춤형 가계부</h2>-->
-      <!--<h3>지금 당장 시작해보세요</h3>-->
+    <% if (username!="guest"){ %>
+          <img class="user_profile" src=<%= profilePicture %> alt="profilePicture">
 
-<div style="margin: 20px;">
-	<% if (username!="guest"){ %>
-    		<img class="user_profile" src=<%= profilePicture %> alt="profilePicture">
+        <h4> <%= username %> </h4>
+    <% } else{ %>
+          <form action="/auth/facebook" method="get">
+              <button id="fb_button" type="submit">
+                <img style="width: 10px; margin-right:4px;" src="/img/login_facebook.png" alt="f">
+                페이스북으로 로그인하기</button>
+          </form>
+    <% } %>
 
-			<h4> <%= username %> </h4>
-	<% } else{ %>
-      	<form action="/auth/facebook" method="get">
-        		<button type="submit">페이스북으로 로그인</button>
-     		</form>
-	<% } %>
-</div>
-      <div class="footer">
-        <img class="btm_logo" alt=" " src="img/티끌모아태산.png"/>
-      </div>
+  </div> <!-- header -->
+
+  <div class="home_content">
+    <img style = "width: 400px;" alt=" " src="img/capture_main.png"/>
+
+
+
+    <div class="footer">
+      <img class="btm_logo" alt=" " src="img/티끌모아태산.png"/>
     </div>
-
+  </div>
 
 
   </body>
