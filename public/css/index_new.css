@@ -24,7 +24,7 @@ li { list-style: none;}
 span { font-family: 'BareunDotum'; width: 100px;}
 /*body {background:rgb(242, 233, 236);}*/
 body {background:#E64C3D;}
-a { text-decoration: none;;}
+a { text-decoration: none; color: lightgray;}
 
 /*design*/
 .btm_logo {
