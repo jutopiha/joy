@@ -25,7 +25,7 @@ span { font-family: 'BareunDotum'; width: 100px;}
 /*body {background:rgb(242, 233, 236);}*/
 body {background:#E64C3D;}
 a { text-decoration: none; color: lightgray;}
-a:hover {
+li:hover {
   color: #E64C3D;
   cursor: pointer;
 }
@@ -50,9 +50,11 @@ a:hover {
 
 /*design*/
 .btm_logo {
+  padding-top:30px;
   height: 55px;
   display: block;
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .header {
@@ -87,6 +89,7 @@ a:hover {
 .top_menu {}
 .top_menu > ul > li {float: left; text-align: center;}
 .top_menu > ul > li > span { line-height: 100px;}
+.top_menu > ul > li > a > span { line-height: 100px;}
 .main_menu {color: lightgray; }
 .mmu1 {width: 100px;}
 .mmu2 {width: 100px;}
@@ -139,7 +142,7 @@ a:hover {
 /*---------홈 컨텐츠 디자인------------*/
 .home_content{
   text-align: center;
-  padding: 150px 0 0;
+  padding: 0;
 }
 .home_content h2 {
   font-size: 55px;
@@ -161,8 +164,65 @@ a:hover {
   cursor: pointer;
 }
 
-.home_content .footer {
+.home_content{
   margin-top: 30px;
+}
+
+/*-----------홈 설명 디자인---------------*/
+.section{
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+.section1, .section3, .section5{
+  background-color: #E64C3D;
+}
+.section2, .section4, .section6{
+  background-color: #91a8d0;
+}
+.main_content_img{
+  position: relative;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+#one_img{
+  background-image: url("../img/1.png");
+}
+#two_img{
+  background-image: url("../img/2.png");
+}
+#three_img{
+  background-image: url("../img/3.png");
+}
+#four_img{
+  background-image: url("../img/4.png");
+}
+#five_img{
+  background-image: url("../img/5.png");
+}
+#six_img{
+  background-image: url("../img/6.png");
+  padding-bottom: 60px;
+}
+.right_content1{
+  position: absolute;
+  top:45%;
+  right:8%;
+  color:white;
+  width: 50%;
+}
+.right_content2{
+  position: absolute;
+  top:45%;
+  right:8%;
+  color:black;
+  width: 50%;
+}
+.right_content_title{
+  font-size: 30px;
 }
 
 /*-----------입력 양식 디자인--------------*/
@@ -220,6 +280,7 @@ form .submit_btn button {
   cursor: pointer;
 }
 
+
 .com_main_menu span:hover a{
   color: rgb(255, 2, 129);
   cursor: pointer;
@@ -251,6 +312,9 @@ form .submit_btn button:hover {
 
 /* juha */
 .user_profile {
+  position:absolute;
+  right:90px;
+  bottom:70px;
 	width: 100px; height: 100px;
 	object-fit: cover;
     border-radius: 50%;
