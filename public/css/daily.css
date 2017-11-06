@@ -1,0 +1,218 @@
+
+@import url(https://fonts.googleapis.com/css?family=Oswald:300);
+
+/*-- first must include this css code --*/
+body{
+   font-family: 'Oswald', sans-serif;
+}
+
+
+
+a{
+  text-decoration:none;
+  color: #fff;
+}
+
+.daily_box {
+  width: 780px;
+  margin: 0 auto;
+}
+
+.daily_box .daily_date_picker {overflow: auto;}
+.daily_box .daily_date_picker form {float: right; margin-bottom: 15px;}
+.daily_box .daily_date_picker form input {
+  width: 200px;
+  height: 40px;
+  margin-right: 10px;
+}
+.daily_box .daily_date_picker form button {
+  width: 70px;
+  height: 40px;
+  font-weight: bold;
+  color: rgb(255, 2, 129);
+  border: 2px solid rgb(255, 2, 129);
+  border-radius: 5px;
+  background: white;
+}
+
+.daily_box #daily_income {
+
+}
+.daily_box #daily_expense {}
+
+/*----------- title -----------*/
+.title{
+  text-align:center;
+  padding-bottom:35px;
+  padding-left:10px;
+  font-weight:200;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.4);
+}
+
+/*------------ table -----------*/
+
+.table{
+  position:relative;
+  float: left;
+  width:350px;
+  margin:10px 0;
+  margin-top: 20px;
+  background: #fff;
+  text-align:center;
+  height:auto;
+  margin-bottom:90px;
+  -webkit-transition:all .3s linear;
+  transition:all .3s linear;
+}
+
+title:hover {
+    -webkit-animation: shake 1s;
+    animation: shake 1s;
+}
+
+/*------------- table title ------------*/
+
+.table-title{
+  text-align:center;
+  background:#34495e;
+  padding:19px;
+  margin-top:-20px;
+}
+
+.basic-title{
+  background:#F39C12;
+}
+
+.premium-title{
+  background:#e74c3c;
+}
+
+.ultimate-title{
+  background:#2ecc71;
+}
+
+
+/*-----------------------------*/
+
+/*---------------- table list ----------*/
+
+.table-list{
+  list-style-type:none;
+  margin-top:0px;
+}
+
+.table-list li{
+  padding:15px;
+  border-bottom:1px solid #ecf0f1;
+  color:#2c3e50;
+  overflow: hidden;
+}
+
+.table-list li:nth-child(2n){
+  background:#ecf0f1;
+}
+
+
+i{
+  float: left;
+  color:#2ecc71;
+  margin:4px 0;
+}
+
+/*------------ price ------------*/
+.price{
+  color:#fff;
+  background:#2c3e50;
+  height:70px;
+  overflow:hidden;
+  padding-top:8px;
+  margin-bottom:-28px;
+  font-size:1.9em;
+  font-weight:bold;
+  text-align:center;
+}
+
+.price sup{
+  padding:10px;
+  font-size:0.6em;
+}
+
+/*----------- buy link ----------*/
+.buy{
+  position:absolute;
+  transform:rotate(-45deg);
+  -webkit-transform:rotate(-45deg);
+  display:block;
+  line-height:3.4;
+  width:90px;
+  height:90px;
+  font-size:1.7em;
+  border-radius:50%;
+  text-align:center;
+  margin-top: -50px;
+}
+
+ .basic{
+   z-index:1;
+  background:#1BBC9B;
+  left:227px;
+   transition:all .3s linear;
+   -webkit-transition:all .3s linear;
+
+}
+
+.basic:hover{
+   border:3px solid rgba(255,255,255,0.2);
+  box-shadow:0 0 0 12px rgba(27,188,155,0.3);
+  transform:rotate(360deg);
+  -webkit-transform:rotate(360deg);
+  transition:all .3s linear ;
+  -webkit-transition:all .3s linear ;
+}
+
+.premium{
+  z-index:1;
+  background:#EF4836;
+  left:227px;
+  transition:all .3s linear;
+   -webkit-transition:all .3s linear;
+
+}
+
+.premium:hover{
+  border:3px solid rgba(255,255,255,0.2);
+  box-shadow:0 0 0 12px rgba(230,75,59,0.3);
+   transform:rotate(360deg);
+  -webkit-transform:rotate(360deg);
+  transition:all .3s linear ;
+  -webkit-transition:all .3s linear ;
+}
+
+.ultimate{
+  z-index:1;
+  background:#F7CA18;
+  left:227px;
+  transition:all .3s linear;
+   -webkit-transition:all .3s linear;
+}
+
+.ultimate:hover{
+  border:3px solid rgba(255,255,255,0.2);
+  box-shadow:0 0 0 12px rgba(247,202,24,0.3);
+   transform:rotate(360deg);
+  -webkit-transform:rotate(360deg);
+  transition:all .3s linear ;
+  -webkit-transition:all .3s linear ;
+}
+
+/*-------------------------*/
+
+.daily_category {
+  float: right;
+  background:#e74c3c;
+  color:#fff;
+  padding:5px;
+  border-radius:6px;
+}
+
+.table-list span {width: 80px;}
