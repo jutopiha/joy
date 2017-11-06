@@ -22,6 +22,12 @@ dbConnection.connect(function(err){
 //module.exports는 server.js에서 모듈로 불러올 수 있도록 사용됨
 module.exports = function(app, fs)
 {
+
+  //ejs HTML 파일에서 데이터 사용하기
+  app.get('/kids', function(req, res){
+    res.render('kids');
+  });
+
   //ejs HTML 파일에서 데이터 사용하기
   app.get('/', function(req, res){
     var username;
@@ -55,7 +61,7 @@ module.exports = function(app, fs)
 	console.log("nowDate=" + nowDate +"fromDate="+ fromDate);
 
     dbConnection.query('SELECT * FROM User WHERE userId = ?;',[req.query.uid], function(err, data){
-	  
+
 	  console.log('point error 찾기: data='+data+'\n');
 	  console.log('point error 찾기: data[0]='+data[0]+'\n');
       mainObject.point = data[0].point;
