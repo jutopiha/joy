@@ -2,6 +2,12 @@
 //커뮤니티
 var mysql = require('mysql');
 var dotenv = require('dotenv').config();
+var aws = require('aws-sdk');
+var multer = require('multer');
+var multerS3 = require('multer-s3');
+
+var memorystorage = multer.memoryStorage();
+var upload = multer({ storage: memorystorage });
 
 /*connect MySQL*/
 var dbConnection = mysql.createConnection({
@@ -23,13 +29,14 @@ module.exports = function(app, fs)
   //금융지식팁 메인페이지
   app.post('/community', function(req, res){
     var currentUser = req.session.passport.user.userId;
+	if(currentUser == undefined) {res.render('logIn');}
 	var postNum;
 	var postData = [];
 	if(req.query.postNum == undefined){
 		postNum = 9;
 	} else {
-		postNum = req.query.postNum;
-		postNum += 9;
+		postNum = parseInt(req.query.postNum);
+		postNum *= 2;
 	}
 
 	dbConnection.query("SELECT * from Post WHERE category='금융지식팁' ORDER BY postId DESC LIMIT ?;",[postNum], function(err, data){
@@ -45,14 +52,18 @@ module.exports = function(app, fs)
   });
 
  app.get('/community', function(req, res){
+	console.log(req.session.passport);
+	if(req.session.passport == undefined){
+		res.render('logIn');
+	} else {
     var currentUser = req.session.passport.user.userId;
     var postNum;
     var postData = [];
     if(req.query.postNum == undefined){
         postNum = 9;
     } else {
-        postNum = req.query.postNum;
-        postNum += 9;
+        postNum = parseInt(req.query.postNum);
+        postNum *= 2;
     }
 
     dbConnection.query("SELECT * from Post WHERE category='금융지식팁' ORDER BY postId DESC LIMIT ?;",[postNum], function(err, data){
@@ -65,15 +76,18 @@ module.exports = function(app, fs)
           res.render('community', {postData});
       }
     });
+}
   });
 
 
   //게시글 조회
   app.get('/community/post', function(req, res){
     var postid = req.query.postid;
+	if(req.session.passport == undefined){res.render('logIn');}
+	else {
 	var currentUser = req.session.passport.user.userId;
     var postData = [];
-
+	postData.push(currentUser);
     dbConnection.query("SELECT * FROM Post WHERE postId=?;",[postid], function(err, data){
       if(err){
         console.log(err);
@@ -106,11 +120,14 @@ module.exports = function(app, fs)
         });
       }
     });
+	}
   });
 
   //게시글 수정
   app.post('/community/post-rewrite', function(req, res){
     var postid = req.query.postid;
+	if(req.session.passport == undefined) {res.render('logIn');}
+	else {
 	var currentUser = req.session.passport.user.userId;
 
     dbConnection.query("SELECT * FROM Post WHERE postId=?", [postid], function(err, data){
@@ -121,12 +138,15 @@ module.exports = function(app, fs)
    	    res.render('community-rewrite', {data});
       }
     });
+	}
   });
 
   //게시글 수정 완료
   app.post('/community/post-rewrite-complete', function(req, res){
    var postid = req.query.postid;
-
+   if(req.session.passport == undefined) {res.render('logIn');}
+   else{
+   var currentUser = req.session.passport.user.userId;
    console.log(req.body.title);
    console.log(req.body.content);
    dbConnection.query("UPDATE Post SET title=?,category=?,content=? WHERE postId=?", [req.body.title, req.body.category, req.body.smarteditor, postid], function(err, data){
@@ -136,12 +156,14 @@ module.exports = function(app, fs)
 			res.redirect('/community/post?postid='+postid);
 		}
 	});
+	}
   });
 
   //게시글 삭제
   app.post('/community/post-delete', function(req, res){
     var postid = req.query.postid;
-
+	if(req.session.passport == undefined) {res.render('logIn');}
+	else {
     //게시글 내 덧글 정보 삭제
     dbConnection.query("DELETE FROM Comment WHERE postId=?",[postid],function(err, data){
       if(err){
@@ -157,13 +179,16 @@ module.exports = function(app, fs)
         });
       }
     });
+	}
   });
 
   //게시글 내 덧글 작성
 	app.post('/community/comment-write', function(req, res){
 		var postid = req.query.postid;
+		if(req.session.passport == undefined) {res.render('logIn');}
+		else {
 		var currentUser = req.session.passport.user.userId;
-
+		
 
 		dbConnection.query("INSERT INTO Comment VALUES(DEFAULT, ?,?,DEFAULT,?);",[currentUser, postid, req.body.content], function(err, data){
 		if(err){
@@ -171,7 +196,8 @@ module.exports = function(app, fs)
 		} else {
 			res.redirect('/community/post?postid='+postid);
 		}
-	});
+		});
+	}
 	});
 
   //게시글 내 덧글 삭제
@@ -207,7 +233,9 @@ module.exports = function(app, fs)
 
   //자유게시판 메인페이지
   app.post('/community/joy-free', function(req, res){
-    var currentUser = req.session.passport.user.userId;
+    if(req.session.passport == undefined){res.render('logIn');}
+	else {
+	var currentUser = req.session.passport.user.userId;
 	var postNum;
     var postData = [];
     if(req.query.postNum == undefined){
@@ -227,9 +255,13 @@ module.exports = function(app, fs)
           res.render('community-joy-free', {postData});
       }
     });
+	}
   });
 
  app.get('/community/joy-free', function(req, res){
+ 
+    if(req.session.passport == undefined){res.render('logIn');}
+    else {
     var currentUser = req.session.passport.user.userId;
     var postNum;
     var postData = [];
@@ -250,13 +282,20 @@ module.exports = function(app, fs)
           res.render('community-joy-free', {postData});
       }
     });
+	}
   });
 
 
   //다짐톡 메인페이지
   app.post('/community/joy-fighting', function(req, res){
-    var allData = [];
+    
+    if(req.session.passport == undefined){res.render('logIn');}
+    else {
+	var currentUser = req.session.passport.user.userId;
+	var allData = [];
     var postNum;
+
+	allData.push(currentUser);
 
 	console.log('postNum is ', req.query.postNum);
 	if(req.query.postNum == undefined){
@@ -269,7 +308,6 @@ module.exports = function(app, fs)
 
 	allData.push(postNum);
 
-    var currentUser = req.session.passport.user.userId;
     dbConnection.query("SELECT * from Post WHERE category='다짐톡' ORDER BY postId DESC LIMIT ?;",[postNum], function(err, data){
       if(err){
         console.log(err);
@@ -304,12 +342,14 @@ module.exports = function(app, fs)
        
       }
     });
+	}
   });
 
  app.get('/community/joy-fighting', function(req, res){
     var allData = [];
     var postNum;
-
+	if(req.session.passport == undefined){res.render('logIn');}
+	else {
     console.log('postNum is ', req.query.postNum);
     if(req.query.postNum == undefined){
         postNum =9;
@@ -321,6 +361,8 @@ module.exports = function(app, fs)
     allData.push(postNum);
 
     var currentUser = req.session.passport.user.userId;
+	allData.push(currentUser);
+
     dbConnection.query("SELECT * from Post WHERE category='다짐톡' ORDER BY postId DESC LIMIT 9;", function(err, data){
       if(err){
         console.log(err);
@@ -355,6 +397,7 @@ module.exports = function(app, fs)
 
       }
     });
+	}
   });
 
   app.post('/community/joy-fighting/write-complete', function(req, res){
@@ -437,7 +480,9 @@ module.exports = function(app, fs)
   //소개톡 메인페이지
   app.post('/community/joy-hello', function(req, res){
 	var allData = [];
-	 var currentUser = req.session.passport.user.userId;
+	if(req.session.passport == undefined){res.render('logIn');}
+	else { 
+    var currentUser = req.session.passport.user.userId;
     dbConnection.query("SELECT * from Post WHERE category='소개톡' ORDER BY postId DESC LIMIT 9;", function(err, data){
       if(err){
         console.log(err);
@@ -472,12 +517,14 @@ module.exports = function(app, fs)
 
       }
     });
-
+	}
   });
 
 app.get('/community/joy-hello', function(req, res){
-    var allData = [];
-     var currentUser = req.session.passport.user.userId;
+    var allData = [];     
+    if(req.session.passport == undefined){res.render('logIn');}
+    else {
+	var currentUser = req.session.passport.user.userId;
     dbConnection.query("SELECT * from Post WHERE category='소개톡' ORDER BY postId DESC LIMIT 9;", function(err, data){
       if(err){
         console.log(err);
@@ -512,7 +559,7 @@ app.get('/community/joy-hello', function(req, res){
 
       }
     });
-
+	}
   });
 
  app.post('/community/joy-hello/write-complete', function(req, res){
