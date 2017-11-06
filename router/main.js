@@ -55,10 +55,12 @@ module.exports = function(app, fs)
 	console.log("nowDate=" + nowDate +"fromDate="+ fromDate);
 
     dbConnection.query('SELECT * FROM User WHERE userId = ?;',[req.query.uid], function(err, data){
+	  
 	  console.log('point error 찾기: data='+data+'\n');
 	  console.log('point error 찾기: data[0]='+data[0]+'\n');
       mainObject.point = data[0].point;
       mainObject.name = data[0].name;
+	  mainObject.birth = data[0].birth;
       dbConnection.query('SELECT money FROM Expense WHERE userId = ? ORDER BY expenseId DESC LIMIT 1;',[req.query.uid, nowDate], function(err, data){
 
         if (data[0] != null) {
@@ -85,19 +87,18 @@ module.exports = function(app, fs)
             }
 
 
-            dbConnection.query('SELECT sum(money) as money FROM Income WHERE userId =? AND date > ? AND date < ?;',[req.query.uid, fromDate, nowDate], function(err, data){
+            dbConnection.query('SELECT sum(money) as money FROM Income WHERE userId =? AND date >= ? AND date <= ?;',[req.query.uid, fromDate, nowDate], function(err, data){
               if(err) {
                  console.log(err);
               }
-
-          	  if (data[0] != null) {
+          	  if (data[0].money != null) {
                 console.log("monthlyIncome:"+data[0].money);
            	    mainObject.monthlyIncome = data[0].money;
           	  } else {
                 mainObject.monthlyIncome = 0;
               }
               dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId =? AND date > ? AND date < ?;',[req.query.uid, fromDate, nowDate], function(err, data){
-            		if (data[0] != null) {
+            		if (data[0].money != null) {
                   console.log("monthlyExpense:"+data[0].money);
                   mainObject.monthlyExpense = data[0].money;
             		} else {
