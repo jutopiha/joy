@@ -39,8 +39,13 @@ module.exports = function(app, fs)
   	});
 
   });
+
+	 app.get('/quest/web', function(req, res) {
+        res.render('quest', {income: 5000, expense: 10000});
+    });
+
 	app.get('/statistic/web', function(req, res) {
-    	res.render('dailyStat', {income: 5000, expense: 10000});
+    	res.render('daily', {income: 5000, expense: 10000});
 	});
 	/*----------------------monthly statistics------------------------*/
   app.get('/statistic/monthly', function(req, res){
