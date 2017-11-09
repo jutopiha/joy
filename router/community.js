@@ -524,6 +524,17 @@ app.get('/community/joy-hello', function(req, res){
     var allData = [];     
     if(req.session.passport == undefined){res.render('logIn');}
     else {
+
+	console.log('postNum is ', req.query.postNum);
+    if(req.query.postNum == undefined){
+        postNum =9;
+    } else {
+        postNum = req.query.postNum;
+        postNum += 9;
+    }
+
+    allData.push(postNum);
+
 	var currentUser = req.session.passport.user.userId;
     dbConnection.query("SELECT * from Post WHERE category='소개톡' ORDER BY postId DESC LIMIT 9;", function(err, data){
       if(err){

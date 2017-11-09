@@ -103,7 +103,7 @@ module.exports = function(app, fs)
           	  } else {
                 mainObject.monthlyIncome = 0;
               }
-              dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId =? AND date > ? AND date < ?;',[req.query.uid, fromDate, nowDate], function(err, data){
+              dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId =? AND date >= ? AND date <= ?;',[req.query.uid, fromDate, nowDate], function(err, data){
             		if (data[0].money != null) {
                   console.log("monthlyExpense:"+data[0].money);
                   mainObject.monthlyExpense = data[0].money;
@@ -138,7 +138,7 @@ module.exports = function(app, fs)
     console.log("***New EXPENSE POST Request is arrived***");
   	//web에서 받은 json 데이터 사전처리
   	if(uid=='web'){
-  		uid = '1234';
+  		uid = req.session.passport.user.userId;
 
   		//날짜 시간
   		req.body.date = moment(req.body.date, 'YYYYMMDD').format('YYYYMMDD');
@@ -168,7 +168,7 @@ module.exports = function(app, fs)
         result.STATUS = "Created";
         result.DATA = json;
       }
-	  if(uid == '1234'){
+	  if(uid != req.query.uid){
 		res.redirect('/');
 	  } else{
       	res.json(result);
@@ -182,16 +182,27 @@ module.exports = function(app, fs)
   app.post('/post/income', function(req, res){
     var result = {};
     var json = {};
+	var uid = req.query.uid;
+	if(req.session.passport) {
+		uid = req.session.passport.user.userId;
+		 //날짜 시간
+        req.body.date = moment(req.body.date, 'YYYYMMDD').format('YYYYMMDD');
+        req.body.time = moment(req.body.time, 'HHmm').format('HHmm');
+        //console.log(req.body.date);
+        req.body.date = parseInt(req.body.date);
+        req.body.time = parseInt(req.body.time);
+        //console.log(req.body.time);
 
+	} else{
     // income request
     console.log("***New INCOME POST Request is arrived***");
 
   	// parse body
   	json = JSON.parse(req.body);
   	console.log(json);
-
+	}
   	// insert to DB
-  	dbConnection.query('INSERT Income VALUES (DEFAULT,?,?,?,?,?,?);', [req.query.uid, json.date, json.time, parseInt(json.money),
+  	dbConnection.query('INSERT Income VALUES (DEFAULT,?,?,?,?,?,?);', [uid, json.date, json.time, parseInt(json.money),
                         json.memo, json.category], function (err, results, fields) {
       if (err) {
         result.CODE = 400;

@@ -44,19 +44,34 @@ module.exports = function(app, fs)
     var allData = [];
     var date;
     var currentUser = req.session.passport.user.userId;
-    if(req.body.date)
-      date = parseInt(moment(req.body.date, 'YYYYMMDD').format('YYYYMMDD'));
-    date = parseInt(moment().format('YYYYMMDD'));
+	console.log(req.query.date);
 
-    dbConnection.query('SELECT SUM(money) FROM Income WHERE userId = ? AND date =?;', [currentUser, date], function(err, data){
+    if(req.query.date)
+	{
+	  console.log("1");
+      date = parseInt(moment(req.query.date, 'YYYYMMDD').format('YYYYMMDD'));
+	}
+	else{
+	console.log("2");
+      date = parseInt(moment().format('YYYYMMDD'));
+	}
+
+	console.log(date);
+
+    dbConnection.query('SELECT SUM(money) AS totalIncome FROM Income WHERE userId = ? AND date =?;', [currentUser, date], function(err, data){
       if(err){
         console.log(err);
       } else {
+		if(data[0].totalIncome == null)
+			data[0].totalIncome = 0;
         allData.push(data);
-        dbConnection.query('SELECT SUM(money) FROM Expense WHERE userId = ? AND date =?;',[currentUser, date],function(err, data){
+        dbConnection.query('SELECT SUM(money) AS totalExpense FROM Expense WHERE userId = ? AND date =?;',[currentUser, date],function(err, data){
             if(err){
               console.log(err);
             } else {
+				if(data[0].totalExpense == null)
+					data[0].totalExpense = 0;
+     
               allData.push(data);
               dbConnection.query('SELECT * FROM Income WHERE userId = ? AND date =?;', [currentUser, date],function(err, data){
                   if(err) {

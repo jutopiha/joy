@@ -141,7 +141,7 @@ console.log(req.query.type+"번 캐릭터를 풀려고 해");
           break;
         case 2:
           if(item.bean>=2 && item.milk>=4 && item.ice>=2) {
-            item.bean -= 3;
+            item.bean -= 2;
             item.milk -= 4;
             item.ice -= 2;
 
