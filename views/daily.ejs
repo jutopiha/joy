@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -8,6 +9,13 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://github.com/daneden/animate.css/blob/master/animate.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script>
+		var data;
+		if(<%-JSON.stringify(allData)%>.length > 0){
+        data = <%-JSON.stringify(allData)%>;
+      } else {data = '아무것도 없음';}
+	</script>
+	<script src='../js/daily.js'></script>
   </head>
   <body>
     <div class="header">

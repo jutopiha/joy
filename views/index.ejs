@@ -38,7 +38,7 @@
               <li class="main_menu mmu3">
                 <span>퀘스트</span>
                 <ul class="sub_menu">
-                  <li><a href="/quest/web">퀘스트</a></li>
+                  <li><a href="/quest">퀘스트</a></li>
                   <li></li>
                 </ul>
               </li>
@@ -63,13 +63,13 @@
       </div>
     </div>
 
-    <div class="full home_content">
+    <div class="full home_content" >
       <h2>당신만의 맞춤형 가계부</h2>
       <h3>지금 당장 시작해보세요</h3>
 
 <div style="margin: 20px;">
 	<% if (username!="guest"){ %>
-    		<img class="user_profile" src=<%= profilePicture %> alt="profilePicture">
+    		<img class="user_profile" src=<%= profilePicture %> alt="profilePicture"/>
 
 			<h4> <%= username %> </h4>
 	<% } else{ %>
