@@ -188,7 +188,7 @@ form .submit_btn button {
   cursor: pointer;
 }
 
-.header:hover .sub_menu{
+.main_menu:hover .sub_menu{
   transform: translateY(-25px);
   visibility: visible;
   display: block; cursor: pointer;
@@ -204,7 +204,7 @@ form .submit_btn button:hover {
     border: 1px solid rgb(255, 2, 129);
     cursor: pointer;
   }
-  
+
 /*.input_form .submit_btn button:hover {
     color: rgb(255, 2, 129);
     background-color: rgba(255, 3, 129, 0.17);
