@@ -3,6 +3,7 @@
 var mysql = require('mysql');
 var dotenv = require('dotenv').config();
 var ss = require('simple-statistics');
+var moment = require('moment');
 
 /*connect MySQL*/
 var dbConnection = mysql.createConnection({
@@ -39,14 +40,66 @@ module.exports = function(app, fs)
   	});
 
   });
+	app.get('/statistic/web', function(req, res) {
+    var allData = [];
+    var date;
+    var currentUser = req.session.passport.user.userId;
+    if(req.body.date)
+      date = parseInt(moment(req.body.date, 'YYYYMMDD').format('YYYYMMDD'));
+    date = parseInt(moment().format('YYYYMMDD'));
 
-	 app.get('/quest/web', function(req, res) {
-        res.render('quest', {income: 5000, expense: 10000});
+    dbConnection.query('SELECT SUM(money) FROM Income WHERE userId = ? AND date =?;', [currentUser, date], function(err, data){
+      if(err){
+        console.log(err);
+      } else {
+        allData.push(data);
+        dbConnection.query('SELECT SUM(money) FROM Expense WHERE userId = ? AND date =?;',[currentUser, date],function(err, data){
+            if(err){
+              console.log(err);
+            } else {
+              allData.push(data);
+              dbConnection.query('SELECT * FROM Income WHERE userId = ? AND date =?;', [currentUser, date],function(err, data){
+                  if(err) {
+                    console.log(err);
+                  } else {
+                    allData.push(data);
+                    dbConnection.query('SELECT * FROM Expense WHERE userId = ? AND date =?;', [currentUser, date],function(err, data){
+                      if(err){
+                        console.log(err);
+                      } else {
+                        allData.push(data);
+                        res.render('daily', {allData});
+                      }
+                    });
+                  }
+              });
+            }
+        });
+      }
     });
 
-	app.get('/statistic/web', function(req, res) {
-    	res.render('daily', {income: 5000, expense: 10000});
 	});
+  //일별통계 세부정보 조회
+  app.get('/statistic/web/detail', function(req, res){
+    var currentUser = req.session.passport.user.userId;
+    if(req.query.incomeid){
+      dbConnection.query('SELECT * FROM Income WHERE userId = ? AND incomeId = ?;', [currentUser, req.query.incomeid], function(err, data){
+        if(err){
+          console.log(err);
+        } else {
+          res.render('daily-detail', {data});
+        }
+      });
+    } else {
+      dbConnection.query('SELECT * FROM Expense WHERE userId = ? AND expenseId = ?;', [currentUser, req.query.expenseid], function(err, data){
+        if(err){
+          console.log(err);
+        } else {
+          res.render('daily-detail', {data});
+        }
+      });
+    }
+  });
 	/*----------------------monthly statistics------------------------*/
   app.get('/statistic/monthly', function(req, res){
     console.log("***Statistic GET Request arrived***");
