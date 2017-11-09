@@ -38,29 +38,28 @@
                 </ul>
               </li>
               <li class="main_menu mmu3">
-                <span>퀘스트</span>
-                <ul class="sub_menu">
-                  <li><a href="/quest/web">퀘스트</a></li>
-                  <li></li>
-                </ul>
+                <a href="/quest"><span>퀘스트</span></a>
               </li>
               <li class="main_menu mmu4">
                 <span>캐릭터</span>
                 <ul class="sub_menu">
                   <li><a href="/character">캐릭터</a></li>
-                  <li><a href="item">아이템</a></li>
+                  <li><a href="/item">아이템</a></li>
                 </ul>
               </li>
               <li class="main_menu mmu5">
-                <span>커뮤니티</span>
-                <ul class="sub_menu">
-                  <li><a href="/income">커뮤니티로 이동▶</a></li>
-                  <li></li>
-                </ul>
+                <a href="/community"><span>커뮤니티</span></a>
               </li>
+
+              <li class="main_menu mmu5">
+                <a href="/kids"><span><img src="/img/kids.png" style="margin-top:30px; height:50px;"alt=""></span></a>
+              </li>
+
+
             </ul>
           </div>
-        </div>
+        </div> <!-- nav -->
+
 
 
 
@@ -95,7 +94,7 @@
           <p><%= weekly.nowMoney %></p>
           <% if (weekly.isEnd != 0) {%>
             <form action="/quest/complete" method="get">
-              
+
 <input class="input-text" type="hidden" name="type" value="weekly"/>
               <input class="input-submit" type="submit" value="보상을 받을래요!"/>
             </form>
