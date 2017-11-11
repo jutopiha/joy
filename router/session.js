@@ -141,8 +141,20 @@ module.exports = function(app, fs)
         result.STATUS = "Created";
         result.DATA = json;
       }
+      dbConnection.query('INSERT into Item VALUES userId = ?;', [json.userId], function (err, results, fields) {
+        if (err) {
+          result.CODE = 400;
+          result.STATUS = "Database Error";
+          throw error;
+        }else {
+          result.CODE = 201;
+          result.STATUS = "Created";
+          result.DATA = json;
+        }
 
-      res.json(result);
+        res.json(result);
+      });
+
     });
 
     return;
