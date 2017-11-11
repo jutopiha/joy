@@ -236,14 +236,14 @@ module.exports = function(app, fs)
               }
             }
 
-            statistic.whole["식비"] = ss.mean(food);
-            statistic.whole["교통비"] = ss.mean(fare);
-            statistic.whole["문화"] = ss.mean(culture);
-            statistic.whole["생활"] = ss.mean(living);
-            statistic.whole["음료/간식"] = ss.mean(snack);
-            statistic.whole["교육"] = ss.mean(edu);
-            statistic.whole["공과금"] = ss.mean(utility);
-            statistic.whole["기타"] = ss.mean(etc);
+            if(food.legnth > 0) statistic.whole["식비"] = ss.mean(food);
+            if(fare.legnth > 0) statistic.whole["교통비"] = ss.mean(fare);
+            if(culture.legnth > 0) statistic.whole["문화"] = ss.mean(culture);
+            if(living.legnth > 0) statistic.whole["생활"] = ss.mean(living);
+            if(snack.legnth > 0) statistic.whole["음료/간식"] = ss.mean(snack);
+            if(edu.legnth > 0) statistic.whole["교육"] = ss.mean(edu);
+            if(utility.legnth > 0) statistic.whole["공과금"] = ss.mean(utility);
+            if(etc.legnth > 0) statistic.whole["기타"] = ss.mean(etc);
 
       			if(isWeb == true) {
       				res.render('monthlyStat', {
