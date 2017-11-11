@@ -31,7 +31,12 @@ module.exports = function(app, fs)
   app.get('/character', function(req, res){
     console.log("***Character GET Request arrived***");
 
-    var isUnlockSuccess = req.query.state;
+    var isUnlockSuccess;
+    if(req.query.state != null){
+      isUnlockSuccess = req.query.state;
+    }else {
+      isUnlockSuccess = "nono";
+    }
   	var currentUser;
   	var isWeb = false;
 
