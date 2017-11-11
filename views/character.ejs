@@ -150,9 +150,15 @@ $('.skew-title').children('span').hover((function() {
   return $('.flat').removeClass('flat');
 });
 
-
-if(<%=state%>==fail) {
+//console.log(<%=state%>);
+//console.log(<%=state.toString%>);
+//console.log(<%=state%>.toString);
+//consoel.log(JSON.stringify(<%=state%>));
+//consoel.log(<%-JSON.stringify(state)%>);
+if(<%-JSON.stringify(state)%>=="fail") {
   alert("캐릭터를 해제하기에는 아이템이 부족해요!");
+} else if(<%-JSON.stringify(state)%>=="success") {
+  alert("캐릭터가 해제 되었습니다. 축하해요!");
 }
 
 </script>
