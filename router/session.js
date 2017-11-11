@@ -84,6 +84,15 @@ module.exports = function(app, fs)
               if (err) {
                 throw error;
               }
+				dbConnection.query('INSERT into Item (userId) VALUES (?);', [newUser.userId], function (err, results, fields) {
+        if (err) {
+          throw error;
+        }else {
+        }
+
+      });
+
+
             });
 
             done(null, newUser);
@@ -131,7 +140,7 @@ module.exports = function(app, fs)
     autoParse = (json.onAutoParse == 'true');
     autoAlarm = (json.onAutoAlarm == 'true');
     // insert to DB
-    dbConnection.query('INSERT into User VALUES (?,?,?,?,?,?,?,?,?);', [json.userId, json.name, parseInt(json.birth), json.gender, json.profilePicture, json.mainBank, autoParse, autoAlarm, 0], function (err, results, fields) {
+    dbConnection.query('INSERT into User VALUES (?,?,?,?,?,?,?,?,?,?);', [json.userId, json.name, parseInt(json.birth), json.gender, json.profilePicture, json.mainBank, autoParse, autoAlarm, 0, 0], function (err, results, fields) {
       if (err) {
         result.CODE = 400;
         result.STATUS = "Database Error";
@@ -141,7 +150,7 @@ module.exports = function(app, fs)
         result.STATUS = "Created";
         result.DATA = json;
       }
-      dbConnection.query('INSERT into Item VALUES userId = ?;', [json.userId], function (err, results, fields) {
+      dbConnection.query('INSERT into Item (userId) VALUES (?);', [json.userId], function (err, results, fields) {
         if (err) {
           result.CODE = 400;
           result.STATUS = "Database Error";
