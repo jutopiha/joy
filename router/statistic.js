@@ -169,14 +169,14 @@ module.exports = function(app, fs)
 
     /* Arrays for computing */
     var expenses = [];
-    var food = [0];
-    var fare = [0];
-    var culture = [0];
-    var living = [0];
-    var snack = [0];
-    var edu = [0];
-    var utility = [0];
-    var etc = [0];
+    var food = [];
+    var fare = [];
+    var culture = [];
+    var living = [];
+    var snack = [];
+    var edu = [];
+    var utility = [];
+    var etc = [];
 
     dbConnection.query('SELECT sum(money) as money FROM Income WHERE userId =? AND date > ? AND date < ?;',[currentUser, fromDate, toDate], function(err, data){
       if(err) {
