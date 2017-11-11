@@ -35,7 +35,7 @@ module.exports = function(app, fs)
       }else {
         result.CODE = 200;
         result.STATUS = "OK";
-        result.DATA = data;
+        result.DATA = data[0];
       }
       res.json(result);
     });
