@@ -106,7 +106,7 @@ module.exports = function(app, fs)
   app.get('/logout', function(req, res) {
       req.logout();
       req.session.save(function(){
-        req.session.passport.user = null;
+        req.session.passport.user.name= "guest";
         res.redirect("/");
       });
   });
