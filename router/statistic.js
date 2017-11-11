@@ -71,7 +71,7 @@ module.exports = function(app, fs)
             } else {
 				if(data[0].totalExpense == null)
 					data[0].totalExpense = 0;
-     
+
               allData.push(data);
               dbConnection.query('SELECT * FROM Income WHERE userId = ? AND date =?;', [currentUser, date],function(err, data){
                   if(err) {
@@ -134,8 +134,8 @@ module.exports = function(app, fs)
   	}
 
   	if( (req.query.month == undefined) ){ //기본값
-  		fromDate = 20170900;
-  		toDate = 20171000;
+  		fromDate = 20171100;
+  		toDate = 20171200;
    	} else{ //달 선택
   		fromDate = parseInt(req.query.month+"00");
     		toDate = fromDate+100;
@@ -209,11 +209,29 @@ module.exports = function(app, fs)
               var category = data[j].category;
               var money = data[j].money;
               switch (category) {
-                case "기타":
-                  etc.push(money);
-                  break;
                 case "식비":
                   food.push(money);
+                  break;
+                case "교통비":
+                  etc.push(fare);
+                  break;
+                case "문화":
+                  food.push(culture);
+                  break;
+                case "생활":
+                  etc.push(living);
+                  break;
+                case "음료/간식":
+                  food.push(snack);
+                  break;
+                case "교육":
+                  etc.push(edu);
+                  break;
+                case "공과금":
+                  food.push(utility);
+                  break;
+                case "기타":
+                  food.push(etc);
                   break;
               }
             }
@@ -229,10 +247,10 @@ module.exports = function(app, fs)
 
       			if(isWeb == true) {
       				res.render('monthlyStat', {
-      					statistic: statistic, income: 5000, expense:1000
+      					statistic: statistic
       				});
       			} else{
-                  	res.json(statistic);
+            	res.json(statistic);
       			}
           });
         });
