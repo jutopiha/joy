@@ -213,25 +213,25 @@ module.exports = function(app, fs)
                   food.push(money);
                   break;
                 case "교통비":
-                  etc.push(fare);
+                  fare.push(fare);
                   break;
                 case "문화":
-                  food.push(culture);
+                  culture.push(culture);
                   break;
                 case "생활":
-                  etc.push(living);
+                  living.push(living);
                   break;
                 case "음료/간식":
-                  food.push(snack);
+                  snack.push(snack);
                   break;
                 case "교육":
-                  etc.push(edu);
+                  edu.push(edu);
                   break;
                 case "공과금":
-                  food.push(utility);
+                  utility.push(utility);
                   break;
                 case "기타":
-                  food.push(etc);
+                  etc.push(etc);
                   break;
               }
             }
