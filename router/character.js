@@ -31,6 +31,7 @@ module.exports = function(app, fs)
   app.get('/character', function(req, res){
     console.log("***Character GET Request arrived***");
 
+    var isUnlockSuccess = req.query.state;
   	var currentUser;
   	var isWeb = false;
 
@@ -72,7 +73,7 @@ module.exports = function(app, fs)
 
         if(isWeb == true) {
         	res.render('character', {
-      			character: character, state: req.query.state
+      			character: character, state: isUnlockSuccess
       		});
         } else{
           res.json(character);
