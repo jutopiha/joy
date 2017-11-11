@@ -84,6 +84,15 @@ module.exports = function(app, fs)
               if (err) {
                 throw error;
               }
+				dbConnection.query('INSERT into Item (userId) VALUES (?);', [newUser.userId], function (err, results, fields) {
+        if (err) {
+          throw error;
+        }else {
+        }
+
+      });
+
+
             });
 
             done(null, newUser);
@@ -141,7 +150,7 @@ module.exports = function(app, fs)
         result.STATUS = "Created";
         result.DATA = json;
       }
-      dbConnection.query('INSERT into Item VALUES userId = ?;', [json.userId], function (err, results, fields) {
+      dbConnection.query('INSERT into Item (userId) VALUES (?);', [json.userId], function (err, results, fields) {
         if (err) {
           result.CODE = 400;
           result.STATUS = "Database Error";
