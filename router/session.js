@@ -185,4 +185,49 @@ module.exports = function(app, fs)
       res.json(data);
     });
   });
+
+
+  /*------------------------POST/signin------------------------*/
+  app.post('/post/userinfo', function(req, res){
+    //signin request
+    console.log("*** 회원정보수정 POST Request is arrived***");
+
+    var result = {};
+    var json = {};
+
+    var isWeb = false;
+    var cureentUser;
+
+    if((req.query.uid == undefined)){ //web
+      isWeb = true;
+
+      if(req.session.passport == undefined)
+        res.render('logIn');
+      else {
+        currentUser = req.session.passport.user.userId;
+        json = req.body;
+      }
+
+  	} else { //android
+  		currentUser = req.query.uid;
+  		json = JSON.parse(req.body);
+    }
+
+
+    dbConnection.query('UPDATE User set name=?, gender=?, birth=? WHERE userId=?;'
+                      , [json.name, json.gender, json.birth, currentUser]
+                      , function (err, result, fields) {
+      if (err) {
+        console.log(err);
+      }else {
+        if(isWeb == true) {
+          res.redirect('/');
+        } else{
+          res.json("success");
+        }
+      }
+    });
+
+    return;
+  });
 };
