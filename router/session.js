@@ -186,6 +186,10 @@ module.exports = function(app, fs)
     });
   });
 
+  app.get('/userinfo', function(req,res){
+    res.render('userinfo');
+  });
+
 
   /*------------------------POST/signin------------------------*/
   app.post('/post/userinfo', function(req, res){
