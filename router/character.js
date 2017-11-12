@@ -40,10 +40,10 @@ module.exports = function(app, fs)
   	var currentUser;
   	var isWeb = false;
 
-  	if( (req.query.uid == undefined)){ //web
+  	if(req.query.uid == undefined){ //web
       isWeb = true;
 	  if(req.session.passport == undefined)
-		res.render('logIn');
+		res.render('logIn', {});
       else
 	    currentUser = req.session.passport.user.userId;
   	} else { //android
@@ -65,7 +65,7 @@ module.exports = function(app, fs)
     dbConnection.query('SELECT characterType FROM Charact WHERE userId=?;',[currentUser], function(err, data){
       if(err) {
          console.log(err);
-      }
+      } else {
   	  if (data[0] != null) {
         for (var i in data ) {
         	var n = data[i].characterType
@@ -76,19 +76,19 @@ module.exports = function(app, fs)
       dbConnection.query('SELECT mainCharacter FROM User WHERE userId=?;',[currentUser], function(err, data){
         if(err) {
            console.log(err);
-        }
-        character.main = data[0].mainCharacter;
+         } else {
+        	character.main = data[0].mainCharacter;
 
-        if(isWeb == true) {
-        	res.render('character', {
-      			character: character, state: isUnlockSuccess
-      		});
-        } else{
-          res.json(character);
-        }
-
+    	    if(isWeb == true) {
+	        	res.render('character', {
+      				character: character, state: isUnlockSuccess
+      			});
+        	} else{
+         	 	res.json(character);
+        	}
+		}
       });
-
+		}
     });
   });
 
