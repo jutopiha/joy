@@ -29,6 +29,26 @@ module.exports = function(app, fs)
   });
 
   //ejs HTML 파일에서 데이터 사용하기
+  app.get('/setting/test', function(req, res){
+    var username;
+    var profilePicture;
+    if (req.session.passport != undefined) {
+      var userId = req.session.passport.user.userId;
+      username = req.session.passport.user.name;
+      profilePicture = "https://graph.facebook.com/" + userId +"/picture?type=large";
+    } else {
+      username = "guest";
+    }
+
+    res.render('index_new_test', {
+        title: "MY HOMEPAGE",
+        length: 5,
+        username: username,
+        profilePicture: profilePicture
+    });
+  });
+
+  //ejs HTML 파일에서 데이터 사용하기
   app.get('/', function(req, res){
     var username;
     var profilePicture;
