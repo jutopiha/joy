@@ -144,6 +144,29 @@ module.exports = function(app, fs)
     }
 
   });
+
+  app.get('statistic/web/detail-delete', function(req, res){
+    var currentUser = req.session.passport.user.userId;
+    if(req.query.incomeid){
+      dbConnection.query('DELETE FROM Income WHERE userId = ? AND incomeId = ?;', [currentUser, req.query.incomeid], function(err, data){
+        if(err){
+          console.log(err);
+        } else {
+          res.render('index_new', {});
+        }
+      })
+    } else {
+      dbConnection.query('DELETE * FROM Expense WHERE userId = ? AND expenseId = ?;', [currentUser, req.query.expenseid], function(err, data){
+        if(err){
+          console.log(err);
+        } else {
+          res.render('index_new', {});
+        }
+      })
+    }
+
+  });
+
 	/*----------------------monthly statistics------------------------*/
   app.get('/statistic/monthly', function(req, res){
     console.log("***Statistic GET Request arrived***");
