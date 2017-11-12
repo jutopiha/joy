@@ -9,7 +9,7 @@
       var data = <%-JSON.stringify(data)%>
       console.log(data);
     </script>
-    <script src="./js/detail.js"></script>
+    <script src="./js/detail-rewrite.js"></script>
   </head>
   <body>
       <div class="header">
@@ -66,49 +66,49 @@
       </div>
 
       <div class="wrapper content">
-        <h2>지출 내역 입력하기</h2>
+        <h2>지출 내역 수정하기</h2>
         <div class="input_form">
-
+          <form action="/post/expense-rewrite" method="post" id="input_expense">
             <div>
               <span>날짜</span>
-              <p>
-                <%=date%>
-              </p>
+              <input type="date" name="date" value = <%=date%> required/>
             </div>
             <div>
               <span>시간</span>
-              <p>
-                <%=time%>
-              </p>
+              <input type="time" name="time" value = <%=time%> required/>
             </div>
             <div>
               <span>금액</span>
-              <p>
-                <%=money%>
-              </p>
+              <input type="number" name="money" value = <%=money%> required/>
             </div>
             <div>
               <span>메모</span>
-              <p>
-                <%=memo%>
-              </p>
+              <input type="text" name="memo" value = <%=memo%>/>
             </div>
             <div>
               <span>분류</span>
-              <p>
-                <%=category%>
-              </p>
+              <select name="category">
+                <option value="식비">식비</option>
+                <option value="교통비">교통비</option>
+                <option value="문화">문화</option>
+                <option value="생활">생활</option>
+                <option value="음료/간식">음료/간식</option>
+                <option value="교육">교육</option>
+                <option value="공과금">공과금</option>
+                <option value="기타">기타</option>
+              </select>
             </div>
             <div>
               <span>결제수단</span>
-              <p>
-                <%=method%>
-              </p>
+              <select name="payMethod">
+                <option value="현금">현금</option>
+                <option value="카드">카드</option>
+              </select>
             </div>
-            <div class="detail_btn">
-              <button><a href="/statistic/web/detail-rewrite?expenseid=?">수정하기</a></button>
-              <button><a href="/statistic/web/detail-delete?expenseid=?">삭제하기</a></button>
+            <div class="submit_btn">
+              <button type="submit">SUBMIT</button>
             </div>
+          </form>
         </div>
       </div>
 

@@ -45,7 +45,7 @@ module.exports = function(app, fs)
     var date;
     var currentUser;
 	if(req.session.passport == undefined){res.render('logIn');}
-    else 
+    else
 		 currentUser = req.session.passport.user.userId;
 	console.log(req.query.date);
 
@@ -102,7 +102,7 @@ module.exports = function(app, fs)
     var currentUser;
 	if(req.session.passport == undefined) {res.render('logIn');}
 	else
-		currentUser = req.session.passport.user.userId; 
+		currentUser = req.session.passport.user.userId;
 
     if(req.query.incomeid){
       dbConnection.query('SELECT * FROM Income WHERE userId = ? AND incomeId = ?;', [currentUser, req.query.incomeid], function(err, data){
@@ -121,6 +121,28 @@ module.exports = function(app, fs)
         }
       });
     }
+  });
+
+  app.get('statistic/web/detail-rewrite', function(req, res){
+    var currentUser = req.session.passport.user.userId;
+    if(req.query.incomeid){
+      dbConnection.query('SELECT * FROM Income WHERE userId = ? AND incomeId = ?;', [currentUser, req.query.incomeid], function(err, data){
+        if(err){
+          console.log(err);
+        } else {
+          res.render('income-rewrite', {data});
+        }
+      })
+    } else {
+      dbConnection.query('SELECT * FROM Expense WHERE userId = ? AND expenseId = ?;', [currentUser, req.query.expenseid], function(err, data){
+        if(err){
+          console.log(err);
+        } else {
+          res.render('expense-rewrite', {data});
+        }
+      })
+    }
+
   });
 	/*----------------------monthly statistics------------------------*/
   app.get('/statistic/monthly', function(req, res){

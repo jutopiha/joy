@@ -83,7 +83,7 @@ module.exports = function(app, fs)
 	console.log("temp" + temp);
     var fromDate = parseInt(nowDate / 100) * 100 + 1;
 	console.log("nowDate=" + nowDate +"fromDate="+ fromDate);
-	console.log("uid: ", req.query.uid); 
+	console.log("uid: ", req.query.uid);
     dbConnection.query('SELECT * FROM User WHERE userId = ?;',[req.query.uid], function(err, data){
 
 	  console.log('point error 찾기: data='+data+'\n');
@@ -166,7 +166,7 @@ module.exports = function(app, fs)
   	//web에서 받은 json 데이터 사전처리
   	if(uid=='web'){
 		if(req.session.passport == undefined){res.render('logIn')}
-  		else 
+  		else
 			uid = req.session.passport.user.userId;
 
   		//날짜 시간
@@ -313,6 +313,31 @@ module.exports = function(app, fs)
     return;
   });
 
+  /*------------------------POST/income-rewite------------------------*/
+  app.post('/post/income-rewrite', function(req, res){
+    var currentUser = req.session.passport.user.userId;
+
+    dbConnection.query('UPDATE Income SET date = ?, time = ?, money = ?, memo = ?, category = ? WHERE userId = ? and incomeId = ?', [req.body.date, req.body.time, req.body.money, req.body.memo, req.body.category, currentUser, req.query.incomeid ], function(err, data){
+      if(err){
+        console.log(err);
+      } else {
+        res.render('index_new', {});
+      }
+    });
+  });
+
+  /*------------------------POST/expense-rewite------------------------*/
+  app.post('/post/income-rewrite', function(req, res){
+    var currentUser = req.session.passport.user.userId;
+
+    dbConnection.query('UPDATE Expense SET date = ?, time = ?, money = ?, memo = ?, category = ?, payMethod = ? WHERE userId = ? and expenseId = ?', [req.body.date, req.body.time, req.body.money, req.body.memo, req.body.category, req.body.payMehod, currentUser, req.query.expenseid ], function(err, data){
+      if(err){
+        console.log(err);
+      } else {
+        res.render('index_new', {});
+      }
+    });
+  })  ;
 
   /*------------------------DELETE/expense------------------------*/
   app.delete('/delete/expense', function(req, res){

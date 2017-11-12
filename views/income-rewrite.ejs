@@ -9,7 +9,7 @@
       var data = <%-JSON.stringify(data)%>
       console.log(data);
     </script>
-    <script src="./js/detail.js"></script>
+    <script src="./js/setail-rewrite.js"></script>
   </head>
   <body>
       <div class="header">
@@ -66,49 +66,37 @@
       </div>
 
       <div class="wrapper content">
-        <h2>지출 내역 입력하기</h2>
+        <h2>수입 내역 수정하기</h2>
         <div class="input_form">
-
+          <form action="/post/income-rewrite" method="post" id="input_expense">
             <div>
               <span>날짜</span>
-              <p>
-                <%=date%>
-              </p>
+              <input type="date" name="date" value=<%=date%> required/>
             </div>
             <div>
               <span>시간</span>
-              <p>
-                <%=time%>
-              </p>
+              <input type="time" name="time" value=<%=time%> required/>
             </div>
             <div>
               <span>금액</span>
-              <p>
-                <%=money%>
-              </p>
+              <input type="number" name="money" value=<%=money%> required/>
             </div>
             <div>
               <span>메모</span>
-              <p>
-                <%=memo%>
-              </p>
+              <input type="text" name="memo" value=<%=memo%>/>
             </div>
             <div>
               <span>분류</span>
-              <p>
-                <%=category%>
-              </p>
+              <select name="category">
+                <option value="월급">월급</option>
+                <option value="용돈">용돈</option>
+                <option value="기타">기타</option>
+              </select>
             </div>
-            <div>
-              <span>결제수단</span>
-              <p>
-                <%=method%>
-              </p>
+            <div class="submit_btn">
+              <button type="submit">SUBMIT</button>
             </div>
-            <div class="detail_btn">
-              <button><a href="/statistic/web/detail-rewrite?expenseid=?">수정하기</a></button>
-              <button><a href="/statistic/web/detail-delete?expenseid=?">삭제하기</a></button>
-            </div>
+          </form>
         </div>
       </div>
 
