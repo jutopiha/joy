@@ -58,108 +58,104 @@
 
     </div>
 
-    <div id="settings" ontouchstart="<%= true %>">
-      <input checked="<%= true %>" class="nav" name="nav" type="radio"></input>
-      <span class="nav">Profile</span>
-      <input class="nav" name="nav" type="radio"></input>
-      <span class="nav">Account</span>
 
-      <main class="content">
-        <section id="profile">
-          <form>
-            <ul>
-              <li class="large padding avatar">
 
-                <!--<span style="background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/345377/selca-square.jpg');"></span>-->
-                <span style="background-image: url('<%=profilePicture%>');"></span>
-<!--
-                  <img class="user_profile" src=<%= profilePicture %> alt="profilePicture">
--->
-                <div>
+    <% if (username!="guest"){ %>
+      <div id="settings" ontouchstart="<%= true %>">
+        <input checked="<%= true %>" class="nav" name="nav" type="radio"></input>
+        <span class="nav">Profile</span>
+        <input class="nav" name="nav" type="radio"></input>
+        <span class="nav">Account</span>
+
+        <main class="content">
+          <section id="profile">
+            <form>
+              <ul>
+                <li class="large padding avatar">
+
+                  <!--<span style="background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/345377/selca-square.jpg');"></span>-->
+                  <span style="background-image: url('<%=profilePicture%>');"></span>
+  <!--
+                    <img class="user_profile" src=<%= profilePicture %> alt="profilePicture">
+  -->
+                  <div>
+                    <fieldset class="material">
+                      <div>
+                        <input required="<%= true %>" type="text" value="<%= username %>"></input>
+                        <label>Name</label>
+                        <hr/>
+                      </div>
+                    </fieldset>
+                  </div>
+                </li>
+                <li id="jh" >
                   <fieldset class="material">
                     <div>
-                      <input required="<%= true %>" type="text" value="<%= username %>"></input>
+                      <input required="<%= true %>" type="text" value="Female"></input>
+                      <label>Gender</label>
+                      <hr/>
+                    </div>
+                  </fieldset>
+                </li>
+                <li id="jh" >
+                  <fieldset class="material">
+                    <div>
+                      <input required="<%= true %>" type="text" value="1995"></input>
+                      <label>Birth</label>
+                      <hr/>
+                    </div>
+                  </fieldset>
+                </li>
+                <!--
+                <li>
+                  <fieldset class="material">
+                    <div>
+                      <input required="<%= true %>" type="text" value="Gabrielle Wee"></input>
                       <label>Name</label>
                       <hr/>
                     </div>
                   </fieldset>
-                </div>
-              </li>
-              <li id="jh" >
-                <fieldset class="material">
-                  <div>
-                    <input required="<%= true %>" type="text" value="Female"></input>
-                    <label>Gender</label>
-                    <hr/>
-                  </div>
-                </fieldset>
-              </li>
-              <li id="jh" >
-                <fieldset class="material">
-                  <div>
-                    <input required="<%= true %>" type="text" value="1995"></input>
-                    <label>Birth</label>
-                    <hr/>
-                  </div>
-                </fieldset>
-              </li>
-              <!--
-              <li>
-                <fieldset class="material">
-                  <div>
-                    <input required="<%= true %>" type="text" value="Gabrielle Wee"></input>
-                    <label>Name</label>
-                    <hr/>
-                  </div>
-                </fieldset>
-              </li>
+                </li>
 
-              <li class="large padding">
-                <fieldset class="material-button center">
-                  <div>
-                    <input class="save" type="submit" value="Save"></input>
-                  </div>
-                </fieldset>
-              </li>
-            -->
-            </ul>
-          </form>
-        </section>
-        <section id="account">
-          <form>
-            <ul>
-              <li class="padding">
-                  <fieldset class="material-button">
+                <li class="large padding">
+                  <fieldset class="material-button center">
                     <div>
-                      <button class="connect gh connected">
-                        <span>My Page</span>
-                      </button>
+                      <input class="save" type="submit" value="Save"></input>
                     </div>
                   </fieldset>
                 </li>
-              <li class="padding">
-                <fieldset class="material-button">
-                  <div>
-                    <button class="connect fb">
-                      <span>Sign out</span>
-                    </button>
-                  </div>
-                </fieldset>
-              </li>
-            </ul>
-          </form>
-        </section>
-
-      </main>
-    </div>
-
-<h1><%=isFirst%></h1>
-    <% if (username!="guest"){ %>
-          <img class="user_profile" src=<%= profilePicture %> alt="profilePicture">
-          <button id="fb_button" type="submit">로그아웃</button>
-
-
-        <h4> <%= username %> </h4>
+              -->
+              </ul>
+            </form>
+          </section>
+          <section id="account">
+            <form>
+              <ul>
+                <li class="padding">
+                    <fieldset class="material-button">
+                      <div>
+                        <button class="connect gh connected">
+                          <span>My Page</span>
+                        </button>
+                      </div>
+                    </fieldset>
+                  </li>
+                <li class="padding">
+                  <fieldset class="material-button">
+                    <div>
+                      <form method= "get" action="/logout">
+                        <button class="connect fb">
+                          <span>Sign out</span>
+                        </button>
+                      </form>
+                    </div>
+                  </fieldset>
+                </li>
+              </ul>
+            </form>
+          </section>
+        </main>
+      </div>
     <% } else{ %>
           <form action="/auth/facebook" method="get">
               <button id="fb_button" type="submit">
