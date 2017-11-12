@@ -112,6 +112,7 @@ birth: birth
       mainObject.point = data[0].point;
       mainObject.name = data[0].name;
 	  mainObject.birth = data[0].birth;
+mainObject.gender = data[0].gender;
       dbConnection.query('SELECT money FROM Expense WHERE userId = ? ORDER BY expenseId DESC LIMIT 1;',[req.query.uid, nowDate], function(err, data){
 
         if (data[0] != null) {
