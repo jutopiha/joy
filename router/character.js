@@ -30,11 +30,12 @@ module.exports = function(app, fs)
 	/* character 첫 화면 */
   app.get('/character', function(req, res){
     console.log("***Character GET Request arrived***");
+    var loginLock = false;
 
     var isUnlockSuccess;
     if(req.query.state != null){
       isUnlockSuccess = req.query.state;
-    }else {
+    } else {
       isUnlockSuccess = "nono";
     }
   	var currentUser;
@@ -42,11 +43,15 @@ module.exports = function(app, fs)
 
   	if( (req.query.uid == undefined)){ //web
       isWeb = true;
-	  if(req.session.passport == undefined)
-		res.render('logIn');
-      else
-	    currentUser = req.session.passport.user.userId;
+  	  if(req.session.passport == undefined)
+  		  res.render('logIn');
+      else {
+        loginLock = true;
+        currentUser = req.session.passport.user.userId;
+      }
+
   	} else { //android
+      loginLock = true;
   		currentUser = req.query.uid;
   	}
 
@@ -62,34 +67,37 @@ module.exports = function(app, fs)
       }
     };
 
-    dbConnection.query('SELECT characterType FROM Charact WHERE userId=?;',[currentUser], function(err, data){
-      if(err) {
-         console.log(err);
-      }
-  	  if (data[0] != null) {
-        for (var i in data ) {
-        	var n = data[i].characterType
-        	character.list[n] = n;
-        }
-      }
-
-      dbConnection.query('SELECT mainCharacter FROM User WHERE userId=?;',[currentUser], function(err, data){
+    if(loginLock == true) {
+      dbConnection.query('SELECT characterType FROM Charact WHERE userId=?;',[currentUser], function(err, data){
         if(err) {
            console.log(err);
         }
-        character.main = data[0].mainCharacter;
-
-        if(isWeb == true) {
-        	res.render('character', {
-      			character: character, state: isUnlockSuccess
-      		});
-        } else{
-          res.json(character);
+    	  if (data[0] != null) {
+          for (var i in data ) {
+          	var n = data[i].characterType
+          	character.list[n] = n;
+          }
         }
 
-      });
+        dbConnection.query('SELECT mainCharacter FROM User WHERE userId=?;',[currentUser], function(err, data){
+          if(err) {
+             console.log(err);
+          }
+          character.main = data[0].mainCharacter;
 
-    });
+          if(isWeb == true) {
+          	res.render('character', {
+        			character: character, state: isUnlockSuccess
+        		});
+          } else{
+            res.json(character);
+          }
+
+        });
+
+      });
+    }
+
   });
 
   /* character unlock*/
@@ -114,9 +122,9 @@ module.exports = function(app, fs)
 
     if((req.query.uid == undefined)){ //web
       isWeb = true;
-	  if(req.session.passport == undefined)
-		res.render('logIn');
-      else 
+  	  if(req.session.passport == undefined)
+  		  res.render('logIn');
+      else
         currentUser = req.session.passport.user.userId;
     } else { //android
       currentUser = req.query.uid;
@@ -208,8 +216,6 @@ console.log(req.query.type+"번 캐릭터를 풀려고 해");
           if (err) {
             console.log(err);
           }else {
-
-
             dbConnection.query('UPDATE Item set bean=?, waterdrop=?, ice=?, choco=?, greenteaPowder=?, milk=?, grapefruit=?, sparkling=?, syrup=?, bluePigment=?, lemon=? WHERE userId=?;'
                               , [item.bean, item.waterdrop, item.ice, item.choco, item.greenteaPowder, item.milk, item.grapefruit, item.sparkling, item.syrup, item.bluePigment, item.lemon, currentUser]
                               , function (err, result, fields) {
@@ -217,9 +223,7 @@ console.log(req.query.type+"번 캐릭터를 풀려고 해");
                 console.log(err);
               }else {
               }
-
             });
-
           }
 
         });
@@ -248,9 +252,8 @@ console.log(req.query.type+"번 캐릭터를 풀려고 해");
 
     if((req.query.uid == undefined)){ //web
       isWeb = true;
-	if(req.session.passport == undefined){res.render('logIn');}
-    else
-      currentUser = req.session.passport.user.userId;
+    	if(req.session.passport == undefined) res.render('logIn');
+        else currentUser = req.session.passport.user.userId;
     } else { //android
       currentUser = req.query.uid;
     }
