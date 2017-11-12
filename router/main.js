@@ -318,6 +318,31 @@ module.exports = function(app, fs)
     return;
   });
 
+  /*------------------------POST/income-rewite------------------------*/
+  app.post('/post/income-rewrite', function(req, res){
+    var currentUser = req.session.passport.user.userId;
+
+    dbConnection.query('UPDATE Income SET date = ?, time = ?, money = ?, memo = ?, category = ? WHERE userId = ? and incomeId = ?', [req.body.date, req.body.time, req.body.money, req.body.memo, req.body.category, currentUser, req.query.incomeid ], function(err, data){
+      if(err){
+        console.log(err);
+      } else {
+        res.render('index_new', {});
+      }
+    });
+  });
+
+  /*------------------------POST/expense-rewite------------------------*/
+  app.post('/post/income-rewrite', function(req, res){
+    var currentUser = req.session.passport.user.userId;
+
+    dbConnection.query('UPDATE Expense SET date = ?, time = ?, money = ?, memo = ?, category = ?, payMethod = ? WHERE userId = ? and expenseId = ?', [req.body.date, req.body.time, req.body.money, req.body.memo, req.body.category, req.body.payMehod, currentUser, req.query.expenseid ], function(err, data){
+      if(err){
+        console.log(err);
+      } else {
+        res.render('index_new', {});
+      }
+    });
+  })  ;
 
   /*------------------------DELETE/expense------------------------*/
   app.delete('/delete/expense', function(req, res){
