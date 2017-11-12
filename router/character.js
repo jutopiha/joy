@@ -42,13 +42,15 @@ module.exports = function(app, fs)
   	var isWeb = false;
 
   	if(req.query.uid == undefined){ //web
+
       isWeb = true;
-  	  if(req.session.passport == undefined)
-  		  res.render('logIn');
-      else {
+  	  if(req.session.passport != undefined && req.session.passport.user!=undefined) {
         loginLock = true;
         currentUser = req.session.passport.user.userId;
       }
+      else
+  		  res.render('logIn');
+
 
   	} else { //android
       loginLock = true;
