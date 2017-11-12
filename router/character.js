@@ -67,7 +67,6 @@ module.exports = function(app, fs)
       }
     };
 
-<<<<<<< HEAD
     if(loginLock == true) {
       dbConnection.query('SELECT characterType FROM Charact WHERE userId=?;',[currentUser], function(err, data){
         if(err) {
@@ -75,7 +74,7 @@ module.exports = function(app, fs)
         }
     	  if (data[0] != null) {
           for (var i in data ) {
-          	var n = data[i].characterType
+          	var n = data[i].characterType;
           	character.list[n] = n;
           }
         }
@@ -99,36 +98,6 @@ module.exports = function(app, fs)
       });
     }
 
-=======
-    dbConnection.query('SELECT characterType FROM Charact WHERE userId=?;',[currentUser], function(err, data){
-      if(err) {
-         console.log(err);
-      } else {
-  	  if (data[0] != null) {
-        for (var i in data ) {
-        	var n = data[i].characterType
-        	character.list[n] = n;
-        }
-      }
-
-      dbConnection.query('SELECT mainCharacter FROM User WHERE userId=?;',[currentUser], function(err, data){
-        if(err) {
-           console.log(err);
-         } else {
-        	character.main = data[0].mainCharacter;
-
-    	    if(isWeb == true) {
-	        	res.render('character', {
-      				character: character, state: isUnlockSuccess
-      			});
-        	} else{
-         	 	res.json(character);
-        	}
-		}
-      });
-		}
-    });
->>>>>>> 6ceef55b0a5de95c7ffd5f646a3ee490c1950d85
   });
 
   /* character unlock*/
@@ -136,6 +105,7 @@ module.exports = function(app, fs)
     console.log("***Character Unlock GET Request arrived***");
 
     var currentUser;
+    var characterData = [];
     var isWeb = false;
     var item = {
       bean: 0,
@@ -190,6 +160,9 @@ console.log(req.query.type+"번 캐릭터를 풀려고 해");
             item.ice -= 2;
 
             result.state = "success";
+          } else {
+            result.state = "fail";
+            result.characterIndex = 1;
           }
           break;
         case 2:
@@ -199,6 +172,9 @@ console.log(req.query.type+"번 캐릭터를 풀려고 해");
             item.ice -= 2;
 
             result.state = "success";
+          } else {
+            result.state = "fail";
+            result.characterIndex = 2;
           }
           break;
         case 3:
@@ -209,6 +185,9 @@ console.log(req.query.type+"번 캐릭터를 풀려고 해");
             item.choco -= 2;
 
             result.state = "success";
+          } else {
+            result.state = "fail";
+            result.characterIndex = 3;
           }
           break;
         case 4:
@@ -218,7 +197,11 @@ console.log(req.query.type+"번 캐릭터를 풀려고 해");
             item.ice -= 2;
 
             result.state = "success";
+          } else {
+            result.state = "fail";
+            result.characterIndex = 4;
           }
+
           break;
         case 5:
           if(item.grapefruit>=3 && item.sparkling>=2 && item.ice>=2 && item.syrup>=1) {
@@ -228,6 +211,9 @@ console.log(req.query.type+"번 캐릭터를 풀려고 해");
             item.syrup -= 1;
 
             result.state = "success";
+          } else {
+            result.state = "fail";
+            result.characterIndex = 5;
           }
           break;
         case 6:
@@ -239,6 +225,9 @@ console.log(req.query.type+"번 캐릭터를 풀려고 해");
             item.ice -= 2;
 
             result.state = "success";
+          } else {
+            result.state = "fail";
+            result.characterIndex = 6;
           }
           break;
       }
@@ -260,13 +249,12 @@ console.log(req.query.type+"번 캐릭터를 풀려고 해");
           }
 
         });
-      } else {
-        result.state = "fail";
       }
 
       if(isWeb == true) {
         console.log("web");
-        res.redirect('/character?state='+result.state);
+        characterWebData.push(result);
+        res.render('character', {characterWebData});
       } else{
         console.log("android");
         res.json(result.state);

@@ -71,11 +71,14 @@
       </div>
 
       <% var where = [] %>
+      <% var clickFunc = [] %>
       <% for (var i in character.list ) { %>
         <% if (character.list[i] == 0) {%>
           <% where[i] = "/character/unlock?type="+i %>
+          <% clickFunc[i] = "unlock("+i+")" %>
         <% } else{%>
           <% where[i] = "/character/main?type="+i %>
+          <% clickFunc[i] = "mainCharacter("+i+")" %>
         <% }%>
       <% }%>
 
@@ -88,32 +91,31 @@
         <label for="menu-toggler"></label>
         <ul>
           <li class="menu-item">
-            <a class="fa fa-facebook" href="<%=where[1]%>">
+            <a class="fa fa-facebook" onClick="<%=clickFunc[1]%>">
               <img class="character-img" alt=" " src="img/character<%=character.list[1]%>_head.png"/>
             </a>
           </li>
           <li class="menu-item">
-            <a class="fa fa-google" href="<%=where[2]%>">
-              <img class="character-img" alt=" " src="img/character<%=character.list[2]%>_head.png"/>
+clickFunc              <img class="character-img" alt=" " src="img/character<%=character.list[2]%>_head.png"/>
             </a>
           </li>
           <li class="menu-item">
-            <a class="fa fa-dribbble" href="<%=where[3]%>">
+            <a class="fa fa-dribbble" onClick="<%=clickFunc[3]%>">
               <img class="character-img" alt=" " src="img/character<%=character.list[3]%>_head.png"/>
             </a>
           </li>
           <li class="menu-item">
-            <a class="fa fa-codepen" href="<%=where[4]%>">
+            <a class="fa fa-codepen" onClick="<%=clickFunc[4]%>">
               <img class="character-img" alt=" " src="img/character<%=character.list[4]%>_head.png"/>
             </a>
           </li>
           <li class="menu-item">
-            <a class="fa fa-linkedin" href="<%=where[5]%>">
+            <a class="fa fa-linkedin" onClick="<%=clickFunc[5]%>">
               <img class="character-img" alt=" " src="img/character<%=character.list[5]%>_head.png"/>
             </a>
           </li>
           <li class="menu-item">
-            <a class="fa fa-github" href="<%=where[6]%>">
+            <a class="fa fa-github" onClick="<%=clickFunc[6]%>">
               <img class="character-img" alt=" " src="img/character<%=character.list[6]%>_head.png"/>
             </a>
           </li>
@@ -154,6 +156,32 @@ if(<%-JSON.stringify(state)%>=="fail") {
   alert("캐릭터를 해제하기에는 아이템이 부족해요!");
 } else if(<%-JSON.stringify(state)%>=="success") {
   alert("캐릭터가 해제 되었습니다. 축하해요!");
+}
+
+funtion unlock(index){
+  if(confirm("캐릭터를 해제하시겠습니까?")){
+    var formTag = document.createElement("form");
+    formTag.setAttribute('action', '/character/unlock?type='+index);
+    formTag.ClassName('submit_unlock');
+    formTag.setAttribute('method', 'GET');
+    formTag.setAttribute('style', 'display: none');
+
+    document.getElementsByClassName('footer')[0].appendChild(formTag);
+    $(".submit_unlock").submit();
+  }
+}
+
+function mainCharacter(index) {
+  if(confirm("메인 캐릭터로 설정하시겠어요?")){
+    var formTag = document.createElement("form");
+    formTag.ClassName('set_main_character');
+    formTag.setAttribute('action', '/character/main?type='+index);
+    formTag.setAttribute('method', 'GET');
+    formTag.setAttribute('style', 'display: none');
+
+    document.getElementsByClassName('footer')[0].appendChild(formTag);
+    $(".set_main_character").submit();
+  }
 }
 
 </script>
