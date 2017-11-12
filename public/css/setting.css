@@ -64,7 +64,7 @@ a, button, input[type="submit"] {
   width: 100%;
   max-width: 300px;
   /* 여기 */
-  height: 40%;
+  height: 45%;
 
 }
 @media only screen and (min-width: 500px) {

@@ -104,7 +104,7 @@ module.exports = function(app, fs)
 
   app.get('/logout', function(req, res) {
 
-        req.session.passport.user.name= "guest";
+      req.session.passport.user.name= "guest";
       req.logout();
       req.session.save(function(){
         res.redirect("/");
@@ -224,6 +224,9 @@ module.exports = function(app, fs)
       if (err) {
         console.log(err);
       }else {
+		req.session.passport.user.name = json.name;
+		req.session.passport.user.gender = json.gender;
+		req.session.passport.user.birth = json.birth;
         if(isWeb == true) {
           res.redirect('/');
         } else{

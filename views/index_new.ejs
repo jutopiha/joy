@@ -82,7 +82,7 @@
                   <div>
                     <fieldset class="material">
                       <div>
-                        <input required="<%= true %>" type="text" value="<%= username %>"></input>
+                        <input  required="<%= true %>" type="text" value="<%= username %>"></input>
                         <label>Name</label>
                         <hr/>
                       </div>
@@ -92,7 +92,7 @@
                 <li id="jh" >
                   <fieldset class="material">
                     <div>
-                      <input required="<%= true %>" type="text" value="Female"></input>
+                      <input required="<%= true %>" type="text" value="<%= gender %>"></input>
                       <label>Gender</label>
                       <hr/>
                     </div>
@@ -101,7 +101,7 @@
                 <li id="jh" >
                   <fieldset class="material">
                     <div>
-                      <input required="<%= true %>" type="text" value="1995"></input>
+                      <input required="<%= true %>" type="text" value="<%= birth %>"></input>
                       <label>Birth</label>
                       <hr/>
                     </div>
@@ -130,14 +130,15 @@
             </form>
           </section>
           <section id="account">
-            <form>
               <ul>
                 <li class="padding">
                     <fieldset class="material-button">
                       <div>
-                        <button class="connect gh connected">
+<form method="get" action="/userinfo">
+                        <button type="submit" class="connect gh connected">
                           <span>My Page</span>
                         </button>
+</form>
                       </div>
                     </fieldset>
                   </li>
@@ -145,7 +146,7 @@
                   <fieldset class="material-button">
                     <div>
                       <form method= "get" action="/logout">
-                        <button class="connect fb">
+                        <button type="submit" class="connect fb">
                           <span>Sign out</span>
                         </button>
                       </form>
@@ -153,7 +154,6 @@
                   </fieldset>
                 </li>
               </ul>
-            </form>
           </section>
         </main>
       </div>
