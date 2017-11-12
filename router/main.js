@@ -52,14 +52,18 @@ module.exports = function(app, fs)
   app.get('/', function(req, res){
     var username;
     var profilePicture;
+    var isFirst=false;
+    if(req.query.isFirst == true) {
+      isFirst = true;
+    }
     if (req.session.passport != undefined) {
 		if(req.session.passport.user != undefined){
       var userId = req.session.passport.user.userId;
       username = req.session.passport.user.name;
       profilePicture = "https://graph.facebook.com/" + userId +"/picture?type=large";}
-		else {
-			username = "guest";
-}
+		  else {
+			  username = "guest";
+      }
     } else {
       username = "guest";
     }
@@ -68,7 +72,8 @@ module.exports = function(app, fs)
         title: "MY HOMEPAGE",
         length: 5,
         username: username,
-        profilePicture: profilePicture
+        profilePicture: profilePicture,
+        isFirst: isFirst
     });
   });
 

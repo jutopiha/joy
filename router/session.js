@@ -5,6 +5,7 @@ var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 // .env 환경변수 가져오는 npm
 var dotenv = require('dotenv').config();
+var isFirst = false;
 
 /*connect MySQL*/
 var dbConnection = mysql.createConnection({
@@ -45,7 +46,7 @@ module.exports = function(app, fs)
     authType: 'rerequest', scope: ['public_profile', 'email']
   }));
   app.get('/auth/facebook/callback',
-    passport.authenticate('facebook', { successRedirect: '/',
+    passport.authenticate('facebook', { successRedirect: '/?isFirst='+isFirst,
                                         failureRedirect: '/failure'}));
 
   passport.use(new FacebookStrategy({
@@ -84,15 +85,13 @@ module.exports = function(app, fs)
               if (err) {
                 throw error;
               }
-				dbConnection.query('INSERT into Item (userId) VALUES (?);', [newUser.userId], function (err, results, fields) {
-        if (err) {
-          throw error;
-        }else {
-        }
 
-      });
-
-
+      				dbConnection.query('INSERT into Item (userId) VALUES (?);', [newUser.userId], function (err, results, fields) {
+                if (err) {
+                  throw error;
+                }
+                isFirst = true;
+              });
             });
 
             done(null, newUser);
