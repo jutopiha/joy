@@ -60,6 +60,7 @@ module.exports = function(app, fs)
 	}
 
 	console.log(date);
+  allData.push(date);
 
     dbConnection.query('SELECT SUM(money) AS totalIncome FROM Income WHERE userId = ? AND date =?;', [currentUser, date], function(err, data){
       if(err){
@@ -123,7 +124,7 @@ module.exports = function(app, fs)
     }
   });
 
-  app.get('/statistic/web/detail-rewrite', function(req, res){
+  app.get('statistic/web/detail-rewrite', function(req, res){
     var currentUser = req.session.passport.user.userId;
     if(req.query.incomeid){
       dbConnection.query('SELECT * FROM Income WHERE userId = ? AND incomeId = ?;', [currentUser, req.query.incomeid], function(err, data){
@@ -145,14 +146,14 @@ module.exports = function(app, fs)
 
   });
 
-  app.get('/statistic/web/detail-delete', function(req, res){
+  app.get('statistic/web/detail-delete', function(req, res){
     var currentUser = req.session.passport.user.userId;
     if(req.query.incomeid){
       dbConnection.query('DELETE FROM Income WHERE userId = ? AND incomeId = ?;', [currentUser, req.query.incomeid], function(err, data){
         if(err){
           console.log(err);
         } else {
-          res.redirect('/');
+          res.render('index_new', {});
         }
       })
     } else {
@@ -160,7 +161,7 @@ module.exports = function(app, fs)
         if(err){
           console.log(err);
         } else {
-          res.render('/');
+          res.render('index_new', {});
         }
       })
     }

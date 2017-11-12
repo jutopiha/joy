@@ -1,21 +1,25 @@
 var doc = document;
 window.addEventListener("DOMContentLoaded", function(){
   var html;
-  var totalIncome=data[0][0].totalIncome;
-  var totalExpense=data[1][0].totalExpense;
+  var year = data[0].substr(0,4);
+  var month = data[0].substr(4,2);
+  var day = data[0].substr(6,2);
+  var totalIncome=data[1][0].totalIncome;
+  var totalExpense=data[2][0].totalExpense;
 
 	console.log(data[1]);
 	console.log(data[1][0]);
 
   //날짜
-  doc.getElementsByClassName("daily_box")[0].getElementsByClassName("title")[0];
+  html = year + '년 ' + month + '월 ' + day + '일';
+  doc.getElementsByClassName("daily_box")[0].getElementsByClassName("title")[0].innerHTML = html;
   var incomeBox = doc.getElementById('daily_income');
   //총 수입 금액
   html = '총 수입 ' + totalIncome + '원';
   incomeBox.getElementsByClassName('table-title')[0].innerHTML = html;
 
   //수입 내역들
-  data[2].forEach(function(data, i){
+  data[3].forEach(function(data, i){
 
     var aTag = doc.createElement('a');
     aTag.setAttribute('href', "/statistic/web/detail?incomeid=" + data.incomeId);
@@ -36,7 +40,7 @@ window.addEventListener("DOMContentLoaded", function(){
   expenseBox.getElementsByClassName('table-title')[0].innerHTML = html;
 	console.log(html);
   //지출 내역들
-  data[3].forEach(function(data, i){
+  data[4].forEach(function(data, i){
 
     var aTag = doc.createElement('a');
     aTag.setAttribute('href', "/statistic/web/detail?expenseid=" + data.expenseId);
