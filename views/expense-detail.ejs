@@ -3,19 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <title>JOY</title>
-    <link rel="stylesheet" type="text/css" href="./css/index.css" />
-    <link rel="stylesheet" type="text/css" href="./css/wrapper.css" />
+    <link rel="stylesheet" type="text/css" href="/css/index.css" />
+    <link rel="stylesheet" type="text/css" href="/css/wrapper.css" />
     <script>
       var data = <%-JSON.stringify(data)%>
       console.log(data);
     </script>
-    <script src="./js/detail.js"></script>
+    <script src="/js/detail.js"></script>
   </head>
   <body>
       <div class="header">
         <div class="wrapper">
           <a href="/">
-            <img class="logo" src="img/티끌모아태산.png" />
+            <img class="logo" src="/img/티끌모아태산.png" />
           </a>
           <!-- <ul class="user_menu">
             <li><span>로그인</span></li>
@@ -72,37 +72,37 @@
             <div>
               <span>날짜</span>
               <p>
-                <%=date%>
+                <%=data[0].date%>
               </p>
             </div>
             <div>
               <span>시간</span>
               <p>
-                <%=time%>
+                <%=data[0].time%>
               </p>
             </div>
             <div>
               <span>금액</span>
               <p>
-                <%=money%>
+                <%=data[0].money%>
               </p>
             </div>
             <div>
               <span>메모</span>
               <p>
-                <%=memo%>
+                <%=data[0].memo%>
               </p>
             </div>
             <div>
               <span>분류</span>
               <p>
-                <%=category%>
+                <%=data[0].category%>
               </p>
             </div>
             <div>
               <span>결제수단</span>
               <p>
-                <%=method%>
+                <%=data[0].method%>
               </p>
             </div>
             <div class="detail_btn">
