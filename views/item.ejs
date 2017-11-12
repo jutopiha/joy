@@ -359,8 +359,8 @@ $(".b_buy").click(function(){
 	else{
 	    message += "총 "+totalMoney+"   point\n";
   	 	message += "구입하시겠어요?";
-		alert(message);
-
+		//alert(message);
+      if(confirm(message)){
         var inputTag = doc.createElement("input");
         inputTag.setAttribute('type', 'hidden');
         inputTag.setAttribute('name','point');
@@ -369,6 +369,8 @@ $(".b_buy").click(function(){
         doc.getElementsByTagName("form")[0].appendChild(inputTag);
 
 		$(".f_buy").submit();
+      }
+
 	}
 });
 </script>
