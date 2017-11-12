@@ -11,26 +11,19 @@ window.addEventListener("DOMContentLoaded", function(){
 
 	console.log(JSON.stringify(data[0]));	
 	year = JSON.stringify(data[0].date).substr(0,4);
-	month = JSON.stringify(data[0].date).substr(5,2);
-	day = JSON.stringify(data[0].date).substr(7,2);
+	month = JSON.stringify(data[0].date).substr(4,2);
+	day = JSON.stringify(data[0].date).substr(6,2);
 
-	hour = JSON.stringify(data[0].time).substr(0,2);
-	min = JSON.stringify(data[0].time).substr(2,2);
-
-	if(parseInt(month%10) == parseInt(month)){
-		month = '0'+month;
+	if(JSON.stringify(data[0].time).length<4){
+		hour = "00";
+		min = JSON.stringify(data[0].time);
+	} else {
+		hour = JSON.stringify(data[0].time).substr(0,2);
+		min = JSON.stringify(data[0].time).substr(2,2);
 	}
-	if(parseInt(day%10) == parseInt(day)){
-        day = '0'+day;
-    }
-	if(parseInt(hour%10) == parseInt(hour)){
-        hour = '0'+hour;
-    }
-	if(parseInt(min%10) == parseInt(min)){
-        min = '0'+min;
-    }
-
-
+	console.log(hour);
+	console.log(min);
+		
   	if(data[0].incomeId){
 		doc.getElementsByClassName('input_form')[0].getElementsByTagName('form')[0].setAttribute('action', '/post/detail-rewrite?incomeid='+data[0].incomeId);
 		doc.getElementsByClassName('input_form')[0].getElementsByTagName('form')[0].getElementsByTagName('div')[0].getElementsByTagName('input')[0].setAttribute('value', year+'-'+month+'-'+day);
