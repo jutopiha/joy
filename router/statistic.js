@@ -43,7 +43,10 @@ module.exports = function(app, fs)
 	app.get('/statistic/web', function(req, res) {
     var allData = [];
     var date;
-    var currentUser = req.session.passport.user.userId;
+    var currentUser;
+	if(req.session.passport == undefined){res.render('logIn');}
+    else 
+		 currentUser = req.session.passport.user.userId;
 	console.log(req.query.date);
 
     if(req.query.date)
@@ -96,7 +99,11 @@ module.exports = function(app, fs)
 	});
   //일별통계 세부정보 조회
   app.get('/statistic/web/detail', function(req, res){
-    var currentUser = req.session.passport.user.userId;
+    var currentUser;
+	if(req.session.passport == undefined) {res.render('logIn');}
+	else
+		currentUser = req.session.passport.user.userId; 
+
     if(req.query.incomeid){
       dbConnection.query('SELECT * FROM Income WHERE userId = ? AND incomeId = ?;', [currentUser, req.query.incomeid], function(err, data){
         if(err){
@@ -125,7 +132,9 @@ module.exports = function(app, fs)
   	var isWeb = false;
 
   	if( (req.query.uid == undefined)){ //web
-  		currentUser = req.session.passport.user.userId;
+		if(req.session.passport == undefined) {res.render('logIn')}
+		else
+  			currentUser = req.session.passport.user.userId;
 
   		isWeb = true;
   	} else { //android
