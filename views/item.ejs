@@ -80,15 +80,15 @@
           <p><%=item.list[3]%></p>
         </div>
         <div class="item">
-          <img src="../img/우유.png">
+          <img src="../img/초코.png">
           <p><%=item.list[4]%></p>
         </div>
         <div class="item">
-          <img src="../img/초코.png">
+          <img src="../img/녹차가루.png">
           <p><%=item.list[5]%> </p>
         </div>
         <div class="item">
-          <img src="../img/녹차가루.png">
+          <img src="../img/우유.png">
           <p><%=item.list[6]%></p>
         </div>
         <div class="item">
@@ -147,7 +147,7 @@
                 <option value=5>5</option>
               </select>
             </li>
-            <li>우유 (150p)
+            <li>초코 (350p)
               <select name="list[3]"id="item3" onClick='item3Select()'>
                 <option value=0 selected>0</option>
                 <option value=1>1</option>
@@ -157,7 +157,7 @@
                 <option value=5>5</option>
               </select>
             </li>
-            <li>초코 (350p)
+            <li>녹차가루 (500p)
               <select name="list[4]"id="item4" onClick='item4Select()'>
                 <option value=0 selected>0</option>
                 <option value=1>1</option>
@@ -167,7 +167,7 @@
                 <option value=5>5</option>
               </select>
             </li>
-            <li>녹차가루 (500p)
+            <li>우유 (150p)
               <select name="list[5]"id="item5" onClick='item5Select()'>
                 <option value=0 selected>0</option>
                 <option value=1>1</option>
@@ -262,11 +262,6 @@ var item = [
         "point": 30
     },
         {
-        "name": "우유",
-        "num": 0,
-        "point": 150
-    },
-        {
         "name": "초코",
         "num": 0,
         "point": 350
@@ -275,6 +270,11 @@ var item = [
         "name": "녹차가루",
         "num": 0,
         "point": 500
+    },
+        {
+        "name": "우유",
+        "num": 0,
+        "point": 150
     },
         {
         "name": "자몽청",
@@ -359,6 +359,7 @@ $(".b_buy").click(function(){
 
 	if( totalMoney >= <%=item.point%>){
 		alert("포인트가 부족합니다.");
+		totalMoney = 0;
 		return;
 	}
 	else{
