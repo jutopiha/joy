@@ -164,7 +164,7 @@ funtion unlock(index){
     var formTag = document.createElement("form");
     formTag.setAttribute('action', '/character/unlock?type='+index);
     formTag.ClassName('submit_unlock');
-    formTag.setAttribute('method', 'GET');
+    formTag.setAttribute('method', 'POST');
     formTag.setAttribute('style', 'display: none');
 
     document.getElementsByClassName('footer')[0].appendChild(formTag);
@@ -177,7 +177,7 @@ function mainCharacter(index) {
     var formTag = document.createElement("form");
     formTag.ClassName('set_main_character');
     formTag.setAttribute('action', '/character/main?type='+index);
-    formTag.setAttribute('method', 'GET');
+    formTag.setAttribute('method', 'POST');
     formTag.setAttribute('style', 'display: none');
 
     document.getElementsByClassName('footer')[0].appendChild(formTag);
