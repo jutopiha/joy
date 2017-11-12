@@ -190,7 +190,7 @@ module.exports = function(app, fs)
 	var name = req.session.passport.user.name;
 	var birth = req.session.passport.user.birth;
 	var gender = req.session.passport.user.gender;
- 
+
     res.render('userinfo', {name, birth, gender});
   });
 
@@ -228,10 +228,12 @@ module.exports = function(app, fs)
       if (err) {
         console.log(err);
       }else {
-		req.session.passport.user.name = json.name;
-		req.session.passport.user.gender = json.gender;
-		req.session.passport.user.birth = json.birth;
+
+
         if(isWeb == true) {
+          req.session.passport.user.name = json.name;
+          req.session.passport.user.gender = json.gender;
+          req.session.passport.user.birth = json.birth;
           res.redirect('/');
         } else{
           res.json("success");
