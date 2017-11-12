@@ -332,6 +332,8 @@ section.upcoming h1 {
   color: #3f4159;
   font-size: 16px;
   line-height: 1.5;
+  pointer-events: none;
+  cursor: none;
 }
 .material input:focus + label, .material input:valid + label {
   transform: translateY(-24px) translateZ(0);
