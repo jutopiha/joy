@@ -71,19 +71,19 @@
           <form action="/post/expense-rewrite" method="post" id="input_expense">
             <div>
               <span>날짜</span>
-              <input type="date" name="date" value = <%=date%> required/>
+              <input type="date" name="date" required/>
             </div>
             <div>
               <span>시간</span>
-              <input type="time" name="time" value = <%=time%> required/>
+              <input type="time" name="time" required/>
             </div>
             <div>
               <span>금액</span>
-              <input type="number" name="money" value = <%=money%> required/>
+              <input type="number" name="money" value = <%=data[0].money%> required/>
             </div>
             <div>
               <span>메모</span>
-              <input type="text" name="memo" value = <%=memo%>/>
+              <input type="text" name="memo" value = <%=data[0].memo%>/>
             </div>
             <div>
               <span>분류</span>

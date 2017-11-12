@@ -3,19 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <title>JOY</title>
-    <link rel="stylesheet" type="text/css" href="./css/index.css" />
-    <link rel="stylesheet" type="text/css" href="./css/wrapper.css" />
+    <link rel="stylesheet" type="text/css" href="/css/index.css" />
+    <link rel="stylesheet" type="text/css" href="/css/wrapper.css" />
     <script>
       var data = <%-JSON.stringify(data)%>
       console.log(data);
     </script>
-    <script src="./js/setail-rewrite.js"></script>
+    <script src="/js/detail-rewrite.js"></script>
   </head>
   <body>
       <div class="header">
         <div class="wrapper">
           <a href="/">
-            <img class="logo" src="img/티끌모아태산.png" />
+            <img class="logo" src="/img/티끌모아태산.png" />
           </a>
           <!-- <ul class="user_menu">
             <li><span>로그인</span></li>
@@ -71,19 +71,19 @@
           <form action="/post/income-rewrite" method="post" id="input_expense">
             <div>
               <span>날짜</span>
-              <input type="date" name="date" value=<%=date%> required/>
+              <input type="date" name="date" required/>
             </div>
             <div>
               <span>시간</span>
-              <input type="time" name="time" value=<%=time%> required/>
+              <input type="time" name="time" required/>
             </div>
             <div>
               <span>금액</span>
-              <input type="number" name="money" value=<%=money%> required/>
+              <input type="number" name="money" value=<%=data[0].money%> required/>
             </div>
             <div>
               <span>메모</span>
-              <input type="text" name="memo" value=<%=memo%>/>
+              <input type="text" name="memo" value=<%=data[0].memo%>/>
             </div>
             <div>
               <span>분류</span>
@@ -101,7 +101,7 @@
       </div>
 
       <div class="footer">
-        <img class="btm_logo" alt=" " src="img/티끌모아태산.png"/>
+        <img class="btm_logo" alt=" " src="/img/티끌모아태산.png"/>
       </div>
   </body>
 </html>

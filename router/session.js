@@ -187,7 +187,11 @@ module.exports = function(app, fs)
   });
 
   app.get('/userinfo', function(req,res){
-    res.render('userinfo');
+	var name = req.session.passport.user.name;
+	var birth = req.session.passport.user.birth;
+	var gender = req.session.passport.user.gender;
+ 
+    res.render('userinfo', {name, birth, gender});
   });
 
 

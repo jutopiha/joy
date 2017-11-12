@@ -123,7 +123,7 @@ module.exports = function(app, fs)
     }
   });
 
-  app.get('statistic/web/detail-rewrite', function(req, res){
+  app.get('/statistic/web/detail-rewrite', function(req, res){
     var currentUser = req.session.passport.user.userId;
     if(req.query.incomeid){
       dbConnection.query('SELECT * FROM Income WHERE userId = ? AND incomeId = ?;', [currentUser, req.query.incomeid], function(err, data){

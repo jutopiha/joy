@@ -66,15 +66,15 @@
           <form action="userinfo" method="post" id="input_expense">
             <div>
               <span>이름</span>
-              <input type="text" name="name" required/>
+              <input type="text" name="name" placeholder="<%=name%>" required/>
             </div>
             <div>
               <span>출생년도</span>
-              <input type="number" name="birth" required/>
+              <input type="number" name="birth" placeholder="<%=birth%>" required/>
             </div>
             <div>
               <span>성별</span>
-              <select name="gender" required>
+              <select name="gender" placeholder="<%=gender%>" required>
                 <option value="Female">여성</option>
                 <option value="Male">남성</option>
               </select>
