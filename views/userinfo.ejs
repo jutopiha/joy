@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>JOY</title>
+    <link rel="stylesheet" type="text/css" href="./css/index.css" />
+    <link rel="stylesheet" type="text/css" href="./css/wrapper.css" />
+  </head>
+  <body>
+      <div class="header">
+        <div class="wrapper">
+          <a href="/">
+            <img class="logo" src="img/티끌모아태산.png" />
+          </a>
+          <!-- <ul class="user_menu">
+            <li><span>로그인</span></li>
+            <li><span>회원가입</span></li>
+          </ul> -->
+          <div class="nav">
+            <div class="top_menu">
+              <ul>
+                <li class="main_menu mmu1">
+                  <span>내역 입력</span>
+                  <ul class="sub_menu">
+                    <li><a href="/income">수입 내역 입력</a></li>
+                    <li><a href="/expense">지출 내역 입력</a></li>
+                  </ul>
+                </li>
+
+                <li class="main_menu mmu2">
+                  <span>통계 조회</span>
+                  <ul class="sub_menu">
+                    <li><a href="/statistic/web">일별 통계</a></li>
+                    <li><a href="/statistic/monthly">월별 통계</a></li>
+                  </ul>
+                </li>
+                <li class="main_menu mmu3">
+                  <a href="/quest"><span>퀘스트</span></a>
+                </li>
+                <li class="main_menu mmu4">
+                  <span>캐릭터</span>
+                  <ul class="sub_menu">
+                    <li><a href="/character">캐릭터</a></li>
+                    <li><a href="/item">아이템</a></li>
+                  </ul>
+                </li>
+                <li class="main_menu mmu5">
+                  <a href="/community"><span>커뮤니티</span></a>
+                </li>
+
+                <li class="main_menu mmu5">
+                  <a href="/kids"><span><img src="/img/kids.png" style="margin-top:30px; height:50px;"alt=""></span></a>
+                </li>
+
+
+              </ul>
+            </div>
+          </div> <!-- nav -->
+
+        </div>
+      </div>
+
+      <div class="wrapper content">
+        <h2>개인 정보 수정하기</h2>
+        <div class="input_form">
+          <form action="userinfo" method="post" id="input_expense">
+            <div>
+              <span>이름</span>
+              <input type="text" name="name" required/>
+            </div>
+            <div>
+              <span>출생년도</span>
+              <input type="number" name="birth" required/>
+            </div>
+            <div>
+              <span>성별</span>
+              <select name="gender" required>
+                <option value="Female">여성</option>
+                <option value="Male">남성</option>
+              </select>
+            </div>
+            <div class="submit_btn">
+              <button type="submit">SUBMIT</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer">
+        <img class="btm_logo" alt=" " src="img/티끌모아태산.png"/>
+      </div>
+  </body>
+</html>
