@@ -1,9 +1,9 @@
 var doc = document;
 window.addEventListener("DOMContentLoaded", function(){
   var html;
-  var year = data[0].substr(0,4);
-  var month = data[0].substr(4,2);
-  var day = data[0].substr(6,2);
+  var year = JSON.stringify(data[0]).substr(0,4);
+  var month = JSON.stringify(data[0]).substr(4,2);
+  var day = JSON.stringify(data[0]).substr(6,2);
   var totalIncome=data[1][0].totalIncome;
   var totalExpense=data[2][0].totalExpense;
 
