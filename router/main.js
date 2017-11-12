@@ -35,6 +35,8 @@ module.exports = function(app, fs)
     if (req.session.passport != undefined) {
       var userId = req.session.passport.user.userId;
       username = req.session.passport.user.name;
+      gender = req.session.passport.user.gender;
+      birth = req.session.passport.user.birth;
       profilePicture = "https://graph.facebook.com/" + userId +"/picture?type=large";
     } else {
       username = "guest";
@@ -44,7 +46,9 @@ module.exports = function(app, fs)
         title: "MY HOMEPAGE",
         length: 5,
         username: username,
-        profilePicture: profilePicture
+        profilePicture: profilePicture,
+        gender: gender,
+        birth: birth
     });
   });
 
