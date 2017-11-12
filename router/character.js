@@ -256,8 +256,7 @@ console.log(req.query.type+"번 캐릭터를 풀려고 해");
 
       if(isWeb == true) {
         console.log("web");
-        characterWebData.push(result);
-        res.render('character', {characterWebData});
+        res.render('character', {character:result});
       } else{
         console.log("android");
         res.json(result.state);
@@ -290,28 +289,33 @@ console.log(req.query.type+"번 캐릭터를 풀려고 해");
       lemon:0,
     };
 
-    if((req.query.uid != undefined)){ //web
+    if(req.query.uid == undefined){ //web
 
       isWeb = true;
-      if(req.session.passport != undefined && req.session.passport.user!=undefined)
-        loginLock = true;
+      if(req.session.passport != undefined && req.session.passport.user!=undefined) {
         currentUser = req.session.passport.user.userId;
+		console.log('web user'+currentUser);
+		loginLock = true;
+}
       else
         res.render('logIn');
 
     } else { //android
-      loginLock = true;
       currentUser = req.query.uid;
+	  console.log('android user'+currentUser);
+	  loginLock = true;
     }
 
     var result = {};
-
+	var character = {};
     if(loginLock == true){
     dbConnection.query('SELECT * FROM Item WHERE userId=?;',[currentUser], function(err, data){
       if(err) {
          console.log(err);
       } else {
-
+		if(loginLock == true){
+		console.log(loginLock);
+		console.log(currentUser);
       item.bean = data[0].bean;
       item.waterdrop= data[0].waterdrop;
       item.ice= data[0].ice;
@@ -322,7 +326,7 @@ console.log(req.query.type+"번 캐릭터를 풀려고 해");
       item.sparkling = data[0].sparkling;
       item.syrup = data[0].syrup;
       item.bluePigment = data[0].bluePigment;
-      item.lemon = data[0].lemon;
+      item.lemon = data[0].lemon;}
   console.log(req.query.type+"번 캐릭터를 풀려고 해");
   switch(parseInt(req.query.type)){
         case 1:
@@ -416,26 +420,49 @@ console.log(req.query.type+"번 캐릭터를 풀려고 해");
               if (err) {
                 console.log(err);
               }else {
-              }
+
+				dbConnection.query('SELECT characterType FROM Charact WHERE userId=?;',[currentUser], function(err, data){
+		        if(err) {
+        		   console.log(err);
+		        }
+    			  if (data[0] != null) {
+		          for (var i in data ) {
+        		  	var n = data[i].characterType;
+		          	character.list[n] = n;
+		          }
+        		}
+
+		        dbConnection.query('SELECT mainCharacter FROM User WHERE userId=?;',[currentUser], function(err, data){
+        		  if(err) {
+		             console.log(err);
+        		  } else {
+		          	character.main = data[0].mainCharacter;
+					}
+    		      });
+	
+        		});
+			}			
+
+      	});
+          }
             });
           }
 
-        });
-      }
-
+        };
+      });
+}
       if(isWeb == true) {
         console.log("web");
-        characterWebData.push(result);
-        res.render('character', {characterWebData});
+        res.render('character', {character:character, state:result.state, unlockFailed: result.characterIndex});
       } else{
         console.log("android");
         res.json(result.state);
       }
-	}
-    });
+	});
+    }
   }
+)
 
-  });
 
   /* character main*/
   app.get('/character/main', function(req, res){
