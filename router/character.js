@@ -151,12 +151,14 @@ module.exports = function(app, fs)
       lemon:0,
     };
 
-    if((req.query.uid == undefined)){ //web
+    if((req.query.uid != undefined)){ //web
+
       isWeb = true;
-  	  if(req.session.passport == undefined)
-  		  res.render('logIn');
-      else
+  	  if(req.session.passport != undefined && req.session.passport.user!=undefined)
         currentUser = req.session.passport.user.userId;
+      else
+  		  res.render('logIn');
+
     } else { //android
       currentUser = req.query.uid;
     }
