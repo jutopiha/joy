@@ -52,14 +52,18 @@ module.exports = function(app, fs)
   app.get('/', function(req, res){
     var username;
     var profilePicture;
+    var isFirst=false;
+    if(req.query.isFirst == true) {
+      isFirst = true;
+    }
     if (req.session.passport != undefined) {
 		if(req.session.passport.user != undefined){
       var userId = req.session.passport.user.userId;
       username = req.session.passport.user.name;
       profilePicture = "https://graph.facebook.com/" + userId +"/picture?type=large";}
-		else {
-			username = "guest";
-}
+		  else {
+			  username = "guest";
+      }
     } else {
       username = "guest";
     }
@@ -68,7 +72,8 @@ module.exports = function(app, fs)
         title: "MY HOMEPAGE",
         length: 5,
         username: username,
-        profilePicture: profilePicture
+        profilePicture: profilePicture,
+        isFirst: isFirst
     });
   });
 
@@ -83,7 +88,7 @@ module.exports = function(app, fs)
 	console.log("temp" + temp);
     var fromDate = parseInt(nowDate / 100) * 100 + 1;
 	console.log("nowDate=" + nowDate +"fromDate="+ fromDate);
-	console.log("uid: ", req.query.uid); 
+	console.log("uid: ", req.query.uid);
     dbConnection.query('SELECT * FROM User WHERE userId = ?;',[req.query.uid], function(err, data){
 
 	  console.log('point error 찾기: data='+data+'\n');
@@ -166,7 +171,7 @@ module.exports = function(app, fs)
   	//web에서 받은 json 데이터 사전처리
   	if(uid=='web'){
 		if(req.session.passport == undefined){res.render('logIn')}
-  		else 
+  		else
 			uid = req.session.passport.user.userId;
 
   		//날짜 시간
