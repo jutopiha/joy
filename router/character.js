@@ -271,6 +271,8 @@ console.log(req.query.type+"번 캐릭터를 풀려고 해");
   app.post('/character/unlock', function(req, res){
     console.log("***Character Unlock GET Request arrived***");
 
+    var loginLock = false;
+
     var currentUser;
     var characterData = [];
     var isWeb = false;
@@ -292,16 +294,19 @@ console.log(req.query.type+"번 캐릭터를 풀려고 해");
 
       isWeb = true;
       if(req.session.passport != undefined && req.session.passport.user!=undefined)
+        loginLock = true;
         currentUser = req.session.passport.user.userId;
       else
         res.render('logIn');
 
     } else { //android
+      loginLock = true;
       currentUser = req.query.uid;
     }
 
     var result = {};
 
+    if(loginLock == true){
     dbConnection.query('SELECT * FROM Item WHERE userId=?;',[currentUser], function(err, data){
       if(err) {
          console.log(err);
@@ -428,6 +433,7 @@ console.log(req.query.type+"번 캐릭터를 풀려고 해");
       }
 	}
     });
+  }
 
   });
 
