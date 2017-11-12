@@ -61,7 +61,7 @@
 <form method= "get" action="/logout">          
 <button id="fb_button" type="submit">로그아웃</button>
 </form>
-        <h4> <%= username %> </h4>
+        <h4> <%= username %> <%=isFirst %></h4>
     <% } else{ %>
           <form action="/auth/facebook" method="get">
               <button id="fb_button" type="submit">
