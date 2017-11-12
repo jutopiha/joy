@@ -102,7 +102,7 @@ module.exports = function(app, fs)
         if(err){
           console.log(err);
         } else {
-          res.render('daily-detail', {data});
+          res.render('income-detail', {data});
         }
       });
     } else {
@@ -110,7 +110,7 @@ module.exports = function(app, fs)
         if(err){
           console.log(err);
         } else {
-          res.render('daily-detail', {data});
+          res.render('expense-detail', {data});
         }
       });
     }
