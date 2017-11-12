@@ -337,6 +337,12 @@ birth: birth
   /*------------------------POST/detail-rewite------------------------*/
   app.post('/post/detail-rewrite', function(req, res){
     var currentUser = req.session.passport.user.userId;
+    //날짜 시간
+    req.body.date = moment(req.body.date, 'YYYYMMDD').format('YYYYMMDD');
+    req.body.time = moment(req.body.time, 'HHmm').format('HHmm');
+    //console.log(req.body.date);
+    req.body.date = parseInt(req.body.date);
+    req.body.time = parseInt(req.body.time);
 
     if(req.query.expenseid){
       dbConnection.query('UPDATE Expense SET date = ?, time = ?, money = ?, memo = ?, category = ?, payMethod = ? WHERE userId = ? and expenseId = ?', [req.body.date, req.body.time, req.body.money, req.body.memo, req.body.category, req.body.payMehod, currentUser, req.query.expenseid ], function(err, data){
