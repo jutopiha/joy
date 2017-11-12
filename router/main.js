@@ -65,6 +65,7 @@ module.exports = function(app, fs)
   var isFirst=false;
     if(req.query.isFirst == true) {
       isFirst = true;
+		res.render('userinfo');
     }
    
   if (req.session.passport != undefined) {
