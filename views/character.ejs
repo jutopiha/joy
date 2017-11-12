@@ -163,8 +163,8 @@ function unlock(index){
   if(confirm("캐릭터를 해제하시겠습니까?")){
     var formTag = document.createElement("form");
     formTag.setAttribute('action', '/character/unlock?type='+index);
-    formTag.className = 'submit_unlock';
-    formTag.setAttribute('method', 'GET');
+    formTag.ClassName('submit_unlock');
+    formTag.setAttribute('method', 'POST');
     formTag.setAttribute('style', 'display: none');
 
     document.getElementsByClassName('footer')[0].appendChild(formTag);
@@ -177,7 +177,7 @@ function mainCharacter(index) {
     var formTag = document.createElement("form");
     formTag.className = 'set_main_character';
     formTag.setAttribute('action', '/character/main?type='+index);
-    formTag.setAttribute('method', 'GET');
+    formTag.setAttribute('method', 'POST');
     formTag.setAttribute('style', 'display: none');
 
     document.getElementsByClassName('footer')[0].appendChild(formTag);
