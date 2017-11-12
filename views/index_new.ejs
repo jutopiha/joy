@@ -58,8 +58,9 @@
 
     <% if (username!="guest"){ %>
           <img class="user_profile" src=<%= profilePicture %> alt="profilePicture">
-          <button id="fb_button" type="submit">로그아웃</button>
-
+<form method= "get" action="/logout">          
+<button id="fb_button" type="submit">로그아웃</button>
+</form>
         <h4> <%= username %> </h4>
     <% } else{ %>
           <form action="/auth/facebook" method="get">

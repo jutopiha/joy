@@ -53,9 +53,13 @@ module.exports = function(app, fs)
     var username;
     var profilePicture;
     if (req.session.passport != undefined) {
+		if(req.session.passport.user != undefined){
       var userId = req.session.passport.user.userId;
       username = req.session.passport.user.name;
-      profilePicture = "https://graph.facebook.com/" + userId +"/picture?type=large";
+      profilePicture = "https://graph.facebook.com/" + userId +"/picture?type=large";}
+		else {
+			username = "guest";
+}
     } else {
       username = "guest";
     }
@@ -79,7 +83,7 @@ module.exports = function(app, fs)
 	console.log("temp" + temp);
     var fromDate = parseInt(nowDate / 100) * 100 + 1;
 	console.log("nowDate=" + nowDate +"fromDate="+ fromDate);
-
+	console.log("uid: ", req.query.uid); 
     dbConnection.query('SELECT * FROM User WHERE userId = ?;',[req.query.uid], function(err, data){
 
 	  console.log('point error 찾기: data='+data+'\n');
@@ -203,9 +207,11 @@ module.exports = function(app, fs)
     var result = {};
     var json = {};
 	var uid = req.query.uid;
-	if(req.session.passport) {
-		uid = req.session.passport.user.userId;
-		 //날짜 시간
+
+	if(uid=='web'){
+        uid = req.session.passport.user.userId;
+
+        //날짜 시간
         req.body.date = moment(req.body.date, 'YYYYMMDD').format('YYYYMMDD');
         req.body.time = moment(req.body.time, 'HHmm').format('HHmm');
         //console.log(req.body.date);
@@ -213,14 +219,14 @@ module.exports = function(app, fs)
         req.body.time = parseInt(req.body.time);
         //console.log(req.body.time);
 
-	} else{
-    // income request
-    console.log("***New INCOME POST Request is arrived***");
+        json = req.body;
+    } else {
+        // parse body
+        json = JSON.parse(req.body);
+    }
+    console.log(req.body);
+    console.log(json);
 
-  	// parse body
-  	json = JSON.parse(req.body);
-  	console.log(json);
-	}
   	// insert to DB
   	dbConnection.query('INSERT Income VALUES (DEFAULT,?,?,?,?,?,?);', [uid, json.date, json.time, parseInt(json.money),
                         json.memo, json.category], function (err, results, fields) {
@@ -233,8 +239,11 @@ module.exports = function(app, fs)
         result.STATUS = "Created";
         result.DATA = json;
       }
-
-      res.json(result);
+	  if(uid != req.query.uid){
+        res.redirect('/');
+      } else{
+        res.json(result);
+      }
     });
 
     return;
