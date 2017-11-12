@@ -72,6 +72,8 @@ module.exports = function(app, fs)
 
     if((req.query.uid == undefined)){ //web
       isWeb = true;
+	 if(req.session.passport == undefined){res.render('logIn');}
+    else 
       currentUser = req.session.passport.user.userId;
     } else { //android
       currentUser = req.query.uid;
@@ -148,6 +150,8 @@ module.exports = function(app, fs)
 
   	if((req.query.uid == undefined)){ //web
       isWeb = true;
+	if(req.session.passport == undefined){res.render('logIn');}
+    else 
       currentUser = req.session.passport.user.userId;
       json = req.body;
   	} else { //android
@@ -179,6 +183,8 @@ module.exports = function(app, fs)
 
     if((req.query.uid == undefined)){ //web
       isWeb = true;
+	if(req.session.passport == undefined){res.render('logIn');}
+    else 
       currentUser = req.session.passport.user.userId;
     } else { //android
       currentUser = req.query.uid;
@@ -220,6 +226,8 @@ console.log(req.query.type);
     var isWeb = false;
     if((req.query.uid == undefined)){ //web
       isWeb = true;
+	if(req.session.passport == undefined){res.render('logIn');}
+    else 
       currentUser = req.session.passport.user.userId;
     } else { //android
       currentUser = req.query.uid;

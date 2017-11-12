@@ -29,6 +29,8 @@ module.exports = function(app, fs)
 
   	if((req.query.uid == undefined)){ //web
       isWeb = true;
+	if(req.session.passport == undefined){res.render('logIn');}
+    else 
       currentUser = req.session.passport.user.userId;
   	} else { //android
   		currentUser = req.query.uid;
@@ -96,6 +98,8 @@ dbConnection.query('SELECT point FROM User WHERE userId=?;',[currentUser], funct
 
   	if((req.query.uid == undefined)){ //web
       isWeb = true;
+	if(req.session.passport == undefined){res.render('logIn');}
+    else 
       currentUser = req.session.passport.user.userId;
 	  json = req.body;
   	} else { //android

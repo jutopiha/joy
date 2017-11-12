@@ -126,9 +126,12 @@ module.exports = function(app, fs)
 
   /* web render */
 	app.get('/income', function(req, res){
+		if( req.session.passport == undefined ) {res.render('logIn');}
 		res.render('income', {});
+
 	});
 	app.get('/expense', function(req, res){
+		if( req.session.passport == undefined ) {res.render('logIn');}
 		res.render('expense', {});
 	});
 
@@ -142,7 +145,9 @@ module.exports = function(app, fs)
     console.log("***New EXPENSE POST Request is arrived***");
   	//web에서 받은 json 데이터 사전처리
   	if(uid=='web'){
-  		uid = req.session.passport.user.userId;
+		if(req.session.passport == undefined){res.render('logIn')}
+  		else 
+			uid = req.session.passport.user.userId;
 
   		//날짜 시간
   		req.body.date = moment(req.body.date, 'YYYYMMDD').format('YYYYMMDD');
@@ -189,7 +194,9 @@ module.exports = function(app, fs)
 	var uid = req.query.uid;
 
 	if(uid=='web'){
-        uid = req.session.passport.user.userId;
+		if(req.session.passport == undefined){res.render('logIn')}
+        else
+		  uid = req.session.passport.user.userId;
 
         //날짜 시간
         req.body.date = moment(req.body.date, 'YYYYMMDD').format('YYYYMMDD');
