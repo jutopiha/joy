@@ -437,31 +437,29 @@ console.log(req.query.type+"번 캐릭터를 풀려고 해");
 		             console.log(err);
         		  } else {
 		          	character.main = data[0].mainCharacter;
-					}
-    		      });
-	
-        		});
-			}			
+					         }
+    		        });
 
-      	});
-          }
-            });
-          }
+        		    });
+			        }
 
-        };
-      });
-}
-      if(isWeb == true) {
-        console.log("web");
-        res.render('character', {character:character, state:result.state, unlockFailed: result.characterIndex});
-      } else{
-        console.log("android");
-        res.json(result.state);
+      	   });
+          }
+        });
       }
-	});
-    }
+
+        if(isWeb == true) {
+          console.log("web");
+          res.render('character', {character:character, state:result.state, unlockFailed: result.characterIndex});
+        } else{
+          console.log("android");
+          res.json(result.state);
+        }
+      }
+    });
   }
-)
+});
+
 
 
   /* character main*/
