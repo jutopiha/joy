@@ -1,8 +1,8 @@
 var doc = document;
 window.addEventListener("DOMContentLoaded", function(){
   var html;
-  var totalIncome;
-  var totalExpense;
+  var totalIncome = data[0];
+  var totalExpense = data[1];
 
   //날짜
   doc.getElementsByClassName("daily_box").getElementsByClassName("title");
@@ -13,7 +13,7 @@ window.addEventListener("DOMContentLoaded", function(){
   incomeBox.getElementsByClassName('table-title').innerHTML = html;
 
   //수입 내역들
-  data[1].forEach(function(data, i){
+  data[2].forEach(function(data, i){
 
     var aTag = doc.createElement('a');
     aTag.setAttribute('href', "/statistic/web/detail?incomeid=" + data.incomeId);
@@ -34,7 +34,7 @@ window.addEventListener("DOMContentLoaded", function(){
   expenseBox.getElementsByClassName('table-title').innerHTML = html;
 
   //지출 내역들
-  data[2].forEach(function(data, i){
+  data[3].forEach(function(data, i){
 
     var aTag = doc.createElement('a');
     aTag.setAttribute('href', "/statistic/web/detail?expenseid=" + data.expenseId);
