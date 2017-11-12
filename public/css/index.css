@@ -1,4 +1,4 @@
-/*font*/
+nt*/
 @font-face {
   font-family: 'BareunDotum';
   font-style: normal;
@@ -23,7 +23,7 @@
 li { list-style: none;}
 span { font-family: 'BareunDotum'; width: 100px;}
 body {background:rgb(242, 233, 236);}
-a { text-decoration: none; color:black !important;}
+a { text-decoration: none; color:black;}
 
 /*design*/
 .btm_logo {
@@ -149,9 +149,35 @@ a { text-decoration: none; color:black !important;}
   margin: 10px 5px;
   font-size: 18px; font-weight: 700;
   display: block;
+  margin-bottom: 15px;
+}
+.input_form div p {
+    padding-left: 3px;
+    padding-bottom: 6px;
+    font-size: 20px;
+    border-bottom: 1px solid #bbb;
 }
 .input_form div input {width: 400px; height: 45px; }
 .input_form div select {width: 400px; height: 45px; }
+
+.detail_btn {
+	text-align: center;
+}
+.detail_btn button{
+	width: 120px;
+    height: 62px;
+    text-align: center;
+    border: 1px solid rgb(255, 2, 129);
+    box-sizing: border-box;
+    margin-left: 5px;
+    text-align: center;
+    margin: 20px 0;
+    background-color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+.detail_btn button a { color: rgb(255, 5, 131);}
+
 
 /*SUBMIT button*/
 form .submit_btn { margin: 100px 0 60px;}

@@ -32,11 +32,15 @@ module.exports = function(app, fs)
   app.get('/setting/test', function(req, res){
     var username;
     var profilePicture;
+	var gender = "no";
+	var birth = 0;
     if (req.session.passport != undefined) {
       var userId = req.session.passport.user.userId;
       username = req.session.passport.user.name;
-      gender = req.session.passport.user.gender;
-      birth = req.session.passport.user.birth;
+	console.log("why");
+	console.log(req.session.passport.user.gender);
+      gender = req.session.passport.user[0].gender;
+      birth = req.session.passport.useri[0].birth;
       profilePicture = "https://graph.facebook.com/" + userId +"/picture?type=large";
     } else {
       username = "guest";
@@ -56,15 +60,20 @@ module.exports = function(app, fs)
   app.get('/', function(req, res){
     var username;
     var profilePicture;
-    var isFirst=false;
+   var gender = "no";
+	var birth = 0;
+  var isFirst=false;
     if(req.query.isFirst == true) {
       isFirst = true;
     }
-    if (req.session.passport != undefined) {
+   
+  if (req.session.passport != undefined) {
 		if(req.session.passport.user != undefined){
       var userId = req.session.passport.user.userId;
       username = req.session.passport.user.name;
-      profilePicture = "https://graph.facebook.com/" + userId +"/picture?type=large";}
+           gender = req.session.passport.user.gender;
+      birth = req.session.passport.user.birth;
+  profilePicture = "https://graph.facebook.com/" + userId +"/picture?type=large";}
 		  else {
 			  username = "guest";
       }
@@ -77,7 +86,9 @@ module.exports = function(app, fs)
         length: 5,
         username: username,
         profilePicture: profilePicture,
-        isFirst: isFirst
+        isFirst: isFirst,
+gender:gender,
+birth: birth
     });
   });
 

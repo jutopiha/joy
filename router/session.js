@@ -192,7 +192,7 @@ module.exports = function(app, fs)
 
 
   /*------------------------POST/signin------------------------*/
-  app.post('/post/userinfo', function(req, res){
+  app.post('/userinfo', function(req, res){
     //signin request
     console.log("*** 회원정보수정 POST Request is arrived***");
 
