@@ -350,7 +350,7 @@ mainObject.gender = data[0].gender;
         if(err){
           console.log(err);
         } else {
-          res.render('index_new', {});
+          res.redirect('/');
         }
       });
     } else if(req.query.incomeid){
@@ -358,7 +358,7 @@ mainObject.gender = data[0].gender;
         if(err){
           console.log(err);
         } else {
-          res.render('index_new', {});
+          res.redirect('/');
         }
       });
     }
