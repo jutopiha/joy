@@ -86,7 +86,8 @@ module.exports = function(app, fs)
              console.log(err);
           }
           character.main = data[0].mainCharacter;
-
+		  console.log(character);
+		  console.log(data[0]);
           if(isWeb == true) {
           	res.render('character', {
         			character: character, state: isUnlockSuccess
@@ -304,7 +305,7 @@ console.log(req.query.type+"번 캐릭터를 풀려고 해");
     dbConnection.query('SELECT * FROM Item WHERE userId=?;',[currentUser], function(err, data){
       if(err) {
          console.log(err);
-      }
+      } else {
 
       item.bean = data[0].bean;
       item.waterdrop= data[0].waterdrop;
@@ -425,7 +426,7 @@ console.log(req.query.type+"번 캐릭터를 풀려고 해");
         console.log("android");
         res.json(result.state);
       }
-
+	}
     });
 
   });
@@ -512,7 +513,8 @@ console.log(req.query.type+"번 캐릭터를 풀려고 해");
     }
 
     var result = {};
-
+	console.log(req.query);
+	console.log(req.query.type);
     dbConnection.query('UPDATE User set mainCharacter=? WHERE userId=?;',[req.query.type, currentUser], function(err, data){
       if(err) {
          console.log(err);
