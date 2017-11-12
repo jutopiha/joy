@@ -152,7 +152,7 @@ module.exports = function(app, fs)
         if(err){
           console.log(err);
         } else {
-          res.render('index_new', {});
+          res.redirect('/');
         }
       })
     } else {
@@ -160,7 +160,7 @@ module.exports = function(app, fs)
         if(err){
           console.log(err);
         } else {
-          res.render('index_new', {});
+          res.render('/');
         }
       })
     }

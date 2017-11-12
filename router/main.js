@@ -112,6 +112,7 @@ birth: birth
       mainObject.point = data[0].point;
       mainObject.name = data[0].name;
 	  mainObject.birth = data[0].birth;
+mainObject.gender = data[0].gender;
       dbConnection.query('SELECT money FROM Expense WHERE userId = ? ORDER BY expenseId DESC LIMIT 1;',[req.query.uid, nowDate], function(err, data){
 
         if (data[0] != null) {
@@ -337,13 +338,19 @@ birth: birth
   /*------------------------POST/detail-rewite------------------------*/
   app.post('/post/detail-rewrite', function(req, res){
     var currentUser = req.session.passport.user.userId;
+    //날짜 시간
+    req.body.date = moment(req.body.date, 'YYYYMMDD').format('YYYYMMDD');
+    req.body.time = moment(req.body.time, 'HHmm').format('HHmm');
+    //console.log(req.body.date);
+    req.body.date = parseInt(req.body.date);
+    req.body.time = parseInt(req.body.time);
 
     if(req.query.expenseid){
       dbConnection.query('UPDATE Expense SET date = ?, time = ?, money = ?, memo = ?, category = ?, payMethod = ? WHERE userId = ? and expenseId = ?', [req.body.date, req.body.time, req.body.money, req.body.memo, req.body.category, req.body.payMehod, currentUser, req.query.expenseid ], function(err, data){
         if(err){
           console.log(err);
         } else {
-          res.render('index_new', {});
+          res.redirect('/');
         }
       });
     } else if(req.query.incomeid){
@@ -351,7 +358,7 @@ birth: birth
         if(err){
           console.log(err);
         } else {
-          res.render('index_new', {});
+          res.redirect('/');
         }
       });
     }
