@@ -197,6 +197,7 @@ module.exports = function(app, fs)
   	}
 
   	console.log("curerntUser: "+currentUser);
+
     var statistic = {
       "income": 0,
       "expense":0,
@@ -232,21 +233,23 @@ module.exports = function(app, fs)
     var edu = [];
     var utility = [];
     var etc = [];
+	
+	var age_min, age_max;
 
+	
     dbConnection.query('SELECT sum(money) as money FROM Income WHERE userId =? AND date > ? AND date < ?;',[currentUser, fromDate, toDate], function(err, data){
       if(err) {
          console.log(err);
       }
-  	  if (data[0].money != null) {
+	  console.log("data"+data);
+  	  if ( data!= null && data[0].money != null) {
    	     statistic.income = data[0].money;
   	  }
-
-      dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId =? AND date > ? AND date < ?;',[currentUser, fromDate, toDate], function(err, data){
-        console.log(data[0].money);
-    		if (data[0].money!=null) {
+      dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId =? AND date > ? AND date =< ?;',[currentUser, fromDate, toDate], function(err, data){
+       // console.log(data[0].money);
+    		if (data!= null && data[0].money!=null) {
               statistic.expense = data[0].money;
     		}
-
         dbConnection.query('SELECT category, sum(money) as money FROM Expense WHERE userId =? AND date > ? AND date < ? GROUP BY(category);',[currentUser, fromDate, toDate], function(err, data){
           if(err) {
              console.log(err);
