@@ -267,7 +267,6 @@ module.exports = function(app, fs)
               var category = data[i].category;
               var money =  data[i].money;
                statistic.mine[category] = money;
->>>>>>> 7d62829cef80c1b259cf10020c39e08945de93ad
             }
 
   // SELECT category, sum(money) as money FROM Expense WHERE date > ? AND date < ? GROUP BY userId, category;
@@ -283,13 +282,17 @@ module.exports = function(app, fs)
           // 60대 58 ~ 69살 49
           // 70대 48 ~ 79살 39
           // 80대 이상
-
-          var ageRange = (2018 - target.birth) / 10;
+          var ageRange = parseInt((2018 - target.birth) / 10);
 
           var toBirth = 2018 - ageRange*10;
           var fromBirth = toBirth - 9;
+console.log("확인해보자");
+console.log(ageRange);
+console.log(toBirth);
+console.log(fromBirth);
 
-            dbConnection.query('SELECT e.category, e.money FROM Expense e, User u WHERE (e.date > ? AND e.date < ? AND u.gender=? AND u.birth > ? AND u.birth < ? AND e.userId=u.userId);', [fromDate, toDate, target.gender, fromBirth, toBirth], function(err, data){
+
+            dbConnection.query('SELECT e.category, e.money FROM Expense e, User u WHERE (e.date > ? AND e.date < ? AND u.gender=? AND u.birth >= ? AND u.birth <= ? AND e.userId=u.userId);', [fromDate, toDate, target.gender, fromBirth, toBirth], function(err, data){
               console.log(data);
               for (var j in data ) {
                 var category = data[j].category;
