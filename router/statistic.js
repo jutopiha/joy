@@ -233,80 +233,109 @@ module.exports = function(app, fs)
     var utility = [];
     var etc = [];
 
-    dbConnection.query('SELECT sum(money) as money FROM Income WHERE userId =? AND date > ? AND date < ?;',[currentUser, fromDate, toDate], function(err, data){
+    var target={};
+    dbConnection.query('SELECT gender, birth FROM User WHERE userId =?;',[currentUser], function(err, data){
       if(err) {
          console.log(err);
       }
-  	  if (data[0].money != null) {
-   	     statistic.income = data[0].money;
-  	  }
+      if (data[0] != null) {
+        target.gender = data[0].gender;
+        target.birth = data[0].birth;
+      }
+      dbConnection.query('SELECT sum(money) as money FROM Income WHERE userId =? AND date > ? AND date < ?;',[currentUser, fromDate, toDate], function(err, data){
+        if(err) {
+           console.log(err);
+        }
+    	  if (data[0].money != null) {
+     	     statistic.income = data[0].money;
+    	  }
 
-      dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId =? AND date > ? AND date < ?;',[currentUser, fromDate, toDate], function(err, data){
-        console.log(data[0].money);
-    		if (data[0].money!=null) {
-              statistic.expense = data[0].money;
-    		}
+        dbConnection.query('SELECT sum(money) as money FROM Expense WHERE userId =? AND date > ? AND date < ?;',[currentUser, fromDate, toDate], function(err, data){
+          console.log(data[0].money);
+      		if (data[0].money!=null) {
+                statistic.expense = data[0].money;
+      		}
 
-        dbConnection.query('SELECT category, sum(money) as money FROM Expense WHERE userId =? AND date > ? AND date < ? GROUP BY(category);',[currentUser, fromDate, toDate], function(err, data){
-          if(err) {
-             console.log(err);
-          }
-
-          for (var i in data ) {
-            var category = data[i].category;
-            var money =  data[i].money;
-             statistic.mine[category] = money;
-          }
-
-          dbConnection.query('SELECT category, sum(money) as money FROM Expense WHERE date > ? AND date < ? GROUP BY userId, category;', [fromDate, toDate], function(err, data){
-            console.log(data);
-            for (var j in data ) {
-              var category = data[j].category;
-              var money = data[j].money;
-              switch (category) {
-                case "식비":
-                  food.push(money);
-                  break;
-                case "교통비":
-                  fare.push(money);
-                  break;
-                case "문화":
-                  culture.push(money);
-                  break;
-                case "생활":
-                  living.push(money);
-                  break;
-                case "음료/간식":
-                  snack.push(money);
-                  break;
-                case "교육":
-                  edu.push(money);
-                  break;
-                case "공과금":
-                  utility.push(money);
-                  break;
-                case "기타":
-                  etc.push(money);
-                  break;
-              }
+          dbConnection.query('SELECT category, sum(money) as money FROM Expense WHERE userId =? AND date > ? AND date < ? GROUP BY(category);',[currentUser, fromDate, toDate], function(err, data){
+            if(err) {
+               console.log(err);
             }
 
-            if(food.length > 0) statistic.whole["식비"] = ss.mean(food);
-            if(fare.length > 0) statistic.whole["교통비"] = ss.mean(fare);
-            if(culture.length > 0) statistic.whole["문화"] = ss.mean(culture);
-            if(living.length > 0) statistic.whole["생활"] = ss.mean(living);
-            if(snack.length > 0) statistic.whole["음료/간식"] = ss.mean(snack);
-            if(edu.length > 0) statistic.whole["교육"] = ss.mean(edu);
-            if(utility.length > 0) statistic.whole["공과금"] = ss.mean(utility);
-            if(etc.length > 0) statistic.whole["기타"] = ss.mean(etc);
+            for (var i in data ) {
+              var category = data[i].category;
+              var money =  data[i].money;
+               statistic.mine[category] = money;
+            }
 
-      			if(isWeb == true) {
-      				res.render('monthlyStat', {
-      					statistic: statistic
-      				});
-      			} else{
-            	res.json(statistic);
-      			}
+  // SELECT category, sum(money) as money FROM Expense WHERE date > ? AND date < ? GROUP BY userId, category;
+  // to
+  // SELECT e.category, e.money FROM Expense e, User u WHERE (e.date > 20171100 AND e.date < 20171200 AND u.gender="Female" AND u.birth > 1980 AND u.birth < 2000 AND e.userId=u.userId);
+
+          // 2017 - birth + 1 = (2018 - birth) / 10
+          // 10대 이하 08 ~ 19살 99
+          // 20대 98 ~ 29살 89
+          // 30대 88 ~ 39살 79
+          // 40대 78 ~ 49살 69
+          // 50대 68 ~ 59살 59
+          // 60대 58 ~ 69살 49
+          // 70대 48 ~ 79살 39
+          // 80대 이상
+
+          var ageRange = (2018 - target.birth) / 10;
+
+          var toBirth = 2018 - ageRange*10;
+          var fromBirth = toBirth - 9;
+
+            dbConnection.query('SELECT e.category, e.money FROM Expense e, User u WHERE (e.date > ? AND e.date < ? AND u.gender=? AND u.birth > ? AND u.birth < ? AND e.userId=u.userId);', [fromDate, toDate, target.gender, fromBirth, toBirth], function(err, data){
+              console.log(data);
+              for (var j in data ) {
+                var category = data[j].category;
+                var money = data[j].money;
+                switch (category) {
+                  case "식비":
+                    food.push(money);
+                    break;
+                  case "교통비":
+                    fare.push(money);
+                    break;
+                  case "문화":
+                    culture.push(money);
+                    break;
+                  case "생활":
+                    living.push(money);
+                    break;
+                  case "음료/간식":
+                    snack.push(money);
+                    break;
+                  case "교육":
+                    edu.push(money);
+                    break;
+                  case "공과금":
+                    utility.push(money);
+                    break;
+                  case "기타":
+                    etc.push(money);
+                    break;
+                }
+              }
+
+              if(food.length > 0) statistic.whole["식비"] = ss.mean(food);
+              if(fare.length > 0) statistic.whole["교통비"] = ss.mean(fare);
+              if(culture.length > 0) statistic.whole["문화"] = ss.mean(culture);
+              if(living.length > 0) statistic.whole["생활"] = ss.mean(living);
+              if(snack.length > 0) statistic.whole["음료/간식"] = ss.mean(snack);
+              if(edu.length > 0) statistic.whole["교육"] = ss.mean(edu);
+              if(utility.length > 0) statistic.whole["공과금"] = ss.mean(utility);
+              if(etc.length > 0) statistic.whole["기타"] = ss.mean(etc);
+
+        			if(isWeb == true) {
+        				res.render('monthlyStat', {
+        					statistic: statistic
+        				});
+        			} else{
+              	res.json(statistic);
+        			}
+            });
           });
         });
       });
