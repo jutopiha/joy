@@ -52,8 +52,8 @@ a, button, input[type="submit"] {
   will-change: opacity, transform;
   animation: rotateIn 1000ms cubic-bezier(0.215, 0.61, 0.355, 1) 500ms forwards;
   position: relative;
-  left:740px;
-  top:-400px;
+  left:1300px;
+  top:-700px;
   display: flex;
   flex-flow: row wrap;
   background: white;
@@ -64,7 +64,7 @@ a, button, input[type="submit"] {
   width: 100%;
   max-width: 300px;
   /* 여기 */
-  height: 45%;
+  height: 30%;
 
 }
 @media only screen and (min-width: 500px) {
